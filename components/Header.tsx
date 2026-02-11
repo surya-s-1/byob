@@ -44,7 +44,11 @@ export default function Header({ user }: any) {
 			</div>
 
 			<div className='relative'>
-				<img src={user?.avatar} className='w-12 h-12 rounded-full cursor-pointer' onClick={() => setOpen(!open)} />
+				<img
+					src={user?.avatar}
+					className='w-12 h-12 rounded-full cursor-pointer'
+					onClick={() => setOpen(!open)}
+				/>
 
 				{open && (
 					<Card className='absolute right-0 w-fit mt-sm z-50'>
@@ -58,19 +62,31 @@ export default function Header({ user }: any) {
 
 						<div className='my-sm border-t border-border' />
 
-						<a href='/dashboard' className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'>
+						<a
+							href='/dashboard'
+							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'
+						>
 							<LayoutDashboard size={16} /> Dashboard
 						</a>
 
-						<a href='/profile' className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'>
+						<a
+							href='/profile'
+							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'
+						>
 							<User size={16} /> Profile
 						</a>
 
-						<a href='/settings' className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'>
+						<a
+							href='/settings'
+							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'
+						>
 							<Settings size={16} /> Settings
 						</a>
 
-						<button onClick={logout} className='flex items-center gap-sm px-md py-sm rounded-md text-error hover:bg-secondary w-full text-left transition-colors cursor-pointer'>
+						<button
+							onClick={logout}
+							className='flex items-center gap-sm px-md py-sm rounded-md text-error hover:bg-secondary w-full text-left transition-colors cursor-pointer'
+						>
 							<LogOut size={16} /> Logout
 						</button>
 					</Card>
