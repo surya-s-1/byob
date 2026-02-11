@@ -1,11 +1,16 @@
-export default function LoginPage() {
+import { redirect } from 'next/navigation'
+import { getCurrentUser } from '@/lib/auth/getCurrentUser'
+
+export default async function LoginPage() {
+	const user = await getCurrentUser()
+	if (user) redirect('/dashboard')
+
 	return (
-		<div style={{ padding: 40 }}>
+		<div>
 			<h1>Login</h1>
-			<a href='/api/auth/login?provider=google'>Continue with Google</a>
+			<a href='/api/auth/login?provider=google'>Google</a>
 			<br />
-			<br />
-			<a href='/api/auth/login?provider=github'>Continue with GitHub</a>
+			<a href='/api/auth/login?provider=github'>GitHub</a>
 		</div>
 	)
 }
