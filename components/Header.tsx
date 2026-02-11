@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { LayoutDashboard, User, Settings, LogOut, Moon, Sun } from 'lucide-react'
-import { useTheme } from 'next-themes'
+import Card from './ui/Card'
 
 export default function Header({ user }: any) {
 	const [open, setOpen] = useState(false)
@@ -39,18 +39,18 @@ export default function Header({ user }: any) {
 	return (
 		<header className='flex items-center justify-between px-xl py-md border-b border-border bg-elevated'>
 			<div className='flex items-center gap-sm'>
-				<div className='w-8 h-8 bg-brand rounded-md' />
-				<h2 className='font-semibold text-main'>MultiBlog</h2>
+				<div className='w-12 h-12 bg-brand rounded-md' />
+				<h2 className='font-semibold text-main text-4xl'>BYOB</h2>
 			</div>
 
 			<div className='relative'>
-				<img src={user?.avatar} className='w-9 h-9 rounded-full' onClick={() => setOpen(!open)} />
+				<img src={user?.avatar} className='w-12 h-12 rounded-full cursor-pointer' onClick={() => setOpen(!open)} />
 
 				{open && (
-					<div className='absolute right-0 mt-sm w-52 bg-elevated border border-border rounded-lg shadow-md p-sm z-50'>
+					<Card className='absolute right-0 w-fit mt-sm z-50'>
 						<button
 							onClick={toggleTheme}
-							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary w-full text-left'
+							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary w-full text-left whitespace-nowrap cursor-pointer'
 						>
 							{isDark ? <Sun size={16} /> : <Moon size={16} />}
 							{isDark ? 'Light Mode' : 'Dark Mode'}
@@ -61,19 +61,19 @@ export default function Header({ user }: any) {
 						<a href='/dashboard' className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'>
 							<LayoutDashboard size={16} /> Dashboard
 						</a>
-						
+
 						<a href='/profile' className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'>
 							<User size={16} /> Profile
 						</a>
-						
+
 						<a href='/settings' className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary transition-colors'>
 							<Settings size={16} /> Settings
 						</a>
 
-						<button onClick={logout} className='flex items-center gap-sm px-md py-sm rounded-md text-error hover:bg-secondary w-full text-left transition-colors'>
+						<button onClick={logout} className='flex items-center gap-sm px-md py-sm rounded-md text-error hover:bg-secondary w-full text-left transition-colors cursor-pointer'>
 							<LogOut size={16} /> Logout
 						</button>
-					</div>
+					</Card>
 				)}
 			</div>
 		</header>
