@@ -28,7 +28,7 @@ export default function Code({ block, update, removeBlock, readOnly }: any) {
 
 	if (readOnly) {
 		return (
-			<div className='my-8 rounded-md overflow-hidden border border-border shadow-sm bg-elevated'>
+			<div className='my-8 rounded-lg overflow-hidden border border-border shadow-sm bg-elevated'>
 				<div className='bg-secondary px-4 py-2 border-b border-border text-xs text-subtle font-mono uppercase tracking-wider'>
 					{block.lang || 'text'}
 				</div>
@@ -42,7 +42,7 @@ export default function Code({ block, update, removeBlock, readOnly }: any) {
 	}
 
 	return (
-		<div className='my-8 rounded-md overflow-hidden border border-border bg-elevated'>
+		<div className='my-8 rounded-lg overflow-hidden border border-border bg-elevated'>
 			<div className='bg-secondary px-4 py-2 flex items-center justify-between border-b border-border'>
 				<select
 					value={LANGUAGES.find((l) => l.value === block.lang) ? block.lang : 'text'}
