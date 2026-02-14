@@ -135,16 +135,23 @@ export function parseToBlocks(md: string) {
 			continue
 		}
 
-		const ifr = l.match(/^::iframe\[(.*?)x(.*?)(?:\|(.*?))?\]\((.*?)\)$/)
+		const ifr = l.match(/^::iframe\[(.*?)x(.*?)(?:\|(.*?))?(?:\|(.*?))?\]\((.*?)\)$/)
 		if (ifr) {
 			flushText()
+			const settingsArr = ifr[4] ? ifr[4].split(',') : []
 			blocks.push({
 				id: `block-init-${counter++}`,
 				type: 'iframe',
 				w: Number(ifr[1]) || 600,
 				h: Number(ifr[2]) || 400,
 				align: ifr[3] || 'center',
-				src: ifr[4],
+				settings: {
+					autoplay: settingsArr.includes('autoplay'),
+					fullscreen: settingsArr.includes('fullscreen'),
+					sensors: settingsArr.includes('sensors'),
+					pip: settingsArr.includes('pip'),
+				},
+				src: ifr[5],
 			})
 			continue
 		}
@@ -165,7 +172,16 @@ export function blocksToMarkdown(blocks: any[]) {
 		.map((b) => {
 			if (b.type === 'text') return htmlToMarkdown(b.content)
 			if (b.type === 'image') return `![${b.w}|${b.align}](${b.src})`
-			if (b.type === 'iframe') return `::iframe[${b.w}x${b.h}|${b.align}](${b.src})`
+			if (b.type === 'iframe') {
+				const settings = b.settings || {}
+				const sLines = []
+				if (settings.autoplay) sLines.push('autoplay')
+				if (settings.fullscreen) sLines.push('fullscreen')
+				if (settings.sensors) sLines.push('sensors')
+				if (settings.pip) sLines.push('pip')
+				const sStr = sLines.length > 0 ? `|${sLines.join(',')}` : ''
+				return `::iframe[${b.w}x${b.h}|${b.align}${sStr}](${b.src})`
+			}
 			if (b.type === 'code') return `\`\`\`${b.lang || 'text'}\n${b.content}\n\`\`\``
 			if (b.type === 'mermaid') return `\`\`\`mermaid\n${b.content}\n\`\`\``
 			return ''
