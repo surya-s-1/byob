@@ -2,9 +2,9 @@ import ReadOnlyRenderer from '@/components/article/ArticleRenderer'
 
 async function getArticle(id: string) {
 	return {
-		title: 'My Awesome Article',
-		subtitle: 'A deep dive into custom markdown',
-		cover: 'https://placehold.co/1200x600',
+		title: '',
+		subtitle: '',
+		cover: '',
 		content: '',
 	}
 }
