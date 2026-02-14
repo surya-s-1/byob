@@ -71,6 +71,9 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 						</button>
 					</div>
 				)}
+				{tab === 'upload' && (
+					<div className='text-sm text-muted p-2'>Upload not available right now.</div>
+				)}
 			</div>
 		)
 	}
