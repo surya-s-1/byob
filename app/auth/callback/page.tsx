@@ -6,8 +6,10 @@ export default function Callback() {
 	useEffect(() => {
 		const hash = window.location.hash.substring(1)
 		const params = new URLSearchParams(hash)
+		const searchParams = new URLSearchParams(window.location.search)
 
 		const access_token = params.get('access_token')
+		const callbackUrl = searchParams.get('callbackUrl')
 
 		if (!access_token) {
 			window.location.href = '/login'
@@ -19,7 +21,11 @@ export default function Callback() {
 			headers: { 'Content-Type': 'application/json' },
 			body: JSON.stringify({ access_token }),
 		}).then(() => {
-			window.location.href = '/dashboard'
+			if (callbackUrl) {
+				window.location.href = decodeURIComponent(callbackUrl)
+			} else {
+				window.location.href = '/dashboard'
+			}
 		})
 	}, [])
 

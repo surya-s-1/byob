@@ -4,11 +4,16 @@ import { AuthAdapter, AuthUser, OAuthProvider } from '../types'
 const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_ANON_KEY!)
 
 export const supabaseAdapter: AuthAdapter = {
-	async getLoginUrl(provider: OAuthProvider) {
+	async getLoginUrl(provider: OAuthProvider, redirectTo?: string) {
+		const defaultRedirect = 'http://localhost:3000/auth/callback'
+		const finalRedirect = redirectTo
+			? `${defaultRedirect}?callbackUrl=${encodeURIComponent(redirectTo)}`
+			: defaultRedirect
+
 		const { data } = await supabase.auth.signInWithOAuth({
 			provider,
 			options: {
-				redirectTo: 'http://localhost:3000/auth/callback',
+				redirectTo: finalRedirect,
 				skipBrowserRedirect: true,
 			},
 		})

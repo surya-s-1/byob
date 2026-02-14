@@ -8,6 +8,6 @@ export interface AuthUser {
 }
 
 export interface AuthAdapter {
-	getLoginUrl(provider: OAuthProvider): Promise<string | null>
+	getLoginUrl(provider: OAuthProvider, redirectTo?: string): Promise<string | null>
 	verifyAccessToken(token: string): Promise<AuthUser | null>
 }

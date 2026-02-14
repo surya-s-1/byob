@@ -1,10 +1,20 @@
-import { getCurrentUser } from '@/lib/auth/getCurrentUser'
 import { redirect } from 'next/navigation'
+
 import Header from '@/components/Header'
+import { getCurrentUser } from '@/lib/auth/getCurrentUser'
 
 export default async function ProtectedLayout({ children }: any) {
 	const user = await getCurrentUser()
-	if (!user) redirect('/login')
+
+	if (!user) {
+		return (
+			<script
+				dangerouslySetInnerHTML={{
+					__html: `window.location.href = '/login?callbackUrl=' + encodeURIComponent(window.location.pathname + window.location.search)`,
+				}}
+			/>
+		)
+	}
 
 	return (
 		<div>
