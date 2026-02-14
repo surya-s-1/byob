@@ -41,7 +41,7 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 		if (ref.current) {
 			const html = ref.current.innerHTML
 			contentRef.current = html
-			update(html)
+			update({ content: html })
 		}
 	}
 
@@ -49,7 +49,9 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 		const text = e.clipboardData.getData('text/plain')
 		if (/(^```|^!\[|^::iframe)/m.test(text)) {
 			e.preventDefault()
-			insertBlock(text.trim())
+			// Optional: You could expand this to parse full pasted markdown back to JSON,
+			// but for simple text blocks, standard HTML paste works natively.
+			insertBlock({ type: 'text', content: text.trim() })
 		}
 	}
 

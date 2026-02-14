@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { Trash2 } from 'lucide-react'
+import { Trash2, CornerDownLeft } from 'lucide-react'
 
 export default function Cover({ cover, setCover }: any) {
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
@@ -15,7 +15,7 @@ export default function Cover({ cover, setCover }: any) {
 				</div>
 				<button
 					onClick={() => setCover('')}
-					className='absolute bottom-4 right-4 bg-elevated/90 text-main border border-border text-sm px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-secondary flex items-center gap-2'
+					className='absolute bottom-4 right-4 bg-elevated/90 text-error border border-border text-sm px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-secondary flex items-center gap-2'
 				>
 					<Trash2 size={16} /> Remove
 				</button>
@@ -46,9 +46,9 @@ export default function Cover({ cover, setCover }: any) {
 						value={url}
 						onChange={(e) => setUrl(e.target.value)}
 						placeholder='Paste image URL...'
-						className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none focus:outline-none transition-all'
+						className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none focus:border-brand focus:ring-1 ring-brand transition-all'
 						onKeyDown={(e) => {
-							e.stopPropagation() // Prevent triggering editor shortcuts
+							e.stopPropagation()
 							if (e.key === 'Enter' && url.trim()) setCover(url.trim())
 						}}
 					/>

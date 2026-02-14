@@ -11,7 +11,6 @@ export default function Iframe({
 	align = 'center',
 	update,
 	onFocus,
-	raw,
 	insertBlock,
 }: any) {
 	const [width, setWidth] = useState(Number(w) || 600)
@@ -21,9 +20,7 @@ export default function Iframe({
 	const [showEditUrl, setShowEditUrl] = useState(false)
 	const [tempUrl, setTempUrl] = useState(src)
 
-	const updateBlock = (newW: number, newH: number, newAlign: string, newSrc: string) => {
-		update(`::iframe[${newW}x${newH}|${newAlign}](${newSrc})`)
-	}
+	const getRawMarkdown = () => `::iframe[${width}x${height}|${alignment}](${src})`
 
 	const alignClass =
 		alignment === 'left' ? 'mr-auto' : alignment === 'right' ? 'ml-auto' : 'mx-auto'
@@ -36,13 +33,13 @@ export default function Iframe({
 			update(null)
 		} else if (e.key === 'Enter') {
 			e.preventDefault()
-			insertBlock('<br>')
+			insertBlock({ type: 'text', content: '' })
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 			update(null)
 		}
 	}
@@ -51,13 +48,14 @@ export default function Iframe({
 		if (e.target === e.currentTarget) {
 			e.preventDefault()
 			const text = e.clipboardData.getData('text/plain')
-			if (text) insertBlock(text.trim())
+			if (text) insertBlock({ type: 'text', content: text.trim() })
 		}
 	}
 
 	return (
-		<div id={id} className='my-xl flex flex-col relative'>
+		<div className='my-xl flex flex-col relative'>
 			<div
+				id={id}
 				tabIndex={0}
 				onFocus={onFocus}
 				onKeyDown={handleWrapperKeyDown}
@@ -74,7 +72,7 @@ export default function Iframe({
 					<button
 						onClick={() => {
 							setAlignment('left')
-							updateBlock(width, height, 'left', src)
+							update({ align: 'left' })
 						}}
 						className={`p-1.5 rounded hover:bg-secondary ${alignment === 'left' ? 'text-brand' : 'text-subtle'}`}
 						title='Align Left'
@@ -84,7 +82,7 @@ export default function Iframe({
 					<button
 						onClick={() => {
 							setAlignment('center')
-							updateBlock(width, height, 'center', src)
+							update({ align: 'center' })
 						}}
 						className={`p-1.5 rounded hover:bg-secondary ${alignment === 'center' ? 'text-brand' : 'text-subtle'}`}
 						title='Align Center'
@@ -94,7 +92,7 @@ export default function Iframe({
 					<button
 						onClick={() => {
 							setAlignment('right')
-							updateBlock(width, height, 'right', src)
+							update({ align: 'right' })
 						}}
 						className={`p-1.5 rounded hover:bg-secondary ${alignment === 'right' ? 'text-brand' : 'text-subtle'}`}
 						title='Align Right'
@@ -133,7 +131,7 @@ export default function Iframe({
 							onKeyDown={(e) => {
 								e.stopPropagation()
 								if (e.key === 'Enter' && tempUrl) {
-									updateBlock(width, height, alignment, tempUrl)
+									update({ src: tempUrl })
 									setShowEditUrl(false)
 								}
 								if (e.key === 'Escape') setShowEditUrl(false)
@@ -141,7 +139,7 @@ export default function Iframe({
 						/>
 						<button
 							onClick={() => {
-								updateBlock(width, height, alignment, tempUrl)
+								update({ src: tempUrl })
 								setShowEditUrl(false)
 							}}
 							className='bg-main text-inverse px-3 py-1.5 rounded-sm text-sm'
@@ -175,7 +173,7 @@ export default function Iframe({
 							setIsResizing(false)
 							window.removeEventListener('mousemove', move)
 							window.removeEventListener('mouseup', up)
-							updateBlock(width, height, alignment, src)
+							update({ w: width, h: height })
 						}
 						window.addEventListener('mousemove', move)
 						window.addEventListener('mouseup', up)

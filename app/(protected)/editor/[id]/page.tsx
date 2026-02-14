@@ -4,7 +4,7 @@ import Content from './Content'
 async function getDraft(id: string) {
 	return {
 		id,
-		cover: 'https://placehold.co/600X400',
+		cover: '',
 		title: '',
 		subtitle: '',
 		content: '',

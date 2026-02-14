@@ -3,24 +3,13 @@
 import { useState } from 'react'
 import { AlignLeft, AlignCenter, AlignRight, Trash2, Maximize, CornerDownLeft } from 'lucide-react'
 
-export default function Image({
-	id,
-	w,
-	align = 'center',
-	src,
-	update,
-	onFocus,
-	raw,
-	insertBlock,
-}: any) {
+export default function Image({ id, w, align = 'center', src, update, onFocus, insertBlock }: any) {
 	const [width, setWidth] = useState(Number(w) || 700)
 	const [alignment, setAlignment] = useState<'left' | 'center' | 'right'>(align)
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
 	const [tempUrl, setTempUrl] = useState('')
 
-	const updateBlock = (newW: number, newAlign: string) => {
-		update(`![${newW}|${newAlign}](${src})`)
-	}
+	const getRawMarkdown = () => `![${width}|${alignment}](${src})`
 
 	const handleWrapperKeyDown = (e: React.KeyboardEvent) => {
 		if (e.target !== e.currentTarget) return
@@ -30,13 +19,13 @@ export default function Image({
 			update(null)
 		} else if (e.key === 'Enter') {
 			e.preventDefault()
-			insertBlock('<br>') // Inserts text block below
+			insertBlock({ type: 'text', content: '' })
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 			update(null)
 		}
 	}
@@ -45,7 +34,7 @@ export default function Image({
 		if (e.target === e.currentTarget) {
 			e.preventDefault()
 			const text = e.clipboardData.getData('text/plain')
-			if (text) insertBlock(text.trim())
+			if (text) insertBlock({ type: 'text', content: text.trim() })
 		}
 	}
 
@@ -86,16 +75,15 @@ export default function Image({
 							value={tempUrl}
 							onChange={(e) => setTempUrl(e.target.value)}
 							placeholder='Paste image URL...'
-							className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none focus:outline-none transition-all'
+							className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none focus:border-brand focus:ring-1 ring-brand transition-all'
 							onKeyDown={(e) => {
 								e.stopPropagation()
-								if (e.key === 'Enter' && tempUrl)
-									update(`![${width}|${alignment}](${tempUrl})`)
+								if (e.key === 'Enter' && tempUrl) update({ src: tempUrl })
 							}}
 						/>
 						<button
 							onClick={() => {
-								if (tempUrl) update(`![${width}|${alignment}](${tempUrl})`)
+								if (tempUrl) update({ src: tempUrl })
 							}}
 							className='px-4 py-1.5 bg-main text-inverse rounded-md text-sm font-medium hover:opacity-80 transition-opacity'
 						>
@@ -114,8 +102,9 @@ export default function Image({
 		alignment === 'left' ? 'mr-auto' : alignment === 'right' ? 'ml-auto' : 'mx-auto'
 
 	return (
-		<div id={id} className='my-xl flex flex-col'>
+		<div className='my-xl flex flex-col'>
 			<div
+				id={id}
 				tabIndex={0}
 				onFocus={onFocus}
 				onKeyDown={handleWrapperKeyDown}
@@ -133,7 +122,7 @@ export default function Image({
 					<button
 						onClick={() => {
 							setAlignment('left')
-							updateBlock(width, 'left')
+							update({ align: 'left' })
 						}}
 						className={`p-1.5 rounded hover:bg-secondary ${alignment === 'left' ? 'text-brand' : 'text-subtle'}`}
 						title='Align Left'
@@ -143,7 +132,7 @@ export default function Image({
 					<button
 						onClick={() => {
 							setAlignment('center')
-							updateBlock(width, 'center')
+							update({ align: 'center' })
 						}}
 						className={`p-1.5 rounded hover:bg-secondary ${alignment === 'center' ? 'text-brand' : 'text-subtle'}`}
 						title='Align Center'
@@ -153,7 +142,7 @@ export default function Image({
 					<button
 						onClick={() => {
 							setAlignment('right')
-							updateBlock(width, 'right')
+							update({ align: 'right' })
 						}}
 						className={`p-1.5 rounded hover:bg-secondary ${alignment === 'right' ? 'text-brand' : 'text-subtle'}`}
 						title='Align Right'
@@ -181,7 +170,7 @@ export default function Image({
 						const up = () => {
 							window.removeEventListener('mousemove', move)
 							window.removeEventListener('mouseup', up)
-							updateBlock(width, alignment)
+							update({ w: width })
 						}
 						window.addEventListener('mousemove', move)
 						window.addEventListener('mouseup', up)

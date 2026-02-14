@@ -4,10 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import mermaid from 'mermaid'
 import { Trash2 } from 'lucide-react'
 
-export default function Mermaid({ id, content, update, onFocus, raw, insertBlock }: any) {
+export default function Mermaid({ id, content, update, onFocus, insertBlock }: any) {
 	const ref = useRef<HTMLDivElement>(null)
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
 	const [error, setError] = useState('')
+
+	const getRawMarkdown = () => `\`\`\`mermaid\n${content}\n\`\`\``
 
 	useEffect(() => {
 		mermaid.initialize({ startOnLoad: false, theme: 'default' })
@@ -27,7 +29,7 @@ export default function Mermaid({ id, content, update, onFocus, raw, insertBlock
 				}
 			} catch (e: any) {
 				if (!isCancelled) {
-					setError('Syntax error in Mermaid diagram. Please check your code.')
+					setError('Syntax error in Mermaid diagram.')
 					const errorSvg = document.getElementById(diagramId)
 					if (errorSvg) errorSvg.remove()
 					const fallbackErrorSvg = document.getElementById(`d${diagramId}`)
@@ -58,13 +60,13 @@ export default function Mermaid({ id, content, update, onFocus, raw, insertBlock
 			update(null)
 		} else if (e.key === 'Enter') {
 			e.preventDefault()
-			insertBlock('<br>')
+			insertBlock({ type: 'text', content: '' })
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 			update(null)
 		}
 	}
@@ -73,7 +75,7 @@ export default function Mermaid({ id, content, update, onFocus, raw, insertBlock
 		if (e.target === e.currentTarget) {
 			e.preventDefault()
 			const text = e.clipboardData.getData('text/plain')
-			if (text) insertBlock(text.trim())
+			if (text) insertBlock({ type: 'text', content: text.trim() })
 		}
 	}
 
@@ -99,7 +101,7 @@ export default function Mermaid({ id, content, update, onFocus, raw, insertBlock
 			<textarea
 				ref={textareaRef}
 				value={content}
-				onChange={(e) => update('```mermaid\n' + e.target.value + '\n```')}
+				onChange={(e) => update({ content: e.target.value })}
 				className='w-full bg-transparent text-main p-4 font-mono text-sm outline-none resize-none min-h-30'
 				spellCheck={false}
 			/>

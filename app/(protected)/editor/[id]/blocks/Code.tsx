@@ -15,8 +15,10 @@ const LANGUAGES = [
 	{ label: 'Groovy', value: 'groovy' },
 ]
 
-export default function Code({ id, content, lang, update, onFocus, raw, insertBlock }: any) {
+export default function Code({ id, content, lang, update, onFocus, insertBlock }: any) {
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
+
+	const getRawMarkdown = () => `\`\`\`${lang}\n${content}\n\`\`\``
 
 	useEffect(() => {
 		if (textareaRef.current) {
@@ -33,13 +35,13 @@ export default function Code({ id, content, lang, update, onFocus, raw, insertBl
 			update(null)
 		} else if (e.key === 'Enter') {
 			e.preventDefault()
-			insertBlock('<br>')
+			insertBlock({ type: 'text', content: '' })
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
 			e.preventDefault()
-			navigator.clipboard.writeText(raw)
+			navigator.clipboard.writeText(getRawMarkdown())
 			update(null)
 		}
 	}
@@ -48,7 +50,7 @@ export default function Code({ id, content, lang, update, onFocus, raw, insertBl
 		if (e.target === e.currentTarget) {
 			e.preventDefault()
 			const text = e.clipboardData.getData('text/plain')
-			if (text) insertBlock(text.trim())
+			if (text) insertBlock({ type: 'text', content: text.trim() })
 		}
 	}
 
@@ -64,7 +66,7 @@ export default function Code({ id, content, lang, update, onFocus, raw, insertBl
 			<div className='bg-secondary px-4 py-2 flex items-center justify-between border-b border-border'>
 				<select
 					value={LANGUAGES.find((l) => l.value === lang) ? lang : 'text'}
-					onChange={(e) => update('```' + e.target.value + '\n' + content + '\n```')}
+					onChange={(e) => update({ lang: e.target.value })}
 					className='text-sm bg-elevated text-main border border-border rounded-sm px-2 py-1 outline-none focus:border-main min-w-35 shadow-sm cursor-pointer'
 				>
 					{LANGUAGES.map((l) => (
@@ -85,7 +87,7 @@ export default function Code({ id, content, lang, update, onFocus, raw, insertBl
 			<textarea
 				ref={textareaRef}
 				value={content}
-				onChange={(e) => update('```' + (lang || 'text') + '\n' + e.target.value + '\n```')}
+				onChange={(e) => update({ content: e.target.value })}
 				className='w-full bg-transparent text-main p-4 font-mono text-sm outline-none resize-none block leading-relaxed'
 				spellCheck={false}
 			/>
