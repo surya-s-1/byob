@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { AlignLeft, AlignCenter, AlignRight, Edit2 } from 'lucide-react'
 
-export default function Iframe({ block, update, readOnly }: any) {
+export default function Iframe({ block, update, readOnly, isFocused }: any) {
 	const [showEditUrl, setShowEditUrl] = useState(false)
 	const [tempUrl, setTempUrl] = useState(block.src)
 	const [isResizing, setIsResizing] = useState(false)
@@ -26,7 +26,7 @@ export default function Iframe({ block, update, readOnly }: any) {
 				style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 			>
 				{isInsecure ? (
-					<div className='w-full h-full rounded-md border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
+					<div className='w-full h-full rounded-lg border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
 						<div className='bg-error/10 text-error p-2 rounded-full'>
 							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
 						</div>
@@ -36,7 +36,7 @@ export default function Iframe({ block, update, readOnly }: any) {
 				) : (
 					<iframe
 						src={embedUrl}
-						className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
+						className='w-full h-full rounded-lg border border-border shadow-sm bg-secondary'
 						allowFullScreen
 					/>
 				)}
@@ -69,11 +69,11 @@ export default function Iframe({ block, update, readOnly }: any) {
 
 	return (
 		<div
-			className="relative inline-block rounded-lg hover:px-8 hover:border hover:border-ring transition-all duration-200"
+			className="relative inline-block rounded-lg hover:px-8 hover:ring-1 ring-brand transition-all duration-200 group"
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
 			{isInsecure ? (
-				<div className='w-full h-full rounded-md border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
+				<div className='w-full h-full rounded-lg border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
 					<div className='bg-error/10 text-error p-2 rounded-full'>
 						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
 					</div>
@@ -83,17 +83,16 @@ export default function Iframe({ block, update, readOnly }: any) {
 			) : (
 				<iframe
 					src={embedUrl}
-					className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
+					className='w-full h-full rounded-lg border border-border shadow-sm bg-secondary block'
 				/>
 			)}
 
-			{/* Overlay to catch events and prevent iframe interaction during resize/hover */}
 			<div
-				className={`absolute inset-0 z-10 ${isResizing ? 'bg-transparent' : 'bg-transparent pointer-events-none'}`}
-				style={{ pointerEvents: isResizing ? 'auto' : 'none' }}
+				className="absolute inset-0 z-10"
+				style={{ pointerEvents: (isResizing || !isFocused) ? 'auto' : 'none' }}
 			/>
 
-			<div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex items-center z-20 overflow-hidden'>
+			<div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex items-center z-20 overflow-hidden'>
 				<button
 					onClick={() => update({ align: 'left' })}
 					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
@@ -128,7 +127,7 @@ export default function Iframe({ block, update, readOnly }: any) {
 			</div>
 
 			{showEditUrl && (
-				<div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-elevated border border-border p-3 rounded-md shadow-xl z-30 flex gap-2 items-center w-[90%] max-w-[400px]'>
+				<div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-elevated border border-border p-3 rounded-lg shadow-xl z-30 flex gap-2 items-center w-[90%] max-w-[400px]'>
 					<input
 						autoFocus
 						value={tempUrl}
