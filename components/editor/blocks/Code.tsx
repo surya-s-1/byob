@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import { Trash2 } from 'lucide-react'
 
 const LANGUAGES = [
 	{ label: 'Python', value: 'python' },
@@ -56,14 +55,6 @@ export default function Code({ block, update, removeBlock, readOnly }: any) {
 						</option>
 					))}
 				</select>
-
-				<button
-					onClick={removeBlock}
-					className='p-1 text-subtle hover:text-error transition-colors'
-					title='Delete Code Block'
-				>
-					<Trash2 size={16} />
-				</button>
 			</div>
 			<textarea
 				ref={textareaRef}

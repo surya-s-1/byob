@@ -1,8 +1,5 @@
-'use client'
-
 import { useEffect, useRef, useState } from 'react'
 import mermaid from 'mermaid'
-import { Trash2 } from 'lucide-react'
 
 if (typeof window !== 'undefined') {
 	mermaid.initialize({
@@ -68,13 +65,6 @@ export default function Mermaid({ block, update, removeBlock, readOnly }: any) {
 		<div className='my-8 flex flex-col border border-border bg-elevated shadow-sm rounded-lg overflow-hidden'>
 			<div className='border-b border-border flex justify-between items-center bg-secondary'>
 				<div className='text-xs text-subtle font-bold px-4 py-2'>Mermaid Editor</div>
-				<button
-					onClick={removeBlock}
-					className='p-2 text-subtle hover:text-error transition-colors'
-					title='Delete Diagram'
-				>
-					<Trash2 size={16} />
-				</button>
 			</div>
 			<textarea
 				ref={textareaRef}

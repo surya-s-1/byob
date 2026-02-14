@@ -1,12 +1,13 @@
 'use client'
 
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import Text from './Text'
 import Image from './Image'
 import Iframe from './Iframe'
 import Code from './Code'
 import Mermaid from './Mermaid'
-import { blocksToMarkdown } from '../utils'
+import { blocksToMarkdown, generateId } from '../utils'
+import { Copy, Scissors, Trash2, Check } from 'lucide-react'
 
 export default function Block({
 	block,
@@ -17,6 +18,7 @@ export default function Block({
 	isFocused,
 	setFocusId,
 }: any) {
+	const [copied, setCopied] = useState(false)
 	const ref = useRef<HTMLDivElement>(null)
 
 	useEffect(() => {
@@ -29,6 +31,22 @@ export default function Block({
 			}, 100)
 		}
 	}, [isFocused, block.type])
+
+	const copyBlock = () => {
+		const md = blocksToMarkdown([block])
+		const data = JSON.stringify({ type: 'byob-block', data: block })
+		// Use a marked string in plain text to ensure browser compatibility
+		const clipboardText = `BYOB_BLOCK:${data}`
+		navigator.clipboard.writeText(clipboardText).then(() => {
+			setCopied(true)
+			setTimeout(() => setCopied(false), 2000)
+		})
+	}
+
+	const cutBlock = () => {
+		copyBlock()
+		removeBlock(index)
+	}
 
 	const handleKeyDown = (e: React.KeyboardEvent) => {
 		if (block.type === 'text') return
@@ -43,11 +61,10 @@ export default function Block({
 			insertBlock(index + 1, { type: 'text', content: '' })
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'c') {
 			e.preventDefault()
-			navigator.clipboard.writeText(blocksToMarkdown([block]))
+			copyBlock()
 		} else if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'x') {
 			e.preventDefault()
-			navigator.clipboard.writeText(blocksToMarkdown([block]))
-			removeBlock(index)
+			cutBlock()
 		}
 	}
 
@@ -76,6 +93,39 @@ export default function Block({
 			onKeyDown={handleKeyDown}
 			className='relative group outline-none focus-within:ring-1 focus:ring-1 ring-brand rounded-lg transition-all'
 		>
+			<div className='absolute -top-3 right-2 flex items-center bg-elevated border border-border rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-40 overflow-hidden'>
+				<button
+					onClick={(e) => {
+						e.stopPropagation()
+						copyBlock()
+					}}
+					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${copied ? 'text-green-500' : 'text-subtle hover:text-main'}`}
+					title='Copy Block'
+				>
+					{copied ? <Check size={14} className='animate-in fade-in zoom-in duration-200' /> : <Copy size={14} />}
+				</button>
+				<button
+					onClick={(e) => {
+						e.stopPropagation()
+						cutBlock()
+					}}
+					className='p-1.5 hover:bg-secondary text-subtle hover:text-main transition-colors border-r border-border'
+					title='Cut Block'
+				>
+					<Scissors size={14} />
+				</button>
+				<button
+					onClick={(e) => {
+						e.stopPropagation()
+						removeBlock(index)
+					}}
+					className='p-1.5 hover:bg-error/10 text-subtle hover:text-error transition-colors'
+					title='Delete Block'
+				>
+					<Trash2 size={14} />
+				</button>
+			</div>
+
 			{block.type === 'image' && <Image {...innerProps} />}
 			{block.type === 'iframe' && <Iframe {...innerProps} />}
 			{block.type === 'code' && <Code {...innerProps} />}

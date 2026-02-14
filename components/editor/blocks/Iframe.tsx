@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AlignLeft, AlignCenter, AlignRight, Trash2, Edit2 } from 'lucide-react'
+import { AlignLeft, AlignCenter, AlignRight, Edit2 } from 'lucide-react'
 
 export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 	const [showEditUrl, setShowEditUrl] = useState(false)
@@ -94,13 +94,6 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 						className='p-1.5 rounded hover:bg-secondary text-subtle'
 					>
 						<Edit2 size={16} />
-					</button>
-					<div className='w-px bg-border mx-1'></div>
-					<button
-						onClick={removeBlock}
-						className='p-1.5 rounded hover:bg-error/10 text-error'
-					>
-						<Trash2 size={16} />
 					</button>
 				</div>
 

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { AlignLeft, AlignCenter, AlignRight, Trash2, CornerDownLeft } from 'lucide-react'
+import { AlignLeft, AlignCenter, AlignRight, CornerDownLeft } from 'lucide-react'
 
 export default function Image({ block, update, removeBlock, readOnly }: any) {
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
@@ -40,13 +40,6 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 						className={`transition-colors font-medium ${tab === 'upload' ? 'text-brand' : 'text-subtle hover:text-main'}`}
 					>
 						Upload
-					</button>
-					<button
-						onClick={removeBlock}
-						className='ml-auto text-subtle hover:text-error transition-colors p-1'
-						title='Cancel'
-					>
-						<Trash2 size={16} />
 					</button>
 				</div>
 				{tab === 'url' && (
@@ -126,13 +119,6 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 						className={`p-1.5 rounded hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
 					>
 						<AlignRight size={16} />
-					</button>
-					<div className='w-px bg-border mx-1'></div>
-					<button
-						onClick={removeBlock}
-						className='p-1.5 rounded hover:bg-error/10 text-error'
-					>
-						<Trash2 size={16} />
 					</button>
 				</div>
 
