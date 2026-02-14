@@ -37,7 +37,7 @@ export default function Header({ user }: any) {
 	}
 
 	return (
-		<header className='flex items-center justify-between px-xl py-md border-b border-border bg-elevated'>
+		<header className='sticky top-0 flex items-center justify-between px-xl py-md bg-transparent'>
 			<div className='flex items-center gap-sm'>
 				<div className='w-12 h-12 bg-brand rounded-md' />
 				<h2 className='font-semibold text-main text-4xl'>BYOB</h2>
