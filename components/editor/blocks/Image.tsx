@@ -7,6 +7,7 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
 	const [tempUrl, setTempUrl] = useState('')
 
+
 	const alignClass =
 		block.align === 'left' ? 'mr-auto' : block.align === 'right' ? 'ml-auto' : 'mx-auto'
 
@@ -27,7 +28,7 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 
 	if (!block.src) {
 		return (
-			<div className='my-8 border border-dashed border-border rounded-lg p-4 outline-none'>
+			<div className='border border-dashed border-border rounded-lg p-4 outline-none'>
 				<div className='flex gap-4 px-2 mb-3 text-sm items-center'>
 					<button
 						onClick={() => setTab('url')}
@@ -90,67 +91,65 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 	)
 
 	return (
-		<div className='my-8 flex flex-col'>
-			<div
-				className={`relative inline-block group ${alignClass}`}
-				style={{ width: block.w || 700, maxWidth: '100%' }}
-			>
-				<img
-					src={block.src}
-					className='w-full rounded-lg shadow-sm border border-border block'
-					alt='Content'
-				/>
+		<div
+			className="relative inline-block"
+			style={{ width: block.w || 700, maxWidth: '100%' }}
+		>
+			<img
+				src={block.src}
+				className='w-full rounded-lg shadow-sm border border-border block'
+				alt='Content'
+			/>
 
-				<div className='absolute top-4 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex gap-1 p-1 z-20'>
-					<button
-						onClick={() => update({ align: 'left' })}
-						className={`p-1.5 rounded hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
-					>
-						<AlignLeft size={16} />
-					</button>
-					<button
-						onClick={() => update({ align: 'center' })}
-						className={`p-1.5 rounded hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
-					>
-						<AlignCenter size={16} />
-					</button>
-					<button
-						onClick={() => update({ align: 'right' })}
-						className={`p-1.5 rounded hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
-					>
-						<AlignRight size={16} />
-					</button>
-				</div>
-
-				<ResizeHandle
-					position='-top-2 -left-2'
-					cursor='cursor-nwse-resize'
-					onDrag={(sw: any, sx: any, cx: any) =>
-						update({ w: Math.max(200, sw - (cx - sx)) })
-					}
-				/>
-				<ResizeHandle
-					position='-top-2 -right-2'
-					cursor='cursor-nesw-resize'
-					onDrag={(sw: any, sx: any, cx: any) =>
-						update({ w: Math.max(200, sw + (cx - sx)) })
-					}
-				/>
-				<ResizeHandle
-					position='-bottom-2 -left-2'
-					cursor='cursor-nesw-resize'
-					onDrag={(sw: any, sx: any, cx: any) =>
-						update({ w: Math.max(200, sw - (cx - sx)) })
-					}
-				/>
-				<ResizeHandle
-					position='-bottom-2 -right-2'
-					cursor='cursor-nwse-resize'
-					onDrag={(sw: any, sx: any, cx: any) =>
-						update({ w: Math.max(200, sw + (cx - sx)) })
-					}
-				/>
+			<div className='absolute top-4 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex gap-1 p-1 z-20'>
+				<button
+					onClick={() => update({ align: 'left' })}
+					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+				>
+					<AlignLeft size={16} />
+				</button>
+				<button
+					onClick={() => update({ align: 'center' })}
+					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+				>
+					<AlignCenter size={16} />
+				</button>
+				<button
+					onClick={() => update({ align: 'right' })}
+					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+				>
+					<AlignRight size={16} />
+				</button>
 			</div>
+
+			<ResizeHandle
+				position='-top-2 -left-2'
+				cursor='cursor-nwse-resize'
+				onDrag={(sw: any, sx: any, cx: any) =>
+					update({ w: Math.max(200, sw - (cx - sx)) })
+				}
+			/>
+			<ResizeHandle
+				position='-top-2 -right-2'
+				cursor='cursor-nesw-resize'
+				onDrag={(sw: any, sx: any, cx: any) =>
+					update({ w: Math.max(200, sw + (cx - sx)) })
+				}
+			/>
+			<ResizeHandle
+				position='-bottom-2 -left-2'
+				cursor='cursor-nesw-resize'
+				onDrag={(sw: any, sx: any, cx: any) =>
+					update({ w: Math.max(200, sw - (cx - sx)) })
+				}
+			/>
+			<ResizeHandle
+				position='-bottom-2 -right-2'
+				cursor='cursor-nwse-resize'
+				onDrag={(sw: any, sx: any, cx: any) =>
+					update({ w: Math.max(200, sw + (cx - sx)) })
+				}
+			/>
 		</div>
 	)
 }

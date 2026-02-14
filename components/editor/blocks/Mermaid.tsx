@@ -55,14 +55,14 @@ export default function Mermaid({ block, update, removeBlock, readOnly }: any) {
 
 	if (readOnly) {
 		return (
-			<div className='my-8 bg-primary p-6 rounded-lg border border-border flex items-center justify-center overflow-auto shadow-sm'>
+			<div className='w-full my-8 bg-primary p-6 rounded-lg border border-border flex items-center justify-center overflow-auto shadow-sm'>
 				<div ref={ref} className='mermaid-preview text-main' />
 			</div>
 		)
 	}
 
 	return (
-		<div className='my-8 flex flex-col border border-border bg-elevated shadow-sm rounded-lg overflow-hidden'>
+		<div className='w-full flex flex-col border border-border bg-elevated shadow-sm rounded-lg overflow-hidden'>
 			<div className='border-b border-border flex justify-between items-center bg-secondary'>
 				<div className='text-xs text-subtle font-bold px-4 py-2'>Mermaid Editor</div>
 			</div>

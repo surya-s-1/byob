@@ -165,7 +165,7 @@ export default function Text({
 				onInput={handleInput}
 				onKeyDown={handleKeyDown}
 				className='w-full outline-none text-lg leading-relaxed text-main wysiwyg-editor min-h-[2rem] p-2 -mx-2 rounded-md transition-colors hover:bg-secondary focus:bg-transparent empty:before:content-[attr(data-placeholder)] empty:before:text-subtle'
-				data-placeholder='Click to start writing...'
+				data-placeholder='Start writing...'
 			/>
 
 			{linkPopup.show && (

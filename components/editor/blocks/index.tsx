@@ -85,13 +85,17 @@ export default function Block({
 		)
 	}
 
+	const alignClass =
+		block.align === 'left' ? 'mr-auto' : block.align === 'right' ? 'ml-auto' : 'mx-auto'
+	const isFullWidth = ['code', 'mermaid'].includes(block.type) || (block.type === 'image' && !block.src)
+
 	return (
 		<div
 			ref={ref}
 			tabIndex={0}
 			onClick={() => setFocusId(block.id)}
 			onKeyDown={handleKeyDown}
-			className='relative group outline-none focus-within:ring-1 focus:ring-1 ring-brand rounded-lg transition-all'
+			className={`relative group outline-none focus-within:ring-1 focus:ring-1 ring-brand rounded-lg transition-all my-8 ${isFullWidth ? 'w-full' : 'w-fit ' + alignClass}`}
 		>
 			<div className='absolute -top-3 right-2 flex items-center bg-elevated border border-border rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-40 overflow-hidden'>
 				<button
