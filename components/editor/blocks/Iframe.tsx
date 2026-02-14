@@ -10,9 +10,9 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	const settings = block.settings || {
 		autoplay: false,
-		fullscreen: true,
-		sensors: true,
-		pip: true,
+		fullscreen: false,
+		sensors: false,
+		pip: false,
 	}
 
 	const getEmbedUrl = (url: string) => {
@@ -103,7 +103,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	return (
 		<div
-			className="relative inline-block rounded-lg hover:px-8 hover:ring-1 ring-brand transition-all duration-200 group"
+			className="relative inline-block rounded-lg hover:px-4 hover:ring-1 ring-brand transition-all duration-200 group"
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
 			{isInsecure ? (
