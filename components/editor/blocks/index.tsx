@@ -1,14 +1,14 @@
 'use client'
 
 import { useRef, useEffect } from 'react'
-import Text from './blocks/Text'
-import Image from './blocks/Image'
-import Iframe from './blocks/Iframe'
-import Code from './blocks/Code'
-import Mermaid from './blocks/Mermaid'
-import { blocksToMarkdown } from './utils'
+import Text from './Text'
+import Image from './Image'
+import Iframe from './Iframe'
+import Code from './Code'
+import Mermaid from './Mermaid'
+import { blocksToMarkdown } from '../utils'
 
-export default function BlockWrapper({
+export default function Block({
 	block,
 	index,
 	updateBlock,

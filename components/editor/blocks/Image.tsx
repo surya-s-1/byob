@@ -28,12 +28,12 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 	if (!block.src) {
 		return (
 			<div className='my-8 border border-dashed border-border rounded-lg p-4 outline-none'>
-				<div className='flex gap-4 mb-3 text-sm items-center'>
+				<div className='flex gap-4 px-2 mb-3 text-sm items-center'>
 					<button
 						onClick={() => setTab('url')}
 						className={`transition-colors font-medium ${tab === 'url' ? 'text-brand' : 'text-subtle hover:text-main'}`}
 					>
-						Image URL
+						URL
 					</button>
 					<button
 						onClick={() => setTab('upload')}
@@ -55,7 +55,7 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 							value={tempUrl}
 							onChange={(e) => setTempUrl(e.target.value)}
 							placeholder='Paste image URL...'
-							className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none focus:border-brand focus:ring-1 ring-brand transition-all'
+							className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none transition-all'
 							onKeyDown={(e) => {
 								e.stopPropagation()
 								if (e.key === 'Enter' && tempUrl) update({ src: tempUrl })
@@ -67,7 +67,7 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 							}}
 							className='px-4 py-1.5 bg-main text-inverse rounded-md text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1'
 						>
-							<CornerDownLeft size={16} /> Add
+							<CornerDownLeft size={16} />
 						</button>
 					</div>
 				)}

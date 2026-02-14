@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import Toolbar from './Toolbar'
-import BlockWrapper from './BlockWrapper'
+import Block from './blocks'
 import { parseToBlocks, blocksToMarkdown, generateId } from './utils'
 
 export default function Content({ initialMarkdown }: any) {
@@ -21,7 +21,6 @@ export default function Content({ initialMarkdown }: any) {
 		blocksRef.current = blocks
 	}, [blocks])
 
-	// Save Markdown string!
 	useEffect(() => {
 		const intervalId = setInterval(() => {
 			const currentMarkdown = blocksToMarkdown(blocksRef.current)
@@ -95,7 +94,7 @@ export default function Content({ initialMarkdown }: any) {
 			/>
 			<div className='space-y-4'>
 				{blocks.map((block, index) => (
-					<BlockWrapper
+					<Block
 						key={block.id}
 						index={index}
 						block={block}
