@@ -21,7 +21,7 @@ export default function Mermaid({ block, update, removeBlock, readOnly }: any) {
 	useEffect(() => {
 		let isCancelled = false
 		const renderDiagram = async () => {
-			if (!ref.current || !block.content?.trim()) return
+			if (!ref.current) return
 
 			const diagramId = 'mermaid-render-' + Math.random().toString(36).substring(2, 9)
 
@@ -35,9 +35,8 @@ export default function Mermaid({ block, update, removeBlock, readOnly }: any) {
 					setError('')
 				}
 			} catch (e: any) {
-				console.error('Mermaid Render Error:', e)
 				if (!isCancelled) {
-					setError('Syntax error in Mermaid diagram.')
+					setError('Syntax Error')
 					const svgEl = document.getElementById(diagramId)
 					if (svgEl) svgEl.remove()
 				}
@@ -85,15 +84,16 @@ export default function Mermaid({ block, update, removeBlock, readOnly }: any) {
 				spellCheck={false}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>
-			<div className='bg-primary p-6 flex items-center justify-center min-h-[200px] overflow-auto border-t border-border'>
-				{error ? (
-					<div className='text-error text-sm font-mono whitespace-pre-wrap'>{error}</div>
-				) : (
-					<div
-						ref={ref}
-						className='w-full flex justify-center mermaid-preview text-main'
-					/>
+			<div className='bg-primary p-6 flex flex-col items-center justify-center min-h-[200px] overflow-auto border-t border-border'>
+				{error && (
+					<div className='text-error text-sm font-mono whitespace-pre-wrap mb-4'>
+						{error}
+					</div>
 				)}
+				<div
+					ref={ref}
+					className={`w-full flex justify-center mermaid-preview text-main ${error ? 'hidden' : 'block'}`}
+				/>
 			</div>
 		</div>
 	)

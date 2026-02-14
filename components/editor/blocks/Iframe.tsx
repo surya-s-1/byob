@@ -6,6 +6,7 @@ import { AlignLeft, AlignCenter, AlignRight, Trash2, Edit2 } from 'lucide-react'
 export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 	const [showEditUrl, setShowEditUrl] = useState(false)
 	const [tempUrl, setTempUrl] = useState(block.src)
+	const [isResizing, setIsResizing] = useState(false)
 
 	const alignClass =
 		block.align === 'left' ? 'mr-auto' : block.align === 'right' ? 'ml-auto' : 'mx-auto'
@@ -27,9 +28,10 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 
 	const ResizeHandle = ({ position, cursor, onDrag }: any) => (
 		<div
-			className={`absolute ${position} w-4 h-4 ${cursor} z-10 opacity-0 group-hover:opacity-100 transition-opacity`}
+			className={`absolute ${position} w-4 h-4 ${cursor} z-30 opacity-0 group-hover:opacity-100 transition-opacity`}
 			onMouseDown={(e) => {
 				e.preventDefault()
+				setIsResizing(true)
 				const startX = e.clientX
 				const startY = e.clientY
 				const startW = block.w || 600
@@ -37,6 +39,7 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 				const move = (ev: MouseEvent) =>
 					onDrag(startW, startH, startX, startY, ev.clientX, ev.clientY)
 				const up = () => {
+					setIsResizing(false)
 					window.removeEventListener('mousemove', move)
 					window.removeEventListener('mouseup', up)
 				}
@@ -54,7 +57,13 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 			>
 				<iframe
 					src={block.src}
-					className='w-full h-full rounded-md border border-border shadow-sm bg-secondary pointer-events-none group-hover:pointer-events-auto'
+					className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
+				/>
+
+				{/* Overlay to catch events and prevent iframe interaction during resize/hover */}
+				<div
+					className={`absolute inset-0 z-10 ${isResizing ? 'bg-transparent' : 'bg-transparent pointer-events-none'}`}
+					style={{ pointerEvents: isResizing ? 'auto' : 'none' }}
 				/>
 
 				<div className='absolute top-4 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex gap-1 p-1 z-20'>
@@ -166,3 +175,4 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 		</div>
 	)
 }
+
