@@ -12,6 +12,7 @@ import {
 	Heading3,
 	List,
 	ListOrdered,
+	Quote,
 	Image as ImageIcon,
 	Network,
 	Code,
@@ -61,6 +62,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 		const activeTags = getActiveTags()
 		const block = document.queryCommandValue('formatBlock').toLowerCase()
 		const isHeading = ['h1', 'h2', 'h3'].includes(block)
+		const isQuote = block === 'blockquote'
 
 		setActive({
 			bold: document.queryCommandState('bold') && !isHeading,
@@ -70,6 +72,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 			h1: block === 'h1',
 			h2: block === 'h2',
 			h3: block === 'h3',
+			quote: isQuote,
 			ul: document.queryCommandState('insertUnorderedList'),
 			ol: document.queryCommandState('insertOrderedList'),
 			link: activeTags.has('A'),
@@ -244,6 +247,14 @@ export default function Toolbar({ insert, saveStatus }: any) {
 				title='Numbered List'
 			>
 				<ListOrdered size={18} />
+			</button>
+
+			<button
+				onMouseDown={(e) => handleCommand(e, 'formatBlock', 'BLOCKQUOTE')}
+				className={getBtnClass('quote')}
+				title='Quote'
+			>
+				<Quote size={16} />
 			</button>
 
 			<div className='w-px h-5 bg-border mx-2'></div>

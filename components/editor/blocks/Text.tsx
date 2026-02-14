@@ -14,7 +14,7 @@ const parseInitialMarkdown = (md: string) => {
 		.replace(/^### (.*$)/gim, '<h3>$1</h3>')
 		.replace(/^## (.*$)/gim, '<h2>$1</h2>')
 		.replace(/^# (.*$)/gim, '<h1>$1</h1>')
-		.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
+		.replace(/^\>\s?(.*$)/gim, '<blockquote>$1</blockquote>')
 
 	// Inline styles
 	html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')

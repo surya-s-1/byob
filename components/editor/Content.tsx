@@ -12,10 +12,6 @@ export default function Content({ initialMarkdown }: any) {
 	const [savedMarkdown, setSavedMarkdown] = useState<string>(initialMarkdown)
 	const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('saved')
 
-	useEffect(() => {
-		console.log(savedMarkdown)
-	}, [savedMarkdown])
-
 	const blocksRef = useRef(blocks)
 	useEffect(() => {
 		blocksRef.current = blocks
