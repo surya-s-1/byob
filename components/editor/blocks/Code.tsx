@@ -4,15 +4,17 @@ import { useRef, useEffect } from 'react'
 import { Trash2 } from 'lucide-react'
 
 const LANGUAGES = [
-	{ label: 'Plain Text', value: 'text' },
 	{ label: 'Python', value: 'python' },
-	{ label: 'JavaScript', value: 'javascript' },
-	{ label: 'Markdown', value: 'markdown' },
 	{ label: 'C', value: 'c' },
-	{ label: 'C#', value: 'csharp' },
 	{ label: 'C++', value: 'cpp' },
 	{ label: 'Java', value: 'java' },
+	{ label: 'JavaScript', value: 'javascript' },
 	{ label: 'Groovy', value: 'groovy' },
+	{ label: 'C#', value: 'csharp' },
+	{ label: 'Markdown', value: 'markdown' },
+	{ label: 'HTML', value: 'html' },
+	{ label: 'CSS', value: 'css' },
+	{ label: 'Plain Text', value: 'text' },
 ]
 
 export default function Code({ block, update, removeBlock, readOnly }: any) {
