@@ -56,8 +56,8 @@ export default function Header({ user }: any) {
 							onClick={toggleTheme}
 							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary w-full text-left whitespace-nowrap cursor-pointer'
 						>
-							{isDark ? <Sun size={16} /> : <Moon size={16} />}
-							{isDark ? 'Light Mode' : 'Dark Mode'}
+							{isDark ? <span><Sun size={16} /></span> : <span><Moon size={16} /></span>}
+							{isDark ? <span>Light Mode</span> : <span>Dark Mode</span>}
 						</button>
 
 						<div className='my-sm border-t border-border' />
