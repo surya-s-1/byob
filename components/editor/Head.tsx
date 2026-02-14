@@ -35,7 +35,7 @@ export default function Head({ draft, readOnly }: any) {
 	}
 
 	return (
-		<div className='mb-2xl'>
+		<div className='mb-lg'>
 			<Cover cover={cover} setCover={setCover} />
 			<textarea
 				ref={titleRef}
