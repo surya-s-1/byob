@@ -1,5 +1,5 @@
-import Head from './Head'
-import Content from './Content'
+import Head from '@/components/editor/Head'
+import Content from '@/components/editor/Content'
 
 async function getDraft(id: string) {
 	return {
@@ -18,7 +18,7 @@ export default async function Page({ params }: any) {
 		<div className='min-h-screen bg-primary text-main pb-2xl'>
 			<div className='max-w-4xl mx-auto px-xl py-2xl'>
 				<Head draft={draft} />
-				<Content initial={draft.content} />
+				<Content initialMarkdown={draft.content} />
 			</div>
 		</div>
 	)

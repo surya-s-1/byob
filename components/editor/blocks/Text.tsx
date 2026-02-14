@@ -1,26 +1,75 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
+import { htmlToMarkdown } from '../utils'
 
 const parseInitialMarkdown = (md: string) => {
 	if (!md) return ''
-	if (md.includes('<') && md.includes('>')) return md
-	return md
+
+	// If it's already complex HTML (has tags with attributes), we skip parsing
+	// but allow simple tags like <br> that might be present in markdown.
+	if (md.includes('<a') || md.includes('<div') || md.includes('<p')) return md
+
+	let html = md
 		.replace(/^### (.*$)/gim, '<h3>$1</h3>')
 		.replace(/^## (.*$)/gim, '<h2>$1</h2>')
 		.replace(/^# (.*$)/gim, '<h1>$1</h1>')
 		.replace(/^\> (.*$)/gim, '<blockquote>$1</blockquote>')
-		.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
-		.replace(/\*(.*?)\*/gim, '<em>$1</em>')
-		.replace(/`(.*?)`/gim, '<code>$1</code>')
-		.replace(/^- (.*$)/gim, '<ul><li>$1</li></ul>')
-		.replace(/\n/gim, '<br>')
+
+	// Inline styles
+	html = html.replace(/\*\*(.*?)\*\*/gim, '<strong>$1</strong>')
+	html = html.replace(/~~(.*?)~~/gim, '<s>$1</s>')
+	html = html.replace(/_(.*?)_/gim, '<u>$1</u>')
+	html = html.replace(/\*(.*?)\*/gim, '<em>$1</em>')
+	html = html.replace(/`(.*?)`/gim, '<code>$1</code>')
+
+	// Links
+	html = html.replace(/\[(.*?)\]\((.*?)\)/gim, '<a href="$2" target="_blank">$1</a>')
+
+	// Unordered Lists - Grouping
+	html = html.replace(/^[\s]*- (.*$)/gim, '<li>$1</li>')
+	html = html.replace(/(<li>[\s\S]*?<\/li>)/gim, (m) => {
+		return `<ul>${m}</ul>`.replace(/<\/ul>\s*<ul>/gim, '')
+	})
+
+	// Ordered Lists - Grouping
+	html = html.replace(/^[\s]*\d+\.\s(.*$)/gim, '<li class="oli">$1</li>')
+	html = html.replace(/(<li class="oli">[\s\S]*?<\/li>)/gim, (m) => {
+		return `<ol>${m}</ol>`.replace(/<\/ol>\s*<ol>/gim, '')
+	})
+	html = html.replace(/<li class="oli">/gim, '<li>')
+
+	// Newlines to BR
+	html = html.replace(/\n/gim, '<br>')
+
+	// Final cleanup for block tags and double BRs
+	html = html.replace(/<\/(h1|h2|h3|blockquote|ul|ol|li)><br>/gim, '</$1>')
+	html = html.replace(/<br><(h1|h2|h3|blockquote|ul|ol)/gim, '<$1')
+
+	return html
 }
 
-export default function Text({ id, content, update, onFocus, insertBlock }: any) {
+export default function Text({
+	block,
+	update,
+	isFocused,
+	setFocusId,
+	removeBlock,
+	insertBlock,
+	readOnly,
+}: any) {
+	if (readOnly) {
+		return (
+			<div
+				className='w-full text-lg leading-relaxed text-main wysiwyg-editor my-2'
+				dangerouslySetInnerHTML={{ __html: parseInitialMarkdown(block.content) }}
+			/>
+		)
+	}
+
 	const ref = useRef<HTMLDivElement>(null)
 	const isEditing = useRef(false)
-	const contentRef = useRef(content)
+	const contentRef = useRef(block.content)
 	const [linkPopup, setLinkPopup] = useState<{
 		show: boolean
 		url: string
@@ -30,28 +79,27 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 
 	useEffect(() => {
 		if (ref.current && !isEditing.current) {
-			if (content !== contentRef.current || !ref.current.innerHTML) {
-				ref.current.innerHTML = parseInitialMarkdown(content)
-				contentRef.current = content
+			if (block.content !== contentRef.current || !ref.current.innerHTML) {
+				ref.current.innerHTML = parseInitialMarkdown(block.content)
+				contentRef.current = block.content
 			}
 		}
-	}, [content])
+
+		if (isFocused && ref.current && document.activeElement !== ref.current) {
+			ref.current.focus()
+			const range = document.createRange()
+			const sel = window.getSelection()
+			range.selectNodeContents(ref.current)
+			range.collapse(false)
+			sel?.removeAllRanges()
+			sel?.addRange(range)
+		}
+	}, [block.content, isFocused])
 
 	const handleInput = () => {
 		if (ref.current) {
-			const html = ref.current.innerHTML
-			contentRef.current = html
-			update({ content: html })
-		}
-	}
-
-	const handlePaste = (e: React.ClipboardEvent) => {
-		const text = e.clipboardData.getData('text/plain')
-		if (/(^```|^!\[|^::iframe)/m.test(text)) {
-			e.preventDefault()
-			// Optional: You could expand this to parse full pasted markdown back to JSON,
-			// but for simple text blocks, standard HTML paste works natively.
-			insertBlock({ type: 'text', content: text.trim() })
+			contentRef.current = ref.current.innerHTML
+			update({ content: ref.current.innerHTML })
 		}
 	}
 
@@ -60,7 +108,6 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 			e.preventDefault()
 			const selection = window.getSelection()
 			const range = selection && selection.rangeCount > 0 ? selection.getRangeAt(0) : null
-
 			let node = selection?.anchorNode
 			let aNode = null
 			while (node && node.nodeName !== 'DIV' && node.nodeName !== 'BODY') {
@@ -70,7 +117,6 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 				}
 				node = node.parentNode
 			}
-
 			if (aNode) {
 				setLinkPopup({ show: true, url: aNode.href, text: aNode.textContent || '', range })
 			} else {
@@ -83,7 +129,7 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 			const html = ref.current?.innerHTML || ''
 			if (html === '' || html === '<br>') {
 				e.preventDefault()
-				update(null)
+				removeBlock()
 			}
 		}
 	}
@@ -103,37 +149,14 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 		setTimeout(() => document.dispatchEvent(new Event('selectionchange')), 10)
 	}
 
-	const handleKeyUp = (e: React.KeyboardEvent) => {
-		if (e.key === ' ') {
-			const selection = window.getSelection()
-			if (!selection || selection.rangeCount === 0) return
-
-			const node = selection.focusNode
-			if (node && node.nodeType === Node.TEXT_NODE) {
-				const text = node.textContent || ''
-				if (text === '- ') {
-					node.textContent = ''
-					document.execCommand('insertUnorderedList')
-					handleInput()
-				} else if (text === '1. ') {
-					node.textContent = ''
-					document.execCommand('insertOrderedList')
-					handleInput()
-				}
-			}
-		}
-		setTimeout(handleInput, 10)
-	}
-
 	return (
-		<div className='relative'>
+		<div className='relative w-full'>
 			<div
-				id={id}
 				ref={ref}
 				contentEditable
 				onFocus={() => {
 					isEditing.current = true
-					if (onFocus) onFocus()
+					setFocusId()
 				}}
 				onBlur={() => {
 					isEditing.current = false
@@ -141,13 +164,12 @@ export default function Text({ id, content, update, onFocus, insertBlock }: any)
 				}}
 				onInput={handleInput}
 				onKeyDown={handleKeyDown}
-				onKeyUp={handleKeyUp}
-				onPaste={handlePaste}
-				className='w-full outline-none text-lg leading-relaxed text-main wysiwyg-editor min-h-[2rem] p-sm -mx-sm rounded-md transition-colors hover:bg-secondary focus:bg-transparent'
+				className='w-full outline-none text-lg leading-relaxed text-main wysiwyg-editor min-h-[2rem] p-2 -mx-2 rounded-md transition-colors hover:bg-secondary focus:bg-transparent empty:before:content-[attr(data-placeholder)] empty:before:text-subtle'
+				data-placeholder='Click to start writing...'
 			/>
 
 			{linkPopup.show && (
-				<div className='absolute top-full left-0 mt-2 bg-elevated border border-border p-3 rounded-md shadow-xl z-50 flex flex-col gap-2 w-75'>
+				<div className='absolute top-full left-0 mt-2 bg-elevated border border-border p-3 rounded-md shadow-xl z-50 flex flex-col gap-2 w-[300px]'>
 					<h3 className='text-xs font-bold text-subtle uppercase tracking-wider'>
 						Insert Link
 					</h3>

@@ -3,25 +3,29 @@
 import { useState } from 'react'
 import { Trash2, CornerDownLeft } from 'lucide-react'
 
-export default function Cover({ cover, setCover }: any) {
+export default function Cover({ cover, setCover, readOnly }: any) {
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
 	const [url, setUrl] = useState('')
 
 	if (cover) {
 		return (
 			<div className='relative mb-xl group'>
-				<div className='w-full aspect-2/1 overflow-hidden rounded-lg bg-secondary border border-border'>
+				<div className='w-full aspect-[2/1] overflow-hidden rounded-lg bg-secondary border border-border'>
 					<img src={cover} alt='Cover' className='w-full h-full object-cover' />
 				</div>
-				<button
-					onClick={() => setCover('')}
-					className='absolute bottom-4 right-4 bg-elevated/90 text-error border border-border text-sm px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-secondary flex items-center gap-2'
-				>
-					<Trash2 size={16} /> Remove
-				</button>
+				{!readOnly && (
+					<button
+						onClick={() => setCover('')}
+						className='absolute bottom-4 right-4 bg-elevated/90 text-main border border-border text-sm px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-secondary flex items-center gap-2'
+					>
+						<Trash2 size={16} /> Remove
+					</button>
+				)}
 			</div>
 		)
 	}
+
+	if (readOnly) return null
 
 	return (
 		<div className='mb-xl border border-border rounded-lg p-md'>
@@ -62,7 +66,6 @@ export default function Cover({ cover, setCover }: any) {
 					</button>
 				</div>
 			)}
-
 			{tab === 'upload' && (
 				<div className='text-sm text-muted py-2'>Upload not available right now.</div>
 			)}

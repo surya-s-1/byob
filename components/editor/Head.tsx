@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react'
 import Cover from './Cover'
 
-export default function Head({ draft }: any) {
+export default function Head({ draft, readOnly }: any) {
 	const [cover, setCover] = useState(draft.cover || '')
 	const [title, setTitle] = useState(draft.title || '')
 	const [subtitle, setSubtitle] = useState(draft.subtitle || '')
@@ -18,14 +18,25 @@ export default function Head({ draft }: any) {
 	}
 
 	useEffect(() => {
-		autoResize(titleRef.current)
-		autoResize(subtitleRef.current)
-	}, [title, subtitle])
+		if (!readOnly) {
+			autoResize(titleRef.current)
+			autoResize(subtitleRef.current)
+		}
+	}, [title, subtitle, readOnly])
+
+	if (readOnly) {
+		return (
+			<div className='mb-12'>
+				<Cover cover={cover} readOnly={true} />
+				<h1 className='text-[48px] font-bold leading-tight mt-4 text-main'>{title}</h1>
+				{subtitle && <h2 className='text-xl text-subtle mt-2'>{subtitle}</h2>}
+			</div>
+		)
+	}
 
 	return (
 		<div className='mb-2xl'>
 			<Cover cover={cover} setCover={setCover} />
-
 			<textarea
 				ref={titleRef}
 				placeholder='Article Title'
@@ -35,7 +46,6 @@ export default function Head({ draft }: any) {
 				className='w-full bg-transparent text-main outline-none resize-none text-[48px] font-bold leading-tight mt-md overflow-hidden'
 				rows={1}
 			/>
-
 			<textarea
 				ref={subtitleRef}
 				placeholder='Add a subtitle...'
