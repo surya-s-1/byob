@@ -19,6 +19,7 @@ import {
 	AppWindow,
 	Loader2,
 	Link2Off,
+	Check,
 } from 'lucide-react'
 
 export default function Toolbar({ insert, saveStatus }: any) {
@@ -311,6 +312,9 @@ export default function Toolbar({ insert, saveStatus }: any) {
 			<div className='ml-auto flex items-center pr-2' title='Saving...'>
 				{(saveStatus === 'idle' || saveStatus === 'saving') && (
 					<Loader2 size={14} className='animate-spin text-brand' />
+				)}
+				{saveStatus === 'saved' && (
+					<Check size={14} className='text-brand' />
 				)}
 			</div>
 

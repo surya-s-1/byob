@@ -33,6 +33,7 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 	return (
 		<div className='mb-xl border border-border rounded-lg p-md'>
 			<div className='flex gap-4 px-2 mb-3 text-sm'>
+				<span className='font-semibold'>Cover Image</span>
 				<button
 					onClick={() => setTab('url')}
 					className={`transition-colors font-medium ${tab === 'url' ? 'text-brand' : 'text-subtle hover:text-main'}`}

@@ -30,6 +30,7 @@ export default function Image({ block, update, readOnly }: any) {
 		return (
 			<div className='border border-dashed border-border rounded-lg p-4 outline-none'>
 				<div className='flex gap-4 px-2 mb-3 text-sm items-center'>
+					<span className='font-semibold'>Image</span>
 					<button
 						onClick={() => setTab('url')}
 						className={`transition-colors font-medium ${tab === 'url' ? 'text-brand' : 'text-subtle hover:text-main'}`}
