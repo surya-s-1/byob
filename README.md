@@ -6,7 +6,7 @@ Features to be built right now:
 - each article should belong to zero or more series
 - each series/article can belong to only one blog
 - each article should have cover url, title (required), subtitle, content (required)
-- articles can be published right now/backdated/scheduled for future
+- articles can be published right now/backdated
 - each article can preview some content as selected by user for scheduled articles
 - each blog can be public or private for non-followers (shown as private or hidden as chosen by user)
 - each article can be public or private for non-followers (shown as private or hidden as chosen by user)
@@ -17,6 +17,11 @@ Features to be built right now:
 - owner can mandate review of articles before publishing
 - owner can transfer ownership to existing members of the publication
 - series and article rules are same as blogs
+
+## Draft Editor
+- markdown with image sizing
+- mermaid with architecture icons
+- iframes with sizing
 
 ## Users
 - create upto 2 free blogs and 1 free publication
@@ -31,6 +36,18 @@ Features to be built right now:
 - can edit and save drafts of articles
 
 Features to be added later:
+## Publications
+- Users should be able to collaborate with other contributors on drafts for publications
+- An article can be owned by multiple users
+
+## Notifications
+- Notify on new articles or replies on comments
+
+## Scheduling
+Users should be able to
+- schedule articles for future
+- receive notifications 24 hours before publishing and upon publishing the article
+
 ## Payments
 Users should be able to pay to get services beyond free limit
 - Pay for more/publications blogs either certain amount per blog and per article in the blog
@@ -41,13 +58,6 @@ Users should be able to charge for their articles from followers
 - Can charge per article
 - Platform can take a cut on each transaction
 
-## Publications
-- Users should be able to collaborate with other contributors on drafts for publications
-- An article can be owned by multiple users
-
-## Notifications
-- Notify on new articles or replies on comments
-
 ## Engagement
 - Like/Appreciate/Celebrate etc. reactions on articles
 
@@ -55,26 +65,26 @@ Users should be able to charge for their articles from followers
 User {
     id: uuid!
     username: string! (unique)
-    firstName: string!
-    middleName: string
-    lastName: string!
+    first_name: string!
+    middle_name: string
+    last_name: string!
     bio: string!
     dp: string | null
     dob: Date!
     email: string!
-    createdAt: Date!
+    created_at: Date!
 }
 
 UserFollows {
     following: uuid!
-    followedBy: uuid!
-    followedAt: Date!
+    followed_by: uuid!
+    followed_at: Date!
 }
 
 # A workspace can be a blog or a publication
 Workspace {
     id: uuid!
-    ownerId: uuid!
+    owner_id: uuid!
     type: 'PERSONAL' | 'PUBLICATION'
     cover: string | null # link to cover image
     slug: string!
@@ -84,79 +94,79 @@ Workspace {
 }
 
 WorkspaceMember {
-    workspaceId: uuid!
-    userId: uuid!
+    workspace_id: uuid!
+    user_id: uuid!
     role: 'EDITOR' | 'REVIEWER' | 'ADMIN'
-    joinedAt: Date!
+    joined_at: Date!
 }
 
 WorkspaceFollows {
-    workspaceId: uuid!
-    userId: uuid!
-    followedAt: Date!
+    workspace_id: uuid!
+    user_id: uuid!
+    followed_at: Date!
 }
 
 Article {
     id: uuid!
-    workspaceId: uuid!
+    workspace_id: uuid!
     cover: string | null
     slug: string!
     title: string!
     subtitle: string!
     content: string!
-    publishedAt: Date | null
-    scheduledAt: Date | null
-    updatedAt: Date | null
+    published_at: Date | null
+    scheduled_at: Date | null
+    updated_at: Date | null
     excerpt: string!
     status: 'DRAFT' | 'SCHEDULED' | 'PUBLISHED' # Can be moved between DRAFT and SCHEDULED until it is PUBLISHED
     visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
 }
 
 ArticleAuthor {
-    articleId: uuid!
-    userId: uuid!
-    isPrimary: boolean!
+    article_id: uuid!
+    user_id: uuid!
+    is_primary: boolean!
 }
 
-# Not storing user id because logically a series  belongs to a workspace 
+# Not storing user id because logically a series belongs to a workspace 
 # which can be a personal blog or a publication with multiple users
 Series {
     id: uuid!
-    workspaceId: uuid!
+    workspace_id: uuid!
     slug: string!
     name: string!
     description: string
-    sortOrder: number!
+    sort_order: number!
 }
 
 # Many-to-many ordered relationship is difficult to store in either entity so storing separately
 SeriesArticleRelation {
-    seriesId: uuid!
-    articleId: uuid!
-    sortOrder: number!
+    series_id: uuid!
+    article_id: uuid!
+    sort_order: number!
 }
 
 Collection {
     id: uuid!
-    userId: uuid!
+    user_id: uuid!
     name: string!
     visibility: 'PUBLIC' | 'UNLISTED' | 'PRIVATE'
 }
 
 # Many-to-many relationship
 CollectionArticleRelation {
-    collectionId: uuid!
-    articleId: uuid!
-    addedAt: Date!
+    collection_id: uuid!
+    article_id: uuid!
+    added_at: Date!
 }
 
 Comment {
     id: uuid!
-    userId: uuid!
-    articleId: uuid!
-    parentId: uuid | null # if reply to another comment
+    user_id: uuid!
+    article_id: uuid!
+    parent_id: uuid | null # if reply to another comment
     content: string!
-    createdAt: Date!
-    updatedAt: Date!
+    created_at: Date!
+    updated_at: Date!
 }
 ```
