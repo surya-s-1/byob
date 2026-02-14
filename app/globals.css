@@ -67,6 +67,123 @@
 	}
 }
 
+@layer components {
+	.wysiwyg-editor h1 {
+		font-size: 2.25rem;
+		line-height: 2.5rem;
+		font-weight: 800;
+		margin-top: 2rem;
+		margin-bottom: 1rem;
+		color: var(--color-main);
+	}
+
+	.wysiwyg-editor h2 {
+		font-size: 1.875rem;
+		line-height: 2.25rem;
+		font-weight: 700;
+		margin-top: 1.5rem;
+		margin-bottom: 0.75rem;
+		border-bottom: 1px solid var(--color-border);
+		padding-bottom: 0.5rem;
+		color: var(--color-main);
+	}
+
+	.wysiwyg-editor h3 {
+		font-size: 1.5rem;
+		line-height: 2rem;
+		font-weight: 700;
+		margin-top: 1rem;
+		margin-bottom: 0.5rem;
+		color: var(--color-main);
+	}
+
+	.wysiwyg-editor p {
+		margin-bottom: 0.5rem;
+		min-height: 1.5rem;
+	}
+
+	.wysiwyg-editor ul {
+		margin-left: 1.5rem;
+		list-style-type: disc;
+		margin-bottom: 0.75rem;
+	}
+
+	.wysiwyg-editor ol {
+		margin-left: 1.5rem;
+		list-style-type: decimal;
+		margin-bottom: 0.75rem;
+	}
+
+	.wysiwyg-editor li {
+		margin-bottom: 0.25rem;
+		color: var(--color-main);
+	}
+
+	.wysiwyg-editor blockquote {
+		border-left: 4px solid var(--color-border);
+		padding-left: 1rem;
+		padding-top: 0.25rem;
+		padding-bottom: 0.25rem;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
+		font-style: italic;
+		color: var(--color-subtle);
+		background-color: var(--color-secondary);
+		border-top-right-radius: 0.375rem;
+		border-bottom-right-radius: 0.375rem;
+	}
+
+	.wysiwyg-editor strong,
+	.wysiwyg-editor b {
+		font-weight: 700;
+		color: var(--color-main);
+	}
+
+	.wysiwyg-editor em,
+	.wysiwyg-editor i {
+		font-style: italic;
+	}
+
+	.wysiwyg-editor u {
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.wysiwyg-editor s,
+	.wysiwyg-editor strike,
+	.wysiwyg-editor del {
+		text-decoration: line-through;
+		color: var(--color-subtle);
+	}
+
+	.wysiwyg-editor a {
+		color: var(--color-main);
+		text-decoration: underline;
+		cursor: pointer;
+		font-weight: 500;
+	}
+
+	.wysiwyg-editor a:hover {
+		opacity: 0.8;
+	}
+
+	.wysiwyg-editor code {
+		background-color: var(--color-secondary);
+		border: 1px solid var(--color-border);
+		color: var(--color-main);
+		padding: 0.125rem 0.25rem;
+		border-radius: 0.125rem;
+		font-size: 0.875rem;
+		font-family: monospace;
+	}
+
+	.wysiwyg-editor:empty:before {
+		content: attr(placeholder);
+		color: var(--color-muted);
+		pointer-events: none;
+	}
+}
+
 body {
 	background: var(--bg-primary);
 	color: var(--text-primary);
