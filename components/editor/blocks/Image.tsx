@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import { AlignLeft, AlignCenter, AlignRight, CornerDownLeft } from 'lucide-react'
 
-export default function Image({ block, update, removeBlock, readOnly }: any) {
+export default function Image({ block, update, readOnly }: any) {
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
 	const [tempUrl, setTempUrl] = useState('')
 
@@ -101,24 +101,27 @@ export default function Image({ block, update, removeBlock, readOnly }: any) {
 				alt='Content'
 			/>
 
-			<div className='absolute top-4 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex gap-1 p-1 z-20'>
+			<div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex items-center z-20 overflow-hidden'>
 				<button
 					onClick={() => update({ align: 'left' })}
-					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					title='Align Left'
 				>
-					<AlignLeft size={16} />
+					<AlignLeft size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'center' })}
-					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					title='Align Center'
 				>
-					<AlignCenter size={16} />
+					<AlignCenter size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'right' })}
-					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-1.5 hover:bg-secondary transition-colors ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					title='Align Right'
 				>
-					<AlignRight size={16} />
+					<AlignRight size={14} />
 				</button>
 			</div>
 

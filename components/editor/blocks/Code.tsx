@@ -16,7 +16,7 @@ const LANGUAGES = [
 	{ label: 'Plain Text', value: 'text' },
 ]
 
-export default function Code({ block, update, removeBlock, readOnly }: any) {
+export default function Code({ block, update, readOnly }: any) {
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
 
 	useEffect(() => {

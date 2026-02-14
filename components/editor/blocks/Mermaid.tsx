@@ -10,7 +10,7 @@ if (typeof window !== 'undefined') {
 	})
 }
 
-export default function Mermaid({ block, update, removeBlock, readOnly }: any) {
+export default function Mermaid({ block, update, readOnly }: any) {
 	const ref = useRef<HTMLDivElement>(null)
 	const textareaRef = useRef<HTMLTextAreaElement>(null)
 	const [error, setError] = useState('')

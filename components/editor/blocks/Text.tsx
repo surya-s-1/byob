@@ -55,7 +55,6 @@ export default function Text({
 	isFocused,
 	setFocusId,
 	removeBlock,
-	insertBlock,
 	readOnly,
 }: any) {
 	if (readOnly) {

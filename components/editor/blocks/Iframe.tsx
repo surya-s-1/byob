@@ -3,11 +3,19 @@
 import { useState } from 'react'
 import { AlignLeft, AlignCenter, AlignRight, Edit2 } from 'lucide-react'
 
-export default function Iframe({ block, update, removeBlock, readOnly }: any) {
+export default function Iframe({ block, update, readOnly }: any) {
 	const [showEditUrl, setShowEditUrl] = useState(false)
 	const [tempUrl, setTempUrl] = useState(block.src)
 	const [isResizing, setIsResizing] = useState(false)
 
+	const getEmbedUrl = (url: string) => {
+		if (!url) return ''
+		if (!url.startsWith('https://')) return 'UNSUPPORTED_INSECURE'
+		return url
+	}
+
+	const embedUrl = getEmbedUrl(block.src)
+	const isInsecure = embedUrl === 'UNSUPPORTED_INSECURE'
 	const alignClass =
 		block.align === 'left' ? 'mr-auto' : block.align === 'right' ? 'ml-auto' : 'mx-auto'
 
@@ -17,11 +25,21 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 				className={`my-8 block ${alignClass}`}
 				style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 			>
-				<iframe
-					src={block.src}
-					className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
-					allowFullScreen
-				/>
+				{isInsecure ? (
+					<div className='w-full h-full rounded-md border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
+						<div className='bg-error/10 text-error p-2 rounded-full'>
+							<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+						</div>
+						<span className='font-bold text-main'>Unsupported Content</span>
+						Only secure (https) links are allowed for embedding.
+					</div>
+				) : (
+					<iframe
+						src={embedUrl}
+						className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
+						allowFullScreen
+					/>
+				)}
 			</div>
 		)
 	}
@@ -51,13 +69,23 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 
 	return (
 		<div
-			className="relative inline-block"
+			className="relative inline-block rounded-lg hover:px-8 hover:border hover:border-ring transition-all duration-200"
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
-			<iframe
-				src={block.src}
-				className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
-			/>
+			{isInsecure ? (
+				<div className='w-full h-full rounded-md border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
+					<div className='bg-error/10 text-error p-2 rounded-full'>
+						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+					</div>
+					<span className='font-bold text-main'>Unsupported Content</span>
+					Only secure (https) links are allowed for embedding.
+				</div>
+			) : (
+				<iframe
+					src={embedUrl}
+					className='w-full h-full rounded-md border border-border shadow-sm bg-secondary'
+				/>
+			)}
 
 			{/* Overlay to catch events and prevent iframe interaction during resize/hover */}
 			<div
@@ -65,32 +93,35 @@ export default function Iframe({ block, update, removeBlock, readOnly }: any) {
 				style={{ pointerEvents: isResizing ? 'auto' : 'none' }}
 			/>
 
-			<div className='absolute top-4 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex gap-1 p-1 z-20'>
+			<div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex items-center z-20 overflow-hidden'>
 				<button
 					onClick={() => update({ align: 'left' })}
-					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					title='Align Left'
 				>
-					<AlignLeft size={16} />
+					<AlignLeft size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'center' })}
-					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					title='Align Center'
 				>
-					<AlignCenter size={16} />
+					<AlignCenter size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'right' })}
-					className={`p-1.5 rounded hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					title='Align Right'
 				>
-					<AlignRight size={16} />
+					<AlignRight size={14} />
 				</button>
-				<div className='w-px bg-border mx-1'></div>
 				<button
 					onClick={() => {
 						setTempUrl(block.src)
 						setShowEditUrl(true)
 					}}
-					className='p-1.5 rounded hover:bg-secondary text-subtle'
+					className='p-1.5 hover:bg-secondary transition-colors text-subtle'
+					title='Edit URL'
 				>
 					<Edit2 size={16} />
 				</button>
