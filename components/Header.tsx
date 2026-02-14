@@ -56,7 +56,15 @@ export default function Header({ user }: any) {
 							onClick={toggleTheme}
 							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary w-full text-left whitespace-nowrap cursor-pointer'
 						>
-							{isDark ? <span><Sun size={16} /></span> : <span><Moon size={16} /></span>}
+							{isDark ? (
+								<span>
+									<Sun size={16} />
+								</span>
+							) : (
+								<span>
+									<Moon size={16} />
+								</span>
+							)}
 							{isDark ? <span>Light Mode</span> : <span>Dark Mode</span>}
 						</button>
 

@@ -3,6 +3,7 @@
 ## To be built right now:
 
 ### Blogs
+
 - each blog can have zero or more series and articles
 - series in a blog can be ordered
 - each series can have zero or more articles
@@ -16,11 +17,13 @@
 - in each series, articles can be ordered by user (by default newly added is added first in line)
 
 ### Draft Editor
+
 - markdown
 - image resizing
 - mermaid with architecture icons
 
 ### Users
+
 - create upto 2 free blogs and 1 free publication
 - edit metadata of blogs, series and publications
 - can let another user to write in their blog by converting it into a publication
@@ -35,6 +38,7 @@
 ## To be added later:
 
 ### Publications
+
 - each publication should have atleast one owner and can have multiple contributers and reviewers
 - owner can mandate review of articles before publishing
 - owner can transfer ownership to existing members of the publication
@@ -43,27 +47,35 @@
 - An article can be owned by multiple users
 
 ### Notifications
+
 - Notify on new articles or replies on comments
 
 ### Scheduling
+
 Users should be able to
+
 - schedule articles for future
 - receive notifications 24 hours before publishing and upon publishing the article
 
 ### Payments
+
 Users should be able to pay to get services beyond free limit
+
 - Pay for more/publications blogs either certain amount per blog and per article in the blog
 - Pay once for unlimited blogs and articles
 
 Users should be able to charge for their articles from followers
+
 - Can charge once for following the whole blog
 - Can charge per article
 - Platform can take a cut on each transaction
 
 ### Engagement
+
 - Like/Appreciate/Celebrate etc. reactions on articles
 
 ### Draft Editor
+
 - iframes with sizing
 - link previews
 
@@ -157,7 +169,7 @@ ArticleAuthor {
     is_primary: boolean!
 }
 
-# Not storing user id because logically a series belongs to a workspace 
+# Not storing user id because logically a series belongs to a workspace
 # which can be a personal blog or a publication with multiple users
 Series {
     id: uuid! (unique)
