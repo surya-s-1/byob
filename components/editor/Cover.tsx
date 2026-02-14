@@ -15,10 +15,13 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 				</div>
 				{!readOnly && (
 					<button
-						onClick={() => setCover('')}
-						className='absolute bottom-4 right-4 bg-elevated/90 text-main border border-border text-sm px-3 py-1.5 rounded-md opacity-0 group-hover:opacity-100 transition-opacity shadow-md hover:bg-secondary flex items-center gap-2'
+						onClick={() => {
+							setUrl('')
+							setCover('')
+						}}
+						className='absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity shadow-md p-1.5 text-subtle rounded-md bg-elevated/50 hover:text-error transition-colors'
 					>
-						<Trash2 size={16} /> Remove
+						<Trash2 size={16} />
 					</button>
 				)}
 			</div>

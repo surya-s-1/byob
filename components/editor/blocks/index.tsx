@@ -123,7 +123,7 @@ export default function Block({
 						e.stopPropagation()
 						removeBlock(index)
 					}}
-					className='p-1.5 hover:bg-error/10 text-subtle hover:text-error transition-colors'
+					className='p-1.5 text-subtle hover:bg-error/10 hover:text-error transition-colors'
 					title='Delete Block'
 				>
 					<Trash2 size={14} />
