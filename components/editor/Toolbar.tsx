@@ -18,6 +18,7 @@ import {
 	Code,
 	AppWindow,
 	Loader2,
+	Link2Off,
 } from 'lucide-react'
 
 export default function Toolbar({ insert, saveStatus }: any) {
@@ -207,6 +208,15 @@ export default function Toolbar({ insert, saveStatus }: any) {
 			>
 				<LinkIcon size={16} />
 			</button>
+			{active.link && (
+				<button
+					onMouseDown={(e) => handleCommand(e, 'unlink')}
+					className={actionBtnClass}
+					title='Unlink'
+				>
+					<Link2Off size={16} />
+				</button>
+			)}
 
 			<div className='w-px h-5 bg-border mx-1'></div>
 
