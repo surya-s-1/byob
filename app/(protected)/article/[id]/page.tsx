@@ -9,8 +9,9 @@ async function getArticle(id: string) {
 	}
 }
 
-export default async function ArticlePage({ params }: { params: { id: string } }) {
-	const article = await getArticle(params.id)
+export default async function ArticlePage({ params }: { params: Promise<{ id: string }> }) {
+	const { id } = await params
+	const article = await getArticle(id)
 
 	return (
 		<article className='min-h-screen bg-primary text-main pb-32'>

@@ -12,7 +12,8 @@ async function getDraft(id: string) {
 }
 
 export default async function Page({ params }: any) {
-	const draft = await getDraft(params.id)
+	const { id } = await params
+	const draft = await getDraft(id)
 
 	return (
 		<div className='min-h-screen bg-primary text-main pb-2xl'>
