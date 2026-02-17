@@ -51,7 +51,7 @@ export default function Header({ user }: any) {
 				/>
 
 				{open && (
-					<Card className='absolute right-0 w-fit mt-sm z-50'>
+					<Card className='absolute right-0 w-fit mt-sm z-50 p-md'>
 						<button
 							onClick={toggleTheme}
 							className='flex items-center gap-sm px-md py-sm rounded-md text-subtle hover:text-main hover:bg-secondary w-full text-left whitespace-nowrap cursor-pointer'
