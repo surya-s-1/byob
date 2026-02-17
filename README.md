@@ -75,9 +75,9 @@ User {
     id: uuid! (unique)
     username: string! (unique)
     first_name: string!
-    middle_name: string
+    middle_name: string | null
     last_name: string!
-    bio: string!
+    bio: string | null
     dp: string | null
     dob: Date!
     email: string!
@@ -86,8 +86,8 @@ User {
 }
 
 UserFollows {
-    following: uuid!
-    followed_by: uuid!
+    followed_user_id: uuid!
+    followed_by_user_id: uuid!
     followed_at: Date!
 }
 
@@ -95,16 +95,16 @@ Publication {
     id: uuid! (unique)
     cover: string | null
     slug: string! (unique)
-    name: string!
-    description: string
-    visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
+    display_name: string!
+    display_description: string
+    publication_visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
     deleted_at: Date | null
 }
 
 PublicationMember {
     publication_id: uuid!
     user_id: uuid!
-    role: 'OWNER' | 'EDITOR' | 'REVIEWER' | 'ADMIN'
+    user_role: 'OWNER' | 'EDITOR' | 'REVIEWER' | 'ADMIN'
     joined_at: Date!
 }
 
@@ -118,7 +118,7 @@ Article {
     id: uuid! (unique)
     publication_id: uuid!
     slug: string! (unique per publication)
-    status: 'DRAFT' | 'SCHEDULED' | 'PUBLISHED'
+    article_status: 'DRAFT' | 'SCHEDULED' | 'PUBLISHED'
     published_at: Date | null
     scheduled_at: Date | null
     cover: string | null
@@ -129,7 +129,7 @@ Article {
     created_at: Date!
     created_by: uuid!
     updated_at: Date | null
-    visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
+    article_visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
     deleted_at: Date | null
 }
 
@@ -157,8 +157,8 @@ Series {
     id: uuid! (unique)
     publication_id: uuid!
     slug: string! (unique per publication)
-    name: string!
-    description: string
+    display_name: string!
+    display_description: string | null
     sort_order: number!
     deleted_at: Date | null
 }
@@ -172,7 +172,7 @@ SeriesArticleRelation {
 Collection {
     id: uuid! (unique)
     user_id: uuid!
-    name: string!
+    display_name: string!
     visibility: 'PUBLIC' | 'UNLISTED' | 'PRIVATE'
     deleted_at: Date | null
 }
