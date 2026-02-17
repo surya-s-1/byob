@@ -9,6 +9,7 @@ export interface AuthUser {
 
 export interface AuthAdapter {
 	getSignInUrl(provider: OAuthProvider, redirectTo?: string): Promise<string | null>
+	exchangeCode(code: string, callbackUrl: string): Promise<any>
 	verifySession(): Promise<AuthUser | null>
 	signOut(): Promise<void>
 }

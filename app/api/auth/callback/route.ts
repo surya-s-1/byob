@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
 import { AUTH_PROVIDER } from '@/lib/auth/config'
-import { supabaseAuth } from '@/lib/auth/providers/supabase'
+import { supabaseAdapter } from '@/lib/auth/providers/supabase'
 
 export async function GET(request: Request) {
     const { searchParams, origin } = new URL(request.url)
@@ -11,18 +11,7 @@ export async function GET(request: Request) {
         const code = searchParams.get('code')
 
         if (code) {
-            try {
-                const supabase = await supabaseAuth()
-
-                const { error } = await supabase.auth.exchangeCodeForSession(code)
-
-                if (!error) {
-                    return NextResponse.redirect(new URL(callbackUrl, origin))
-                }
-            } catch (error) {
-                console.error('Error fetching session:', error)
-                return NextResponse.redirect(new URL('/auth/error', origin))
-            }
+            return supabaseAdapter.exchangeCode(code, callbackUrl)
         } else {
             return NextResponse.redirect(new URL('/auth/error', origin))
         }

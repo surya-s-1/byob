@@ -1,4 +1,5 @@
 import { cookies } from 'next/headers'
+import { NextResponse } from 'next/server'
 import { createServerClient } from '@supabase/ssr'
 import { AuthAdapter, AuthUser, OAuthProvider } from '../types'
 
@@ -47,6 +48,21 @@ export const supabaseAdapter: AuthAdapter = {
 		})
 
 		return data.url || null
+	},
+
+	async exchangeCode(code, callbackUrl) {
+		try {
+			const supabase = await supabaseAuth()
+
+			const { error } = await supabase.auth.exchangeCodeForSession(code)
+
+			if (!error) {
+				return NextResponse.redirect(new URL(callbackUrl, origin))
+			}
+		} catch (error) {
+			console.error('Error fetching session:', error)
+			return NextResponse.redirect(new URL('/auth/error', origin))
+		}
 	},
 
 	async verifySession(): Promise<AuthUser | null> {
