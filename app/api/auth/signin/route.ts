@@ -10,6 +10,7 @@ export async function GET(req: Request) {
 		return NextResponse.redirect(new URL('/login', req.url))
 	}
 
-	const loginUrl = await auth.getLoginUrl(provider, callbackUrl || undefined)
+	const loginUrl = await auth.getSignInUrl(provider, callbackUrl || undefined)
+	
 	return NextResponse.redirect(loginUrl || '/')
 }

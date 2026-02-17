@@ -1,7 +1,9 @@
 'use client'
+
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { LayoutDashboard, User, Settings, LogOut, Moon, Sun } from 'lucide-react'
+
 import Card from './ui/Card'
 
 export default function Header({ user }: any) {
@@ -49,7 +51,7 @@ export default function Header({ user }: any) {
 	}
 
 	const logout = async () => {
-		await fetch('/api/auth/logout', { method: 'POST' })
+		await fetch('/api/auth/signout', { method: 'POST' })
 		window.location.href = '/login'
 	}
 

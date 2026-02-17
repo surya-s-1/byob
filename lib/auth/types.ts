@@ -3,11 +3,12 @@ export type OAuthProvider = 'google' | 'github'
 export interface AuthUser {
 	id: string
 	email: string
-	name?: string
-	avatar?: string
+	name: string
+	avatar: string | null
 }
 
 export interface AuthAdapter {
-	getLoginUrl(provider: OAuthProvider, redirectTo?: string): Promise<string | null>
-	verifyAccessToken(token: string): Promise<AuthUser | null>
+	getSignInUrl(provider: OAuthProvider, redirectTo?: string): Promise<string | null>
+	verifySession(): Promise<AuthUser | null>
+	signOut(): Promise<void>
 }

@@ -1,7 +1,5 @@
-import { redirect } from 'next/navigation'
-
 import Header from '@/components/Header'
-import { getCurrentUser } from '@/lib/auth/getCurrentUser'
+import { getCurrentUser } from '@/lib/auth'
 
 export default async function ProtectedLayout({ children }: any) {
 	const user = await getCurrentUser()

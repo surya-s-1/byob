@@ -1,1 +1,1 @@
-export const AUTH_PROVIDER = 'supabase'
+export const AUTH_PROVIDER = process.env.AUTH_PROVIDER || 'neon'
