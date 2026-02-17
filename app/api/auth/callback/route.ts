@@ -11,7 +11,14 @@ export async function GET(request: Request) {
         const code = searchParams.get('code')
 
         if (code) {
-            return supabaseAdapter.exchangeCode(code, callbackUrl)
+            const error = await supabaseAdapter.exchangeCode(code, callbackUrl)
+
+            if (!error) {
+                return NextResponse.redirect(new URL(callbackUrl, origin))
+            } else {
+                console.error(error)
+                return NextResponse.redirect(new URL('/auth/error', origin))
+            }
         } else {
             return NextResponse.redirect(new URL('/auth/error', origin))
         }
