@@ -5,7 +5,7 @@ dotenv.config()
 
 export default defineConfig({
 	dialect: 'postgresql',
-	schema: './lib/db/schema.ts',
+	schema: './lib/auth/db/schema.ts',
 	out: './drizzle',
 	dbCredentials: {
 		url: process.env.BETTER_AUTH_DB_URL!,
