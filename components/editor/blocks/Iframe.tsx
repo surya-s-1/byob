@@ -68,9 +68,9 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 						src={embedUrl}
 						className='w-full h-full rounded-lg border border-border shadow-sm bg-secondary'
 						allowFullScreen={settings.fullscreen}
-						title="Embedded content"
-						loading="lazy"
-						referrerPolicy="no-referrer-when-downgrade"
+						title='Embedded content'
+						loading='lazy'
+						referrerPolicy='no-referrer-when-downgrade'
 						allow={getAllowString()}
 					/>
 				)}
@@ -103,13 +103,27 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	return (
 		<div
-			className="relative inline-block rounded-lg hover:px-4 hover:ring-1 ring-brand transition-all duration-200 group"
+			className='relative inline-block rounded-lg hover:px-4 hover:ring-1 ring-brand transition-all duration-200 group'
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
 			{isInsecure ? (
 				<div className='w-full h-full rounded-lg border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
 					<div className='bg-error/10 text-error p-2 rounded-full'>
-						<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z" /><line x1="12" y1="9" x2="12" y2="13" /><line x1="12" y1="17" x2="12.01" y2="17" /></svg>
+						<svg
+							xmlns='http://www.w3.org/2000/svg'
+							width='20'
+							height='20'
+							viewBox='0 0 24 24'
+							fill='none'
+							stroke='currentColor'
+							strokeWidth='2'
+							strokeLinecap='round'
+							strokeLinejoin='round'
+						>
+							<path d='M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z' />
+							<line x1='12' y1='9' x2='12' y2='13' />
+							<line x1='12' y1='17' x2='12.01' y2='17' />
+						</svg>
 					</div>
 					<span className='font-bold text-main'>Unsupported Content</span>
 					Only secure (https) links are allowed for embedding.
@@ -118,16 +132,16 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 				<iframe
 					src={embedUrl}
 					className='w-full h-full rounded-lg border border-border shadow-sm bg-secondary block'
-					title="Embedded content"
-					loading="lazy"
-					referrerPolicy="no-referrer-when-downgrade"
+					title='Embedded content'
+					loading='lazy'
+					referrerPolicy='no-referrer-when-downgrade'
 					allow={getAllowString()}
 				/>
 			)}
 
 			<div
-				className="absolute inset-0 z-10"
-				style={{ pointerEvents: (isResizing || !isFocused) ? 'auto' : 'none' }}
+				className='absolute inset-0 z-10'
+				style={{ pointerEvents: isResizing || !isFocused ? 'auto' : 'none' }}
 			/>
 
 			<div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex items-center z-20 overflow-hidden'>
@@ -166,9 +180,11 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 			{showEditUrl && (
 				<div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-elevated border border-border p-4 rounded-lg shadow-xl z-30 flex flex-col gap-4 w-[90%] max-w-[400px] animate-in fade-in zoom-in duration-200'>
-					<div className="flex flex-col gap-1.5">
-						<label className="text-[10px] font-bold uppercase tracking-wider text-muted">Source URL</label>
-						<div className="flex gap-2">
+					<div className='flex flex-col gap-1.5'>
+						<label className='text-[10px] font-bold uppercase tracking-wider text-muted'>
+							Source URL
+						</label>
+						<div className='flex gap-2'>
 							<input
 								autoFocus
 								value={tempUrl}
@@ -185,42 +201,62 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 						</div>
 					</div>
 
-					<div className="grid grid-cols-2 gap-3">
-						<label className="flex items-center gap-2 cursor-pointer group">
+					<div className='grid grid-cols-2 gap-3'>
+						<label className='flex items-center gap-2 cursor-pointer group'>
 							<input
-								type="checkbox"
+								type='checkbox'
 								checked={settings.autoplay}
-								onChange={(e) => update({ settings: { ...settings, autoplay: e.target.checked } })}
-								className="w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all"
+								onChange={(e) =>
+									update({
+										settings: { ...settings, autoplay: e.target.checked },
+									})
+								}
+								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
 							/>
-							<span className="text-xs text-subtle group-hover:text-main transition-colors font-medium">Autoplay</span>
+							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+								Autoplay
+							</span>
 						</label>
-						<label className="flex items-center gap-2 cursor-pointer group">
+						<label className='flex items-center gap-2 cursor-pointer group'>
 							<input
-								type="checkbox"
+								type='checkbox'
 								checked={settings.fullscreen}
-								onChange={(e) => update({ settings: { ...settings, fullscreen: e.target.checked } })}
-								className="w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all"
+								onChange={(e) =>
+									update({
+										settings: { ...settings, fullscreen: e.target.checked },
+									})
+								}
+								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
 							/>
-							<span className="text-xs text-subtle group-hover:text-main transition-colors font-medium">Fullscreen</span>
+							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+								Fullscreen
+							</span>
 						</label>
-						<label className="flex items-center gap-2 cursor-pointer group">
+						<label className='flex items-center gap-2 cursor-pointer group'>
 							<input
-								type="checkbox"
+								type='checkbox'
 								checked={settings.sensors}
-								onChange={(e) => update({ settings: { ...settings, sensors: e.target.checked } })}
-								className="w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all"
+								onChange={(e) =>
+									update({ settings: { ...settings, sensors: e.target.checked } })
+								}
+								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
 							/>
-							<span className="text-xs text-subtle group-hover:text-main transition-colors font-medium">Sensors</span>
+							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+								Sensors
+							</span>
 						</label>
-						<label className="flex items-center gap-2 cursor-pointer group">
+						<label className='flex items-center gap-2 cursor-pointer group'>
 							<input
-								type="checkbox"
+								type='checkbox'
 								checked={settings.pip}
-								onChange={(e) => update({ settings: { ...settings, pip: e.target.checked } })}
-								className="w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all"
+								onChange={(e) =>
+									update({ settings: { ...settings, pip: e.target.checked } })
+								}
+								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
 							/>
-							<span className="text-xs text-subtle group-hover:text-main transition-colors font-medium">Picture-in-Picture</span>
+							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+								Picture-in-Picture
+							</span>
 						</label>
 					</div>
 
@@ -279,4 +315,3 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 		</div>
 	)
 }
-

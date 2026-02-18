@@ -1,5 +1,5 @@
 import Header from '@/components/Header'
-import { getCurrentUser } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/auth/server'
 
 export default async function ProtectedLayout({ children }: any) {
 	const user = await getCurrentUser()

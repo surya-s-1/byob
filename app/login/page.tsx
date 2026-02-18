@@ -1,14 +1,17 @@
-import Image from 'next/image'
 import { redirect } from 'next/navigation'
-import { getCurrentUser } from '@/lib/auth'
+import { getCurrentUser } from '@/lib/auth/server'
 import Card from '@/components/ui/Card'
+import LoginButtons from '@/components/LoginButtons'
 
-export default async function LoginPage({ searchParams }: { searchParams: Promise<{ callbackUrl?: string }> }) {
+export default async function LoginPage({
+	searchParams,
+}: {
+	searchParams: Promise<{ callbackUrl?: string }>
+}) {
 	const user = await getCurrentUser()
 	if (user) redirect('/dashboard')
 
 	const { callbackUrl } = await searchParams
-	const callbackParam = callbackUrl ? `&callbackUrl=${encodeURIComponent(callbackUrl)}` : ''
 
 	return (
 		<div className='w-screen h-screen flex items-center justify-center bg-secondary'>
@@ -18,23 +21,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
 					<p className='text-subtle text-sm mt-sm'>Sign in to continue</p>
 				</div>
 
-				<div className='flex flex-col gap-md'>
-					<a
-						href={`/api/auth/signin?provider=google${callbackParam}`}
-						className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:bg-secondary hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full'
-					>
-						<Image src='/Google.svg' alt='Google' width={20} height={20} />
-						<span>Continue with Google</span>
-					</a>
-
-					<a
-						href={`/api/auth/signin?provider=github${callbackParam}`}
-						className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:bg-secondary hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full'
-					>
-						<Image src='/GitHub.svg' alt='GitHub' width={20} height={20} className='dark:invert' />
-						<span>Continue with GitHub</span>
-					</a>
-				</div>
+				<LoginButtons callbackUrl={callbackUrl} />
 			</Card>
 		</div>
 	)

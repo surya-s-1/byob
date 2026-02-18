@@ -7,7 +7,6 @@ export default function Image({ block, update, readOnly }: any) {
 	const [tab, setTab] = useState<'url' | 'upload'>('url')
 	const [tempUrl, setTempUrl] = useState('')
 
-
 	const alignClass =
 		block.align === 'left' ? 'mr-auto' : block.align === 'right' ? 'ml-auto' : 'mx-auto'
 
@@ -92,10 +91,7 @@ export default function Image({ block, update, readOnly }: any) {
 	)
 
 	return (
-		<div
-			className="relative inline-block"
-			style={{ width: block.w || 700, maxWidth: '100%' }}
-		>
+		<div className='relative inline-block' style={{ width: block.w || 700, maxWidth: '100%' }}>
 			<img
 				src={block.src}
 				className='w-full rounded-lg shadow-sm border border-border block'
@@ -129,30 +125,22 @@ export default function Image({ block, update, readOnly }: any) {
 			<ResizeHandle
 				position='-top-2 -left-2'
 				cursor='cursor-nwse-resize'
-				onDrag={(sw: any, sx: any, cx: any) =>
-					update({ w: Math.max(200, sw - (cx - sx)) })
-				}
+				onDrag={(sw: any, sx: any, cx: any) => update({ w: Math.max(200, sw - (cx - sx)) })}
 			/>
 			<ResizeHandle
 				position='-top-2 -right-2'
 				cursor='cursor-nesw-resize'
-				onDrag={(sw: any, sx: any, cx: any) =>
-					update({ w: Math.max(200, sw + (cx - sx)) })
-				}
+				onDrag={(sw: any, sx: any, cx: any) => update({ w: Math.max(200, sw + (cx - sx)) })}
 			/>
 			<ResizeHandle
 				position='-bottom-2 -left-2'
 				cursor='cursor-nesw-resize'
-				onDrag={(sw: any, sx: any, cx: any) =>
-					update({ w: Math.max(200, sw - (cx - sx)) })
-				}
+				onDrag={(sw: any, sx: any, cx: any) => update({ w: Math.max(200, sw - (cx - sx)) })}
 			/>
 			<ResizeHandle
 				position='-bottom-2 -right-2'
 				cursor='cursor-nwse-resize'
-				onDrag={(sw: any, sx: any, cx: any) =>
-					update({ w: Math.max(200, sw + (cx - sx)) })
-				}
+				onDrag={(sw: any, sx: any, cx: any) => update({ w: Math.max(200, sw + (cx - sx)) })}
 			/>
 		</div>
 	)

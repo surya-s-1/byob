@@ -94,19 +94,26 @@ export default function Content({ initialMarkdown }: any) {
 							insertBlock(insertAt, parsed.data)
 							return
 						}
-					} catch (err) { }
+					} catch (err) {}
 				}
 
 				// If it's markdown-like text, we might want to prevent it from pasting raw into a text block
 				// but only if we are not focused on an input/textarea
 				const target = e.target as HTMLElement
-				if (target.getAttribute('contenteditable') === 'true' || target.tagName === 'INPUT' || target.tagName === 'TEXTAREA') {
+				if (
+					target.getAttribute('contenteditable') === 'true' ||
+					target.tagName === 'INPUT' ||
+					target.tagName === 'TEXTAREA'
+				) {
 					// Let it happen naturally for text blocks
 					return
 				}
 
 				// If we are focused on the container itself but not a block, insert as blocks
-				if (text && (text.includes('![') || text.includes('```') || text.includes('::iframe'))) {
+				if (
+					text &&
+					(text.includes('![') || text.includes('```') || text.includes('::iframe'))
+				) {
 					e.preventDefault()
 					const newBlocks = parseToBlocks(text)
 					const currentIndex = blocks.findIndex((b) => b.id === focusId)
@@ -114,7 +121,11 @@ export default function Content({ initialMarkdown }: any) {
 
 					setBlocks((prev) => {
 						const arr = [...prev]
-						arr.splice(insertAt, 0, ...newBlocks.map(b => ({ ...b, id: generateId() })))
+						arr.splice(
+							insertAt,
+							0,
+							...newBlocks.map((b) => ({ ...b, id: generateId() }))
+						)
 						return arr
 					})
 				}

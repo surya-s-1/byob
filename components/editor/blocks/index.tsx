@@ -87,7 +87,8 @@ export default function Block({
 
 	const alignClass =
 		block.align === 'left' ? 'mr-auto' : block.align === 'right' ? 'ml-auto' : 'mx-auto'
-	const isFullWidth = ['code', 'mermaid'].includes(block.type) || (block.type === 'image' && !block.src)
+	const isFullWidth =
+		['code', 'mermaid'].includes(block.type) || (block.type === 'image' && !block.src)
 
 	return (
 		<div
@@ -106,7 +107,11 @@ export default function Block({
 					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${copied ? 'text-green-500' : 'text-subtle hover:text-main'}`}
 					title='Copy Block'
 				>
-					{copied ? <Check size={14} className='animate-in fade-in zoom-in duration-200' /> : <Copy size={14} />}
+					{copied ? (
+						<Check size={14} className='animate-in fade-in zoom-in duration-200' />
+					) : (
+						<Copy size={14} />
+					)}
 				</button>
 				<button
 					onClick={(e) => {

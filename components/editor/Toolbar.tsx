@@ -94,10 +94,11 @@ export default function Toolbar({ insert, saveStatus }: any) {
 
 	const getBtnClass = (cmd: string) => {
 		const isActive = active[cmd]
-		return `w-8 h-8 flex items-center justify-center text-sm rounded-sm transition-colors cursor-pointer border ${isActive
-			? 'bg-brand/5 border-brand text-brand'
-			: 'bg-transparent border-transparent text-subtle hover:bg-secondary hover:text-main'
-			}`
+		return `w-8 h-8 flex items-center justify-center text-sm rounded-sm transition-colors cursor-pointer border ${
+			isActive
+				? 'bg-brand/5 border-brand text-brand'
+				: 'bg-transparent border-transparent text-subtle hover:bg-secondary hover:text-main'
+		}`
 	}
 
 	const actionBtnClass =
@@ -313,9 +314,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 				{(saveStatus === 'idle' || saveStatus === 'saving') && (
 					<Loader2 size={14} className='animate-spin text-brand' />
 				)}
-				{saveStatus === 'saved' && (
-					<Check size={14} className='text-brand' />
-				)}
+				{saveStatus === 'saved' && <Check size={14} className='text-brand' />}
 			</div>
 
 			{linkPopup.show && (

@@ -1,1 +1,0 @@
-export const AUTH_PROVIDER = process.env.AUTH_PROVIDER || 'supabase'

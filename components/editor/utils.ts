@@ -8,7 +8,14 @@ export function htmlToMarkdown(html: string) {
 	md = md.replace(/<h2>(.*?)<\/h2>/gi, '\n## $1\n')
 	md = md.replace(/<h3>(.*?)<\/h3>/gi, '\n### $1\n')
 	md = md.replace(/<blockquote>([\s\S]*?)<\/blockquote>/gi, (m, inner) => {
-		return '\n' + inner.split('\n').map((line: string) => `> ${line.trim()}`).join('\n') + '\n'
+		return (
+			'\n' +
+			inner
+				.split('\n')
+				.map((line: string) => `> ${line.trim()}`)
+				.join('\n') +
+			'\n'
+		)
 	})
 
 	md = md.replace(
@@ -17,7 +24,10 @@ export function htmlToMarkdown(html: string) {
 	)
 	md = md.replace(/<ol>([\s\S]*?)<\/ol>/gi, (m: string, inner: string) => {
 		let i = 1
-		return '\n' + inner.replace(/<li.*?>(.*?)<\/li>/gi, (m2: string, li: string) => `${i++}. ${li}\n`)
+		return (
+			'\n' +
+			inner.replace(/<li.*?>(.*?)<\/li>/gi, (m2: string, li: string) => `${i++}. ${li}\n`)
+		)
 	})
 
 	md = md.replace(/<strong>(.*?)<\/strong>/gi, '**$1**')

@@ -49,14 +49,7 @@ const parseInitialMarkdown = (md: string) => {
 	return html
 }
 
-export default function Text({
-	block,
-	update,
-	isFocused,
-	setFocusId,
-	removeBlock,
-	readOnly,
-}: any) {
+export default function Text({ block, update, isFocused, setFocusId, removeBlock, readOnly }: any) {
 	if (readOnly) {
 		return (
 			<div

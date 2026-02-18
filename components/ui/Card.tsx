@@ -2,9 +2,7 @@ import { cn } from '@/lib/utils'
 
 export default function Card({ children, className }: any) {
 	return (
-		<div
-			className={cn('bg-elevated border border-border rounded-lg shadow-sm', className)}
-		>
+		<div className={cn('bg-elevated border border-border rounded-lg shadow-sm', className)}>
 			{children}
 		</div>
 	)

@@ -3,6 +3,7 @@
 ## To be built right now:
 
 ### Publications
+
 - each publication can have zero or more series and articles
 - series in a publication can be ordered
 - each series can have zero or more articles
@@ -15,18 +16,21 @@
 - in each series, articles can be ordered by user (by default newly added is added first in line)
 
 ### Articles
+
 - each article should have cover url, title (required), subtitle, content (required)
 - articles can be published right now or backdated
 - each article can preview some content as selected by user for scheduled articles
 - each article can be public or private for non-followers (shown as private or hidden as chosen by user)
 
 ### Draft Editor
+
 - markdown
 - image and iframe resizing
 - mermaid with architecture icons
 - **Pessimistic Locking:** prevents multiple users from editing the same draft simultaneously by locking it to one active user.
 
 ### Users
+
 - create up to 3 free publications
 - edit metadata of publications and series
 - comment and reply on own/others articles
@@ -39,31 +43,40 @@
 ## To be added later:
 
 ### Collaboration
+
 - Users should be able to collaborate with other contributors on drafts for publications
 - An article can be owned by multiple users
 
 ### Notifications
+
 - Notify on new articles or replies on comments
 
 ### Scheduling
+
 Users should be able to:
+
 - schedule articles for future
 - receive notifications 24 hours before publishing and upon publishing the article
 
 ### Payments
+
 Users should be able to pay to get services beyond free limit:
+
 - Pay for more publications (either a certain amount per publication or per article)
 - Pay once for unlimited publications and articles
 
 Users should be able to charge for their articles from followers:
+
 - Can charge once for following the whole publication
 - Can charge per article
 - Platform can take a cut on each transaction
 
 ### Engagement
+
 - Like/Appreciate/Celebrate etc. reactions on articles
 
 ### Draft Editor
+
 - link previews
 
 ---

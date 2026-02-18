@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
 import { LayoutDashboard, User, Settings, LogOut, Moon, Sun } from 'lucide-react'
-
 import Card from './ui/Card'
 
 export default function Header({ user }: any) {
@@ -51,7 +50,9 @@ export default function Header({ user }: any) {
 	}
 
 	const logout = async () => {
-		await fetch('/api/auth/signout', { method: 'POST' })
+		await fetch('/api/auth/signout', {
+			method: 'POST',
+		})
 		window.location.href = '/login'
 	}
 
@@ -67,9 +68,9 @@ export default function Header({ user }: any) {
 					onClick={() => setOpen(!open)}
 					className='w-12 h-12 rounded-full overflow-hidden border border-border transition-all focus:outline-none cursor-pointer'
 				>
-					{user?.avatar ? (
+					{user?.image ? (
 						<Image
-							src={user.avatar}
+							src={user.image}
 							alt={user.name || 'User'}
 							width={48}
 							height={48}
