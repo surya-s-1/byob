@@ -1,9 +1,13 @@
 import { auth } from '@/lib/auth'
-import { headers } from 'next/headers'
+import { NextResponse } from 'next/server'
 
-export async function POST() {
-	return auth.api.signOut({
-		headers: await headers(),
-		asResponse: true,
-	})
+export async function POST(req: Request) {
+	try {
+		return auth.api.signOut({
+			headers: req.headers,
+			asResponse: true,
+		})
+	} catch (error: any) {
+		return NextResponse.json({ error: error.message }, { status: 500 })
+	}
 }

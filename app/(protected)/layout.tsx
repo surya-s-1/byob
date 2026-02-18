@@ -1,8 +1,9 @@
 import Header from '@/components/Header'
-import { getCurrentUser } from '@/lib/auth/server'
+import { headers } from 'next/headers'
+import { getCurrentUser } from '@/lib/utils'
 
 export default async function ProtectedLayout({ children }: any) {
-	const user = await getCurrentUser()
+	const user = await getCurrentUser(await headers())
 
 	if (!user) {
 		return (

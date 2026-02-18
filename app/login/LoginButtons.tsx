@@ -18,8 +18,6 @@ export default function LoginButtons({ callbackUrl }: { callbackUrl?: string }) 
 
 			const data = await res.json()
 
-			console.log('data', data)
-
 			if (data.url) {
 				window.location.href = data.url
 			}
@@ -37,7 +35,6 @@ export default function LoginButtons({ callbackUrl }: { callbackUrl?: string }) 
 				<Image src='/Google.svg' alt='Google' width={20} height={20} />
 				<span>Continue with Google</span>
 			</button>
-
 			<button
 				onClick={() => handleSignIn('github')}
 				className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:bg-secondary hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full bg-transparent'
