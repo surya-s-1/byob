@@ -19,40 +19,40 @@ export const auth = betterAuth({
 	user: {
 		additionalFields: {
 			username: {
-				type: "string",
+				type: 'string',
 				required: false, // We will generate it, so input isn't required
 			},
 			bio: {
-				type: "string",
+				type: 'string',
 				required: false,
 			},
 			dob: {
-				type: "date",
+				type: 'date',
 				required: false,
-			}
-		}
+			},
+		},
 	},
 	databaseHooks: {
 		user: {
 			create: {
 				before: async (user, context) => {
-					let username = '';
-					let isUnique = false;
-					let attempts = 0;
-					const maxAttempts = 5;
+					let generatedUsername = ''
+					let isUnique = false
+					let attempts = 0
+					const maxAttempts = 5
 
 					while (!isUnique && attempts < maxAttempts) {
 						const prefix = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '_')
 						const suffix = Math.floor(Math.random() * 10000)
 
-						const generatedUsername = `${prefix}_${suffix}`
+						const proposedUsername = `${prefix}_${suffix}`
 
 						const existingUser = await db.query.user.findFirst({
-							where: eq(schema.user.username, generatedUsername)
+							where: eq(schema.user.username, proposedUsername),
 						})
 
 						if (!existingUser) {
-							username = generatedUsername
+							generatedUsername = proposedUsername
 							isUnique = true
 						}
 
@@ -60,19 +60,19 @@ export const auth = betterAuth({
 					}
 
 					if (!isUnique) {
-						username = `User${Date.now()}`
+						generatedUsername = `User${Date.now()}`
 					}
 
 					return {
 						data: {
 							...user,
-							username: username,
-							bio: "New member of the community!"
-						}
+							username: generatedUsername,
+							bio: 'New member of the community!',
+						},
 					}
-				}
-			}
-		}
+				},
+			},
+		},
 	},
 	socialProviders: {
 		google: {
