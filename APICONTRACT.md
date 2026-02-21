@@ -861,7 +861,7 @@ RESPONSE:
 #### Get Article
 
 ```
-GET /api/articles/:slug
+GET /api/articles/slug/:slug
 ```
 
 HEADERS:
@@ -884,7 +884,7 @@ RESPONSE:
 #### Delete Article
 
 ```
-DELETE /api/articles/:id
+DELETE /api/articles/id/:id
 
 ```
 
@@ -947,7 +947,7 @@ RESPONSE:
 #### Get Draft (Load Editor)
 
 ```
-GET /api/drafts/:draftId
+GET /api/drafts/:id
 ```
 
 HEADERS:
@@ -970,7 +970,7 @@ RESPONSE:
 #### Save Draft
 
 ```
-PUT /api/drafts/:draftId
+PUT /api/drafts/:id
 ```
 
 HEADERS:
@@ -1005,7 +1005,7 @@ RESPONSE:
 #### Acquire Edit Lock (Concurrency)
 
 ```
-POST /api/drafts/:draftId/lock
+POST /api/drafts/:id/lock
 ```
 
 HEADERS:
@@ -1031,7 +1031,7 @@ RESPONSE:
 _This moves data from `article_drafts` to `articles`._
 
 ```
-POST /api/drafts/:draftId/publish
+POST /api/drafts/:id/publish
 ```
 
 HEADERS:
@@ -1074,7 +1074,7 @@ RESPONSE:
 #### Create Series
 
 ```
-POST /api/publications/:id/series
+POST /api/series
 ```
 
 HEADERS:
@@ -1091,6 +1091,7 @@ BODY:
 ```
 {
     "slug": string,
+    "publicationId": string,
     "displayName": string,
     "description": string,
     "sortOrder": number
@@ -1109,7 +1110,7 @@ RESPONSE:
 #### Get Series Details
 
 ```
-GET /api/series/:slug
+GET /api/series/slug/:slug
 ```
 
 HEADERS:
@@ -1132,7 +1133,7 @@ RESPONSE:
 #### Get Series Articles
 
 ```
-GET /api/series/:slug/articles?page=1&limit=20
+GET /api/series/slug/:slug/articles?page=1&limit=20
 ```
 
 HEADERS:
@@ -1156,7 +1157,7 @@ RESPONSE:
 #### Manage Series Articles Order
 
 ```
-PUT /api/series/:id/articles/order
+PUT /api/series/id/:id/articles/order
 ```
 
 HEADERS:
