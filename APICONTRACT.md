@@ -1393,7 +1393,7 @@ RESPONSE:
 #### Get Comments
 
 ```
-GET /api/articles/:slug/comments?page=1&limit=50
+GET /api/articles/slug/:slug/comments?page=1&limit=50
 ```
 
 HEADERS:
@@ -1441,7 +1441,7 @@ RESPONSE:
 #### Post Comment
 
 ```
-POST /api/articles/:id/comments
+POST /api/articles/id/:id/comments
 ```
 
 HEADERS:
