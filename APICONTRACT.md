@@ -495,7 +495,7 @@ RESPONSE:
 #### Get Publication
 
 ```
-GET /api/publications/:slug
+GET /api/publications/slug/:slug
 
 ```
 
@@ -519,7 +519,7 @@ RESPONSE:
 #### Get Publication Articles
 
 ```
-GET /api/publications/:slug/articles?page=1&limit=20
+GET /api/publications/slug/:slug/articles?page=1&limit=20
 ```
 
 HEADERS:
@@ -543,7 +543,7 @@ RESPONSE:
 #### Get Publication Series
 
 ```
-GET /api/publications/:slug/series?page=1&limit=20
+GET /api/publications/slug/:slug/series?page=1&limit=20
 ```
 
 HEADERS:
@@ -567,7 +567,7 @@ RESPONSE:
 #### Update Publication
 
 ```
-PUT /api/publications/:id
+PUT /api/publications/id/:id
 
 ```
 
@@ -603,7 +603,7 @@ RESPONSE:
 #### Manage Publication Series Order
 
 ```
-PUT /api/publications/:id/series
+PUT /api/publications/id/:id/series
 
 ```
 
@@ -636,7 +636,7 @@ RESPONSE:
 #### Delete Publication
 
 ```
-DELETE /api/publications/:id
+DELETE /api/publications/id/:id
 ```
 
 HEADERS:
@@ -659,7 +659,7 @@ RESPONSE:
 #### Follow Publication
 
 ```
-POST /api/publications/:id/follow
+POST /api/publications/id/:id/follow
 ```
 
 HEADERS:
@@ -682,7 +682,7 @@ RESPONSE:
 #### Unfollow Publication
 
 ```
-POST /api/publications/:id/unfollow
+POST /api/publications/id/:id/unfollow
 ```
 
 HEADERS:
@@ -705,7 +705,7 @@ RESPONSE:
 #### Get Publication Members
 
 ```
-GET /api/publications/:slug/members?page=1&limit=20
+GET /api/publications/slug/:slug/members?page=1&limit=20
 ```
 
 HEADERS:
@@ -735,7 +735,7 @@ RESPONSE:
 #### Invite Member
 
 ```
-POST /api/publications/:id/members/invite
+POST /api/publications/id/:id/members/invite
 ```
 
 HEADERS:
@@ -768,7 +768,7 @@ RESPONSE:
 #### Remove Member
 
 ```
-DELETE /api/publications/:id/members/:userId
+DELETE /api/publications/id/:id/members/:userId
 ```
 
 HEADERS:
@@ -793,7 +793,7 @@ RESPONSE:
 #### Get Publication Invitations
 
 ```
-GET /api/publications/:slug/invitations?page=1&limit=20
+GET /api/publications/slug/:slug/invitations?page=1&limit=20
 ```
 
 HEADERS:
@@ -825,7 +825,7 @@ RESPONSE:
 #### Update Member Role
 
 ```
-PUT /api/publications/:id/members/:userId
+PUT /api/publications/id/:id/members/:userId
 ```
 
 HEADERS:
