@@ -2,16 +2,16 @@
 
 ```json
 {
-  "id": "uuid",
-  "username": "string",
-  "email": "string",
-  "name": "string",
-  "bio": "string | null",
-  "dob": "ISO8601 Date | null",
-  "image": "string | null",
-  "followersCount": "number",
-  "followingCount": "number",
-  "isFollowing": "boolean"
+	"id": "uuid",
+	"username": "string",
+	"email": "string",
+	"name": "string",
+	"bio": "string | null",
+	"dob": "ISO8601 Date | null",
+	"image": "string | null",
+	"followersCount": "number",
+	"followingCount": "number",
+	"isFollowing": "boolean"
 }
 ```
 
@@ -19,16 +19,16 @@
 
 ```json
 {
-  "id": "uuid",
-  "slug": "string",
-  "displayName": "string",
-  "displayDescription": "string | null",
-  "cover": "string | null",
-  "visibility": "PUBLIC | HIDDEN | LOCKED",
-  "followersCount": "number",
-  "isFollowing": "boolean",
-  "isMember": "boolean",
-  "myRole": "OWNER | EDITOR | REVIEWER | ADMIN | null"
+	"id": "uuid",
+	"slug": "string",
+	"displayName": "string",
+	"displayDescription": "string | null",
+	"cover": "string | null",
+	"visibility": "PUBLIC | HIDDEN | LOCKED",
+	"followersCount": "number",
+	"isFollowing": "boolean",
+	"isMember": "boolean",
+	"myRole": "OWNER | EDITOR | REVIEWER | ADMIN | null"
 }
 ```
 
@@ -56,13 +56,13 @@
 
 ```json
 {
-  "id": "uuid",
-  "slug": "string",
-  "displayName": "string",
-  "displayDescription": "string | null",
-  "sortOrder": "number",
-  "articleCount": "number",
-  "publication": { "id": "uuid", "slug": "string", "displayName": "string" }
+	"id": "uuid",
+	"slug": "string",
+	"displayName": "string",
+	"displayDescription": "string | null",
+	"sortOrder": "number",
+	"articleCount": "number",
+	"publication": { "id": "uuid", "slug": "string", "displayName": "string" }
 }
 ```
 
@@ -84,13 +84,13 @@
 
 ```json
 {
-  "id": "uuid",
-  "content": "string",
-  "createdAt": "ISO8601 Date",
-  "user": { "id": "text", "name": "string", "image": "string" },
-  "parentId": "uuid | null",
-  "articleId": "uuid",
-  "replyCount": "number"
+	"id": "uuid",
+	"content": "string",
+	"createdAt": "ISO8601 Date",
+	"user": { "id": "text", "name": "string", "image": "string" },
+	"parentId": "uuid | null",
+	"articleId": "uuid",
+	"replyCount": "number"
 }
 ```
 
@@ -98,12 +98,12 @@
 
 ```json
 {
-  "id": "uuid",
-  "displayName": "string",
-  "visibility": "PUBLIC | UNLISTED | PRIVATE",
-  "articleCount": "number",
-  "createdAt": "ISO8601 Date",
-  "ownedBy": { "id": "text", "name": "string", "image": "string" }
+	"id": "uuid",
+	"displayName": "string",
+	"visibility": "PUBLIC | UNLISTED | PRIVATE",
+	"articleCount": "number",
+	"createdAt": "ISO8601 Date",
+	"ownedBy": { "id": "text", "name": "string", "image": "string" }
 }
 ```
 
@@ -373,6 +373,7 @@ RESPONSE:
     "error": string | null
 }
 ```
+
 ---
 
 #### Reject Invitation
@@ -1027,7 +1028,7 @@ RESPONSE:
 
 #### Publish Draft
 
-*This moves data from `article_drafts` to `articles`.*
+_This moves data from `article_drafts` to `articles`._
 
 ```
 POST /api/drafts/:draftId/publish
