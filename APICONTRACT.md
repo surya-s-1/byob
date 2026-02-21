@@ -1635,3 +1635,5 @@ RESPONSE:
 #### Unpublish Article
 
 #### Move article to review after publish
+
+#### On review success/failure move article to published/draft
