@@ -60,7 +60,7 @@ CREATE TABLE articles (
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
     created_by UUID NOT NULL REFERENCES users(id),
-    deleted_at TIMESTAMPTZ,
+    deleted_at TIMESTAMPTZ
 );
 
 CREATE TABLE article_drafts (
