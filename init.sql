@@ -120,13 +120,11 @@ CREATE INDEX idx_article_authors_user ON article_authors(user_id);
 CREATE TABLE series (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     publication_id UUID NOT NULL REFERENCES publications(id),
-    slug TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
     display_name TEXT NOT NULL,
     display_description TEXT,
     sort_order INTEGER NOT NULL DEFAULT 0,
-    deleted_at TIMESTAMPTZ,
-    UNIQUE (publication_id, slug)
-    -- Slug unique per publication
+    deleted_at TIMESTAMPTZ
 );
 
 CREATE TABLE series_articles (

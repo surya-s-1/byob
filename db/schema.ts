@@ -238,13 +238,12 @@ export const series = pgTable(
 		publicationId: uuid('publication_id')
 			.notNull()
 			.references(() => publications.id),
-		slug: text('slug').notNull(),
+		slug: text('slug').unique().notNull(),
 		displayName: text('display_name').notNull(),
 		displayDescription: text('display_description'),
 		sortOrder: integer('sort_order').notNull().default(0),
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
-	},
-	(t) => [unique().on(t.publicationId, t.slug)]
+	}
 )
 
 export const seriesArticles = pgTable(
