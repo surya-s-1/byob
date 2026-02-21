@@ -3,7 +3,7 @@ import { Pool } from 'pg'
 import * as schema from './schema'
 
 const pool = new Pool({
-	connectionString: process.env.BETTER_AUTH_DB_URL,
+	connectionString: process.env.DATABASE_URL!,
 })
 
 export const db = drizzle(pool, { schema })
