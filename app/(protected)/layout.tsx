@@ -1,4 +1,3 @@
-import Header from '@/components/Header'
 import { headers } from 'next/headers'
 import { getCurrentUser } from '@/lib/utils'
 
@@ -15,10 +14,5 @@ export default async function ProtectedLayout({ children }: any) {
 		)
 	}
 
-	return (
-		<div>
-			<Header user={user} />
-			{children}
-		</div>
-	)
+	return children
 }

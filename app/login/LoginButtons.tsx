@@ -30,14 +30,14 @@ export default function LoginButtons({ callbackUrl }: { callbackUrl?: string }) 
 		<div className='flex flex-col gap-md'>
 			<button
 				onClick={() => handleSignIn('google')}
-				className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:bg-secondary hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full bg-transparent'
+				className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full bg-transparent'
 			>
 				<Image src='/Google.svg' alt='Google' width={20} height={20} />
 				<span>Continue with Google</span>
 			</button>
 			<button
 				onClick={() => handleSignIn('github')}
-				className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:bg-secondary hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full bg-transparent'
+				className='flex items-center justify-center gap-md border border-border rounded-md px-lg py-md text-center hover:scale-[1.02] active:scale-[0.98] transition-all duration-fast cursor-pointer w-full bg-transparent'
 			>
 				<Image
 					src='/GitHub.svg'

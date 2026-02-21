@@ -1,10 +1,9 @@
 @import 'tailwindcss';
 
-/* 1. Define the manual dark mode variant */
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-	/* Spacing: Creates p-xs, m-sm, gap-md, etc. */
+	/* Spacing */
 	--spacing-xs: 4px;
 	--spacing-sm: 8px;
 	--spacing-md: 12px;
@@ -21,8 +20,8 @@
 	--color-muted: var(--text-muted);
 	--color-inverse: var(--text-inverse);
 	--color-border: var(--border-default);
-	--color-brand: var(--brand-primary);
-	--color-brand-hover: var(--brand-hover);
+
+	--background-image-brand: var(--brand-primary);
 	--color-error: #ef4444;
 
 	/* UI Elements */
@@ -35,12 +34,18 @@
 
 	/* Animation */
 	--animate-fast: 150ms ease-in-out;
+	--animate-shine: shine 0.75s ease-out;
+
+	@keyframes shine {
+		100% {
+			left: 125%;
+		}
+	}
 }
 
 @layer base {
 	:root {
-		--brand-primary: #3b82f6;
-		--brand-hover: #2563eb;
+		--brand-primary: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #3b82f6 100%);
 		--bg-primary: #ffffff;
 		--bg-secondary: #f9fafb;
 		--bg-elevated: #ffffff;
@@ -66,6 +71,12 @@
 		--shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.5);
 	}
 
+	body {
+		background: var(--bg-primary);
+		color: var(--text-primary);
+		font-family: Inter, system-ui, Arial;
+	}
+
 	html,
 	body,
 	div,
@@ -75,38 +86,107 @@
 		scrollbar-color: var(--text-primary) transparent;
 	}
 
-	html::-webkit-scrollbar,
-	body::-webkit-scrollbar,
-	div::-webkit-scrollbar,
-	p::-webkit-scrollbar,
-	textarea::-webkit-scrollbar {
+	/* Webkit Scrollbars */
+	*::-webkit-scrollbar {
 		width: 6px;
 		height: 6px;
 	}
 
-	html::-webkit-scrollbar-track,
-	body::-webkit-scrollbar-track,
-	div::-webkit-scrollbar-track,
-	p::-webkit-scrollbar-track,
-	textarea::-webkit-scrollbar-track {
+	*::-webkit-scrollbar-track {
 		background: transparent;
 	}
 
-	html::-webkit-scrollbar-thumb,
-	body::-webkit-scrollbar-thumb,
-	div::-webkit-scrollbar-thumb,
-	p::-webkit-scrollbar-thumb,
-	textarea::-webkit-scrollbar-thumb {
+	*::-webkit-scrollbar-thumb {
 		background-color: var(--text-primary);
 		border-radius: 20px;
 	}
 
-	html::-webkit-scrollbar-thumb:hover,
-	body::-webkit-scrollbar-thumb:hover,
-	div::-webkit-scrollbar-thumb:hover,
-	p::-webkit-scrollbar-thumb:hover,
-	textarea::-webkit-scrollbar-thumb:hover {
+	*::-webkit-scrollbar-thumb:hover {
 		background-color: var(--text-muted);
+	}
+}
+
+@layer components {
+	.btn-brand {
+		@apply relative overflow-hidden inline-flex items-center justify-center;
+		background: var(--brand-primary);
+		color: white;
+	}
+
+	.btn-brand::after {
+		content: "";
+		@apply absolute top-0 -left-[75%] w-1/2 h-full block;
+		background: linear-gradient(to right, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+		transform: skewX(-25deg);
+	}
+
+	.btn-brand:hover::after {
+		@apply animate-shine;
+	}
+
+	/* WYSIWYG Editor Styles */
+	.wysiwyg-editor h1 {
+		@apply text-4xl font-extrabold my-4 text-main;
+	}
+
+	.wysiwyg-editor h2 {
+		@apply text-3xl font-bold mt-3 mb-2 pb-2 text-main;
+	}
+
+	.wysiwyg-editor h3 {
+		@apply text-2xl font-bold mt-2 mb-1 text-main;
+	}
+
+	.wysiwyg-editor p {
+		@apply mb-2 min-h-[1.5rem];
+	}
+
+	.wysiwyg-editor ul {
+		@apply ml-6 list-disc mb-3;
+	}
+
+	.wysiwyg-editor ol {
+		@apply ml-6 list-decimal mb-3;
+	}
+
+	.wysiwyg-editor li {
+		@apply mb-1 text-main;
+	}
+
+	.wysiwyg-editor blockquote {
+		@apply border-l-4 border-border pl-4 py-1 my-4 italic text-subtle rounded-r-md;
+	}
+
+	.wysiwyg-editor strong,
+	.wysiwyg-editor b {
+		@apply font-bold text-main;
+	}
+
+	.wysiwyg-editor em,
+	.wysiwyg-editor i {
+		@apply italic;
+	}
+
+	.wysiwyg-editor u {
+		@apply underline underline-offset-4;
+	}
+
+	.wysiwyg-editor s,
+	.wysiwyg-editor del {
+		@apply line-through text-subtle;
+	}
+
+	.wysiwyg-editor a {
+		@apply text-main underline font-medium cursor-pointer hover:opacity-80;
+	}
+
+	.wysiwyg-editor code {
+		@apply text-main p-1 rounded-sm text-sm font-mono;
+	}
+
+	.wysiwyg-editor:empty:before {
+		content: attr(placeholder);
+		@apply text-muted pointer-events-none;
 	}
 }
 
@@ -115,141 +195,4 @@
 		scrollbar-width: thin;
 		scrollbar-color: var(--text-primary) transparent;
 	}
-
-	.thin-scrollbar::-webkit-scrollbar {
-		width: 6px;
-		height: 6px;
-	}
-
-	.thin-scrollbar::-webkit-scrollbar-track {
-		background: transparent;
-	}
-
-	.thin-scrollbar::-webkit-scrollbar-thumb {
-		background-color: var(--text-primary);
-		border-radius: 20px;
-	}
-
-	.thin-scrollbar::-webkit-scrollbar-thumb:hover {
-		background-color: var(--text-muted);
-	}
-}
-
-@layer components {
-	.wysiwyg-editor h1 {
-		font-size: 2.25rem;
-		line-height: 2.5rem;
-		font-weight: 800;
-		margin-top: 1rem;
-		margin-bottom: 1rem;
-		color: var(--color-main);
-	}
-
-	.wysiwyg-editor h2 {
-		font-size: 1.875rem;
-		line-height: 2.25rem;
-		font-weight: 700;
-		margin-top: 0.75rem;
-		margin-bottom: 0.5rem;
-		padding-bottom: 0.5rem;
-		color: var(--color-main);
-	}
-
-	.wysiwyg-editor h3 {
-		font-size: 1.5rem;
-		line-height: 2rem;
-		font-weight: 700;
-		margin-top: 0.5rem;
-		margin-bottom: 0.25rem;
-		color: var(--color-main);
-	}
-
-	.wysiwyg-editor p {
-		margin-bottom: 0.5rem;
-		min-height: 1.5rem;
-	}
-
-	.wysiwyg-editor ul {
-		margin-left: 1.5rem;
-		list-style-type: disc;
-		margin-bottom: 0.75rem;
-	}
-
-	.wysiwyg-editor ol {
-		margin-left: 1.5rem;
-		list-style-type: decimal;
-		margin-bottom: 0.75rem;
-	}
-
-	.wysiwyg-editor li {
-		margin-bottom: 0.25rem;
-		color: var(--color-main);
-	}
-
-	.wysiwyg-editor blockquote {
-		border-left: 4px solid var(--color-border);
-		padding-left: 1rem;
-		padding-top: 0.25rem;
-		padding-bottom: 0.25rem;
-		margin-top: 1rem;
-		margin-bottom: 1rem;
-		font-style: italic;
-		color: var(--color-subtle);
-		border-top-right-radius: 0.375rem;
-		border-bottom-right-radius: 0.375rem;
-	}
-
-	.wysiwyg-editor strong,
-	.wysiwyg-editor b {
-		font-weight: 700;
-		color: var(--color-main);
-	}
-
-	.wysiwyg-editor em,
-	.wysiwyg-editor i {
-		font-style: italic;
-	}
-
-	.wysiwyg-editor u {
-		text-decoration: underline;
-		text-underline-offset: 4px;
-	}
-
-	.wysiwyg-editor s,
-	.wysiwyg-editor strike,
-	.wysiwyg-editor del {
-		text-decoration: line-through;
-		color: var(--color-subtle);
-	}
-
-	.wysiwyg-editor a {
-		color: var(--color-main);
-		text-decoration: underline;
-		cursor: pointer;
-		font-weight: 500;
-	}
-
-	.wysiwyg-editor a:hover {
-		opacity: 0.8;
-	}
-
-	.wysiwyg-editor code {
-		color: var(--color-main);
-		padding: 0.125rem 0.25rem;
-		border-radius: 0.125rem;
-		font-size: 0.875rem;
-		font-family: monospace;
-	}
-
-	.wysiwyg-editor:empty:before {
-		content: attr(placeholder);
-		color: var(--color-muted);
-		pointer-events: none;
-	}
-}
-
-body {
-	background: var(--bg-primary);
-	color: var(--text-primary);
-	font-family: Inter, system-ui, Arial;
 }

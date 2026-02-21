@@ -15,7 +15,7 @@ export default async function LoginPage({
 	const { callbackUrl } = await searchParams
 
 	return (
-		<div className='w-screen h-screen flex items-center justify-center bg-secondary'>
+		<div className='w-full h-full flex items-center justify-center'>
 			<Card className='w-fit max-w-[40%] p-2xl'>
 				<div className='text-center mb-xl'>
 					<h1 className='text-2xl font-semibold text-main'>Welcome to BYOB!</h1>

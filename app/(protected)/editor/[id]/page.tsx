@@ -16,7 +16,7 @@ export default async function Page({ params }: any) {
 	const draft = await getDraft(id)
 
 	return (
-		<div className='min-h-screen bg-primary text-main pb-2xl'>
+		<div className='bg-primary text-main pb-2xl'>
 			<div className='max-w-4xl mx-auto px-xl py-2xl'>
 				<Head draft={draft} />
 				<Content initialMarkdown={draft.content} />

@@ -12,7 +12,7 @@ export default function ArticleRenderer({ markdown }: { markdown: string }) {
 	const blocks = parseToBlocks(markdown)
 
 	return (
-		<div className='article-content wysiwyg-editor'>
+		<div className='wysiwyg-editor'>
 			{blocks.map((block) => {
 				const props = { block, readOnly: true }
 
