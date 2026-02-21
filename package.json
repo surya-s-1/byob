@@ -8,8 +8,8 @@
 		"start": "next start",
 		"lint": "eslint",
 		"format": "prettier --write .",
-		"db:generate": "drizzle-kit generate",
-		"db:push": "drizzle-kit push"
+		"auth:generate": "drizzle-kit generate",
+		"auth:push": "drizzle-kit push"
 	},
 	"dependencies": {
 		"better-auth": "^1.4.18",
