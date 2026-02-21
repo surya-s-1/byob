@@ -1,6 +1,7 @@
 import { betterAuth } from 'better-auth'
 import { admin } from 'better-auth/plugins'
 import { drizzleAdapter } from 'better-auth/adapters/drizzle'
+import { eq } from 'drizzle-orm'
 import { db } from '../db/client'
 import * as schema from '../db/schema'
 
@@ -35,10 +36,32 @@ export const auth = betterAuth({
 		user: {
 			create: {
 				before: async (user, context) => {
-					const prefix = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '_')
-					const suffix = Math.floor(Math.random() * 10000)
+					let username = '';
+					let isUnique = false;
+					let attempts = 0;
+					const maxAttempts = 5;
 
-					const username = `${prefix}${suffix}`
+					while (!isUnique && attempts < maxAttempts) {
+						const prefix = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '_')
+						const suffix = Math.floor(Math.random() * 10000)
+
+						const usernameProposal = `${prefix}_${suffix}`
+
+						const existingUser = await db.query.user.findFirst({
+							where: eq(schema.user.username, usernameProposal)
+						})
+
+						if (!existingUser) {
+							username = usernameProposal
+							isUnique = true
+						}
+
+						attempts++
+					}
+
+					if (!isUnique) {
+						username = `User${Date.now()}`
+					}
 
 					return {
 						data: {
