@@ -222,7 +222,7 @@ RESPONSE:
 
 ```
 {
-    "followers": User[],
+    "followers": Partial<User>[],
     "pagination": { "total": number, "page": number },
     "error": string | null
 }
@@ -249,7 +249,7 @@ RESPONSE:
 
 ```
 {
-    "following": User[],
+    "following": Partial<User>[],
     "pagination": { "total": number, "page": number },
     "error": string | null
 }
@@ -329,7 +329,7 @@ RESPONSE:
 #### Get Publication Articles
 
 ```
-GET /api/publications/:slug/articles?include=title,subtitle,cover,readTime,publishedAt,primaryAuthors&page=1&limit=20
+GET /api/publications/:slug/articles?page=1&limit=20
 
 ```
 
@@ -346,7 +346,7 @@ RESPONSE:
 
 ```
 {
-    "articles": Article[] | null,
+    "articles": Partial<Article>[] | null,
     "pagination": { "total": number, "page": number },
     "error": string | null
 }
@@ -474,7 +474,7 @@ RESPONSE:
 #### Get Publication Members
 
 ```
-GET /api/publications/:slug/members?include=name,image,role&page=1&limit=20
+GET /api/publications/:slug/members?page=1&limit=20
 
 ```
 
@@ -493,7 +493,7 @@ RESPONSE:
 {
     "members": [
         {
-            "user": User,
+            "user": Partial<User>,
             "role": "OWNER" | "EDITOR" | "REVIEWER" | "ADMIN",
             "joinedAt": Date
         }
@@ -571,7 +571,7 @@ RESPONSE:
 
 ### IV. Article & Reading API
 
-#### Get Article Details
+#### Get Article
 
 ```
 GET /api/articles/:slug
@@ -924,7 +924,7 @@ RESPONSE:
 #### Get Series Articles
 
 ```
-GET /api/series/:slug/articles?include=title,subtitle,cover,readTime,publishedAt,primaryAuthors&page=1&limit=20
+GET /api/series/:slug/articles?page=1&limit=20
 
 ```
 
@@ -941,7 +941,7 @@ RESPONSE:
 
 ```
 {
-    "articles": Article[] | null,
+    "articles": Partial<Article>[] | null,
     "pagination": { "total": number, "page": number },
     "error": string | null
 }
@@ -1153,7 +1153,7 @@ RESPONSE:
 
 ### VIII. Comments API
 
-#### Get Article Comments
+#### Get Comments
 
 ```
 GET /api/articles/:slug/comments?page=1&limit=50
