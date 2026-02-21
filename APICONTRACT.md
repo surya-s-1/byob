@@ -4,8 +4,10 @@
 {
   "id": "uuid",
   "username": "string",
+  "email": "string",
   "name": "string",
   "bio": "string | null",
+  "dob": "ISO8601 Date | null",
   "image": "string | null",
   "followersCount": "number",
   "followingCount": "number",
@@ -96,10 +98,10 @@
 
 ### II. User API
 
-#### Get User Profile
+#### Get User's Profile
 
 ```
-GET /api/user/:username
+GET /api/user/:username/profile
 
 ```
 
@@ -107,7 +109,7 @@ HEADERS:
 
 ```
 {
-    "Authorization": "Bearer <token>" (Optional, affects isFollowing)
+    "Authorization": "Bearer <token>"
 }
 ```
 
@@ -115,15 +117,17 @@ RESPONSE:
 
 ```
 {
-    "user": User | null,
+    "user": Partial<User> | null,
     "error": string | null
 }
 ```
 
-#### Update My Profile
+---
+
+#### Update User's Profile
 
 ```
-PUT /api/user/me
+PUT /api/user/:username/profile
 
 ```
 
@@ -142,6 +146,7 @@ BODY:
 {
     "name": string,
     "bio": string,
+    "dob": string,
     "image": string
 }
 ```
@@ -150,10 +155,12 @@ RESPONSE:
 
 ```
 {
-    "user": User | null,
+    "updated": boolean,
     "error": string | null
 }
 ```
+
+---
 
 #### Follow User
 
