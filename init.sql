@@ -1,5 +1,5 @@
 CREATE TABLE users (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    id TEXT PRIMARY KEY DEFAULT gen_random_uuid(),
     username TEXT UNIQUE NOT NULL,
     first_name TEXT NOT NULL,
     middle_name TEXT,
@@ -15,8 +15,8 @@ CREATE TABLE users (
 -- users: No extra indexes needed (PK and UNIQUE constraints handle IDs and Usernames).
 
 CREATE TABLE user_follows (
-    followed_user_id UUID NOT NULL REFERENCES users(id),
-    followed_by_user_id UUID NOT NULL REFERENCES users(id),
+    followed_user_id TEXT NOT NULL REFERENCES users(id),
+    followed_by_user_id TEXT NOT NULL REFERENCES users(id),
     followed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (followed_user_id, followed_by_user_id)
     -- "Who follows this user?" is covered by this Primary Key.
@@ -37,7 +37,7 @@ CREATE TABLE publications (
 
 CREATE TABLE publication_members (
     publication_id UUID NOT NULL REFERENCES publications(id),
-    user_id UUID NOT NULL REFERENCES users(id),
+    user_id TEXT NOT NULL REFERENCES users(id),
     user_role TEXT NOT NULL CHECK (user_role IN ('OWNER', 'EDITOR', 'REVIEWER', 'ADMIN')),
     joined_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (publication_id, user_id)
@@ -49,7 +49,7 @@ CREATE INDEX idx_pub_members_user ON publication_members(user_id);
 
 CREATE TABLE publication_follows (
     publication_id UUID NOT NULL REFERENCES publications(id),
-    user_id UUID NOT NULL REFERENCES users(id),
+    user_id TEXT NOT NULL REFERENCES users(id),
     followed_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     PRIMARY KEY (publication_id, user_id)
     -- "Who are followers of this publication?" is covered by this Primary Key.
@@ -73,7 +73,7 @@ CREATE TABLE articles (
     scheduled_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ,
-    created_by UUID NOT NULL REFERENCES users(id),
+    created_by TEXT NOT NULL REFERENCES users(id),
     deleted_at TIMESTAMPTZ
 );
 
@@ -96,8 +96,8 @@ CREATE TABLE article_drafts (
     subtitle TEXT,
     content TEXT,
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    created_by UUID NOT NULL REFERENCES users(id),
-    locked_by_user_id UUID REFERENCES users(id),
+    created_by TEXT NOT NULL REFERENCES users(id),
+    locked_by_user_id TEXT REFERENCES users(id),
     locked_until TIMESTAMPTZ
 );
 
@@ -106,7 +106,7 @@ CREATE INDEX idx_drafts_article ON article_drafts(article_id);
 
 CREATE TABLE article_authors (
     article_id UUID NOT NULL REFERENCES articles(id),
-    user_id UUID NOT NULL REFERENCES users(id),
+    user_id TEXT NOT NULL REFERENCES users(id),
     is_primary BOOLEAN NOT NULL DEFAULT FALSE,
     PRIMARY KEY (article_id, user_id)
     -- "Who are authors of this article?" is covered by this Primary Key.
@@ -140,7 +140,7 @@ CREATE INDEX idx_series_articles_article ON series_articles(article_id);
 
 CREATE TABLE collections (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES users(id),
+    user_id TEXT NOT NULL REFERENCES users(id),
     display_name TEXT NOT NULL,
     visibility TEXT NOT NULL CHECK (visibility IN ('PUBLIC', 'UNLISTED', 'PRIVATE')),
     deleted_at TIMESTAMPTZ
@@ -162,7 +162,7 @@ CREATE INDEX idx_collection_articles_article ON collection_articles(article_id);
 
 CREATE TABLE comments (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    user_id UUID NOT NULL REFERENCES users(id),
+    user_id TEXT NOT NULL REFERENCES users(id),
     article_id UUID NOT NULL REFERENCES articles(id),
     parent_id UUID REFERENCES comments(id),
     content TEXT NOT NULL,
