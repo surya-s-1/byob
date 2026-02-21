@@ -11,7 +11,6 @@
   "followingCount": "number",
   "isFollowing": "boolean"
 }
-
 ```
 
 **Publication**
@@ -29,7 +28,6 @@
   "isMember": "boolean",
   "myRole": "OWNER | EDITOR | REVIEWER | ADMIN | null"
 }
-
 ```
 
 **Article**
@@ -50,7 +48,6 @@
   "publication": { "id": "uuid", "slug": "string", "displayName": "string" },
   "series": { "id": "uuid", "slug": "string", "displayName": "string", "sortOrder": "number" } | null
 }
-
 ```
 
 **Series**
@@ -65,7 +62,6 @@
   "articleCount": "number",
   "publication": { "id": "uuid", "slug": "string", "displayName": "string" }
 }
-
 ```
 
 **Draft (Private)**
@@ -80,7 +76,6 @@
   "lockedUntil": "ISO8601 Date | null",
   "lastUpdated": "ISO8601 Date"
 }
-
 ```
 
 **Comment**
@@ -95,7 +90,6 @@
   "articleId": "uuid",
   "replyCount": "number"
 }
-
 ```
 
 ---
@@ -115,7 +109,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional, affects isFollowing)
 }
-
 ```
 
 RESPONSE:
@@ -125,7 +118,6 @@ RESPONSE:
     "user": User | null,
     "error": string | null
 }
-
 ```
 
 #### Update My Profile
@@ -142,7 +134,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -153,7 +144,6 @@ BODY:
     "bio": string,
     "image": string
 }
-
 ```
 
 RESPONSE:
@@ -163,7 +153,6 @@ RESPONSE:
     "user": User | null,
     "error": string | null
 }
-
 ```
 
 #### Follow User
@@ -179,7 +168,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -189,7 +177,6 @@ RESPONSE:
     "followed": boolean,
     "error": string | null
 }
-
 ```
 
 #### Unfollow User
@@ -205,7 +192,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -215,14 +201,12 @@ RESPONSE:
     "unfollowed": boolean,
     "error": string | null
 }
-
 ```
 
 #### Get User's Followers
 
 ```
 GET /api/user/:username/followers?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -231,7 +215,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -242,14 +225,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Get User's Following
 
 ```
 GET /api/user/:username/following?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -258,7 +239,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -269,7 +249,6 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 ---
@@ -278,7 +257,6 @@ RESPONSE:
 
 ```
 GET /api/user/:username/articles?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -287,7 +265,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -298,7 +275,6 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 ---
@@ -307,7 +283,6 @@ RESPONSE:
 
 ```
 GET /api/user/:username/publications?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -316,7 +291,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -327,7 +301,6 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 ---
@@ -437,7 +410,6 @@ RESPONSE:
 
 ```
 GET /api/user/:username/comments?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -446,7 +418,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -457,7 +428,6 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 ---
@@ -478,7 +448,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -491,7 +460,6 @@ BODY:
     "cover": string,
     "visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
 }
-
 ```
 
 RESPONSE:
@@ -501,7 +469,6 @@ RESPONSE:
     "publication": { "id": string, "slug": string } | null,
     "error": string | null
 }
-
 ```
 
 #### Get Publication
@@ -517,7 +484,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -527,14 +493,12 @@ RESPONSE:
     "publication": Publication | null,
     "error": string | null
 }
-
 ```
 
 #### Get Publication Articles
 
 ```
 GET /api/publications/:slug/articles?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -543,7 +507,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -554,14 +517,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Get Publication Series
 
 ```
 GET /api/publications/:slug/series?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -570,7 +531,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -581,7 +541,6 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Update Publication
@@ -598,7 +557,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -610,7 +568,6 @@ BODY:
     "cover": string,
     "visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
 }
-
 ```
 
 RESPONSE:
@@ -620,7 +577,6 @@ RESPONSE:
     "publication": Publication | null,
     "error": string | null
 }
-
 ```
 
 #### Manage Publication Series Order
@@ -637,7 +593,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -646,7 +601,6 @@ BODY:
 {
     "series": { "seriesId": string, "sortOrder": number }[]
 }
-
 ```
 
 RESPONSE:
@@ -656,14 +610,12 @@ RESPONSE:
     "updated": boolean,
     "error": string | null
 }
-
 ```
 
 #### Delete Publication
 
 ```
 DELETE /api/publications/:id
-
 ```
 
 HEADERS:
@@ -672,7 +624,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -682,14 +633,12 @@ RESPONSE:
     "deleted": boolean,
     "error": string | null
 }
-
 ```
 
 #### Follow Publication
 
 ```
 POST /api/publications/:id/follow
-
 ```
 
 HEADERS:
@@ -698,7 +647,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -708,14 +656,12 @@ RESPONSE:
     "followed": boolean,
     "error": string | null
 }
-
 ```
 
 #### Unfollow Publication
 
 ```
 POST /api/publications/:id/unfollow
-
 ```
 
 HEADERS:
@@ -724,7 +670,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -734,14 +679,12 @@ RESPONSE:
     "unfollowed": boolean,
     "error": string | null
 }
-
 ```
 
 #### Get Publication Members
 
 ```
 GET /api/publications/:slug/members?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -750,7 +693,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -767,14 +709,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Invite Member
 
 ```
 POST /api/publications/:id/members/invite
-
 ```
 
 HEADERS:
@@ -784,7 +724,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -794,7 +733,6 @@ BODY:
     "userId": string,
     "role": "EDITOR" | "REVIEWER" | "ADMIN"
 }
-
 ```
 
 RESPONSE:
@@ -804,14 +742,12 @@ RESPONSE:
     "invited": boolean,
     "error": string | null
 }
-
 ```
 
 #### Remove Member
 
 ```
 DELETE /api/publications/:id/members/:userId
-
 ```
 
 HEADERS:
@@ -820,7 +756,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -830,7 +765,6 @@ RESPONSE:
     "removed": boolean,
     "error": string | null
 }
-
 ```
 
 ---
@@ -907,7 +841,6 @@ RESPONSE:
 
 ```
 GET /api/articles/:slug
-
 ```
 
 HEADERS:
@@ -916,7 +849,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -926,7 +858,6 @@ RESPONSE:
     "article": Article | null,
     "error": string | null
 }
-
 ```
 
 #### Delete Article
@@ -942,7 +873,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -952,7 +882,6 @@ RESPONSE:
     "deleted": boolean,
     "error": string | null
 }
-
 ```
 
 ---
@@ -963,7 +892,6 @@ RESPONSE:
 
 ```
 POST /api/publications/:id/drafts
-
 ```
 
 HEADERS:
@@ -973,7 +901,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -985,7 +912,6 @@ BODY:
     "content": string, // Initial content
     "cover": string
 }
-
 ```
 
 RESPONSE:
@@ -995,14 +921,12 @@ RESPONSE:
     "draft": { "id": string } | null,
     "error": string | null
 }
-
 ```
 
 #### Get Draft (Load Editor)
 
 ```
 GET /api/drafts/:draftId
-
 ```
 
 HEADERS:
@@ -1011,7 +935,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -1021,14 +944,12 @@ RESPONSE:
     "draft": Draft | null, // Check lockedBy to see if someone else is editing
     "error": string | null
 }
-
 ```
 
 #### Save Draft
 
 ```
 PUT /api/drafts/:draftId
-
 ```
 
 HEADERS:
@@ -1038,7 +959,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1050,7 +970,6 @@ BODY:
     "content": string,
     "cover": string
 }
-
 ```
 
 RESPONSE:
@@ -1060,14 +979,12 @@ RESPONSE:
     "saved": boolean,
     "error": string | null
 }
-
 ```
 
 #### Acquire Edit Lock (Concurrency)
 
 ```
 POST /api/drafts/:draftId/lock
-
 ```
 
 HEADERS:
@@ -1076,7 +993,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -1087,7 +1003,6 @@ RESPONSE:
     "lockedUntil": Date | null,
     "error": string | null
 }
-
 ```
 
 #### Publish Draft
@@ -1096,7 +1011,6 @@ RESPONSE:
 
 ```
 POST /api/drafts/:draftId/publish
-
 ```
 
 HEADERS:
@@ -1106,7 +1020,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1119,7 +1032,6 @@ BODY:
     "excerpt": string,
     "authors": [ { "userId": string, "isPrimary": boolean } ]
 }
-
 ```
 
 RESPONSE:
@@ -1132,7 +1044,6 @@ RESPONSE:
     "status": "PUBLISHED" | "SCHEDULED" | null,
     "error": string | null
 }
-
 ```
 
 ---
@@ -1143,7 +1054,6 @@ RESPONSE:
 
 ```
 POST /api/publications/:id/series
-
 ```
 
 HEADERS:
@@ -1153,7 +1063,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1165,7 +1074,6 @@ BODY:
     "description": string,
     "sortOrder": number
 }
-
 ```
 
 RESPONSE:
@@ -1175,14 +1083,12 @@ RESPONSE:
     "series": { "id": string, "slug": string } | null,
     "error": string | null
 }
-
 ```
 
 #### Get Series Details
 
 ```
 GET /api/series/:slug
-
 ```
 
 HEADERS:
@@ -1191,7 +1097,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -1201,14 +1106,12 @@ RESPONSE:
     "series": Series | null,
     "error": string | null
 }
-
 ```
 
 #### Get Series Articles
 
 ```
 GET /api/series/:slug/articles?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -1217,7 +1120,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -1228,14 +1130,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Manage Series Articles Order
 
 ```
 PUT /api/series/:id/articles/order
-
 ```
 
 HEADERS:
@@ -1245,7 +1145,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1254,7 +1153,6 @@ BODY:
 {
     "articles": { "articleId": string, "sortOrder": number }[]
 }
-
 ```
 
 RESPONSE:
@@ -1264,7 +1162,6 @@ RESPONSE:
     "updated": boolean,
     "error": string | null
 }
-
 ```
 
 ---
@@ -1275,7 +1172,6 @@ RESPONSE:
 
 ```
 GET /api/user/:username/collections?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -1284,7 +1180,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -1302,14 +1197,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Create Collection
 
 ```
 POST /api/collections
-
 ```
 
 HEADERS:
@@ -1319,7 +1212,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1329,7 +1221,6 @@ BODY:
     "displayName": string,
     "visibility": "PUBLIC" | "UNLISTED" | "PRIVATE"
 }
-
 ```
 
 RESPONSE:
@@ -1339,14 +1230,12 @@ RESPONSE:
     "collection": { "id": string } | null,
     "error": string | null
 }
-
 ```
 
 #### Add Article to Collection
 
 ```
 POST /api/collections/:id/articles
-
 ```
 
 HEADERS:
@@ -1356,7 +1245,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1365,7 +1253,6 @@ BODY:
 {
     "articleId": string
 }
-
 ```
 
 RESPONSE:
@@ -1375,14 +1262,12 @@ RESPONSE:
     "added": boolean,
     "error": string | null
 }
-
 ```
 
 #### Remove Article from Collection
 
 ```
 DELETE /api/collections/:id/articles/:articleId
-
 ```
 
 HEADERS:
@@ -1391,7 +1276,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -1401,7 +1285,6 @@ RESPONSE:
     "removed": boolean,
     "error": string | null
 }
-
 ```
 
 #### Delete Collection
@@ -1417,7 +1300,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -1427,7 +1309,6 @@ RESPONSE:
     "deleted": boolean,
     "error": string | null
 }
-
 ```
 
 ---
@@ -1438,7 +1319,6 @@ RESPONSE:
 
 ```
 GET /api/articles/:slug/comments?page=1&limit=50
-
 ```
 
 HEADERS:
@@ -1447,7 +1327,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -1458,14 +1337,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Get Replies (Thread)
 
 ```
 GET /api/comments/:id/replies?page=1&limit=20
-
 ```
 
 HEADERS:
@@ -1474,7 +1351,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>" (Optional)
 }
-
 ```
 
 RESPONSE:
@@ -1485,14 +1361,12 @@ RESPONSE:
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
-
 ```
 
 #### Post Comment
 
 ```
 POST /api/articles/:id/comments
-
 ```
 
 HEADERS:
@@ -1502,7 +1376,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1512,7 +1385,6 @@ BODY:
     "content": string,
     "parentId": string | null // Null for root comment
 }
-
 ```
 
 RESPONSE:
@@ -1522,14 +1394,12 @@ RESPONSE:
     "commented": boolean,
     "error": string | null
 }
-
 ```
 
 #### Update Comment
 
 ```
 PUT /api/comments/:id
-
 ```
 
 HEADERS:
@@ -1539,7 +1409,6 @@ HEADERS:
     "Authorization": "Bearer <token>",
     "Content-Type": "application/json"
 }
-
 ```
 
 BODY:
@@ -1548,7 +1417,6 @@ BODY:
 {
     "content": string
 }
-
 ```
 
 RESPONSE:
@@ -1558,14 +1426,12 @@ RESPONSE:
     "updated": boolean,
     "error": string | null
 }
-
 ```
 
 #### Delete Comment
 
 ```
 DELETE /api/comments/:id
-
 ```
 
 HEADERS:
@@ -1574,7 +1440,6 @@ HEADERS:
 {
     "Authorization": "Bearer <token>"
 }
-
 ```
 
 RESPONSE:
@@ -1584,5 +1449,4 @@ RESPONSE:
     "deleted": boolean,
     "error": string | null
 }
-
 ```
