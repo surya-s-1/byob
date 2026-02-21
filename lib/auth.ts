@@ -45,14 +45,14 @@ export const auth = betterAuth({
 						const prefix = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '_')
 						const suffix = Math.floor(Math.random() * 10000)
 
-						const usernameProposal = `${prefix}_${suffix}`
+						const generatedUsername = `${prefix}_${suffix}`
 
 						const existingUser = await db.query.user.findFirst({
-							where: eq(schema.user.username, usernameProposal)
+							where: eq(schema.user.username, generatedUsername)
 						})
 
 						if (!existingUser) {
-							username = usernameProposal
+							username = generatedUsername
 							isUnique = true
 						}
 
