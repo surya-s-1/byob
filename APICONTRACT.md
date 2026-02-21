@@ -1632,6 +1632,10 @@ RESPONSE:
 
 ## TODO
 
+#### Get article based on article hidden or locked or public status
+
+#### Add draft authors table in schema file
+
 #### Unpublish Article
 
 #### Move article to review after publish
