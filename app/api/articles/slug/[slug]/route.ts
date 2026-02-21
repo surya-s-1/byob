@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db/client'
-import { articles } from '@/db/schema'
-import { eq, and, isNull } from 'drizzle-orm'
+import { articles, userFollows, publicationFollows } from '@/db/schema'
+import { eq, and, isNull, inArray } from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
 export async function GET(
@@ -38,6 +38,31 @@ export async function GET(
             return NextResponse.json({ article: null, error: 'Article not found' }, { status: 404 })
         }
 
+        // Fetch follow status if user is logged in
+        let followedUserIds: string[] = []
+        let followsPublication = false
+
+        if (currentUser) {
+            const authorIds = articleData.authors.map((a) => a.user.id)
+            const userFollowsRecords = await db.query.userFollows.findMany({
+                where: and(
+                    eq(userFollows.followedByUserId, currentUser.id),
+                    inArray(userFollows.followedUserId, authorIds)
+                ),
+            })
+            followedUserIds = userFollowsRecords.map((f) => f.followedUserId)
+
+            if (articleData.publicationId) {
+                const pubFollow = await db.query.publicationFollows.findFirst({
+                    where: and(
+                        eq(publicationFollows.publicationId, articleData.publicationId),
+                        eq(publicationFollows.userId, currentUser.id)
+                    ),
+                })
+                followsPublication = !!pubFollow
+            }
+        }
+
         // Calculate read time
         const wordCount = articleData.content?.split(/\s+/).length || 0
         const readTime = Math.ceil(wordCount / 200) || 1
@@ -59,6 +84,7 @@ export async function GET(
                 name: a.user.name,
                 image: a.user.image,
                 isPrimary: a.isPrimary,
+                isFollowing: followedUserIds.includes(a.user.id),
             })),
             publication: articleData.publication
                 ? {
@@ -66,6 +92,7 @@ export async function GET(
                     slug: articleData.publication.slug,
                     displayName: articleData.publication.displayName,
                     cover: articleData.publication.cover,
+                    isFollowing: followsPublication,
                 }
                 : null,
             series:
