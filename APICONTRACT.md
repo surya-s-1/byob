@@ -856,7 +856,7 @@ RESPONSE:
 
 ---
 
-### IV. Article & Reading API
+### IV. Articles API
 
 #### Get Article
 
@@ -1236,6 +1236,43 @@ RESPONSE:
     "error": string | null
 }
 ```
+
+---
+
+#### Update Collection Details
+
+```
+PUT /api/collections/:id
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+}
+```
+
+BODY:
+
+```
+{
+    "displayName": string,
+    "visibility": "PUBLIC" | "UNLISTED" | "PRIVATE"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "updated": boolean,
+    "error": string | null
+}
+```
+
+---
 
 #### Create Collection
 
