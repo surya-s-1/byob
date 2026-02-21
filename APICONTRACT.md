@@ -94,6 +94,19 @@
 }
 ```
 
+**Collection**
+
+```json
+{
+  "id": "uuid",
+  "displayName": "string",
+  "visibility": "PUBLIC | UNLISTED | PRIVATE",
+  "articleCount": "number",
+  "createdAt": "ISO8601 Date",
+  "ownedBy": { "id": "text", "name": "string", "image": "string" }
+}
+```
+
 ---
 
 ### II. User API
@@ -1175,17 +1188,17 @@ RESPONSE:
 
 ### VII. Collections API
 
-#### Get User Collections
+#### Get Collection Details
 
 ```
-GET /api/user/:username/collections?page=1&limit=20
+GET /api/collections/:id
 ```
 
 HEADERS:
 
 ```
 {
-    "Authorization": "Bearer <token>"
+    "Authorization": "Bearer <token>" (Optional)
 }
 ```
 
@@ -1193,14 +1206,30 @@ RESPONSE:
 
 ```
 {
-    "collections": [
-        {
-            "id": string,
-            "displayName": string,
-            "visibility": "PUBLIC" | "PRIVATE",
-            "count": number
-        }
-    ] | null,
+    "collection": Partial<Collection> | null,
+    "error": string | null
+}
+```
+
+#### Get Collection Articles
+
+```
+GET /api/collections/:id/articles?page=1&limit=20
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+```
+
+RESPONSE:
+
+```
+{
+    "articles": Partial<Article>[] | null,
     "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
