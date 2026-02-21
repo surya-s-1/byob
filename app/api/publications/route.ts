@@ -2,7 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db/client'
 import { publications, publicationMembers } from '@/db/schema'
 import { auth } from '@/lib/auth'
-import { eq } from 'drizzle-orm'
+import { eq, count, sql } from 'drizzle-orm'
+import { slugify } from '@/lib/utils'
 
 export async function POST(req: NextRequest) {
     try {
@@ -14,22 +15,31 @@ export async function POST(req: NextRequest) {
         }
 
         const body = await req.json()
-        const { slug, displayName, displayDescription, cover, visibility } = body
+        const { displayName, displayDescription, cover, visibility } = body
 
-        if (!slug || !displayName || !visibility) {
+        if (!displayName || !visibility) {
             return NextResponse.json(
                 { publication: null, error: 'Missing required fields' },
                 { status: 400 }
             )
         }
 
-        // Check if slug is unique
+        let slug = slugify(displayName)
+
+        // Check if slug exists
         const existingPublication = await db.query.publications.findFirst({
             where: eq(publications.slug, slug),
         })
 
         if (existingPublication) {
-            return NextResponse.json({ publication: null, error: 'Slug already taken' }, { status: 400 })
+            // Find how many publications have slugs starting with this base
+            const similarSlugs = await db
+                .select({ count: count() })
+                .from(publications)
+                .where(sql`${publications.slug} LIKE ${slug + '%'}`)
+
+            const randomSuffix = Math.random().toString(36).substring(2, 8)
+            slug = `${slug}-${similarSlugs[0].count + 1}${randomSuffix}`
         }
 
         const [newPublication] = await db.transaction(async (tx) => {

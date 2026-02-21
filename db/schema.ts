@@ -240,8 +240,30 @@ export const articleDrafts = pgTable(
 		updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 		lockedByUserId: text('locked_by_user_id').references(() => user.id),
 		lockedUntil: timestamp('locked_until', { withTimezone: true }),
+		articleVisibility: articleVisibilityEnum('article_visibility').notNull().default('PUBLIC'),
+		scheduledAt: timestamp('scheduled_at', { withTimezone: true }),
+		excerpt: text('excerpt'),
+		deletedAt: timestamp('deleted_at', { withTimezone: true }),
+		deletedBy: text('deleted_by').references(() => user.id),
 	},
 	(t) => [index('idx_drafts_article').on(t.articleId)]
+)
+
+export const draftAuthors = pgTable(
+	'draft_authors',
+	{
+		draftId: uuid('draft_id')
+			.notNull()
+			.references(() => articleDrafts.id),
+		userId: text('user_id')
+			.notNull()
+			.references(() => user.id),
+		isPrimary: boolean('is_primary').notNull().default(false),
+	},
+	(t) => [
+		primaryKey({ columns: [t.draftId, t.userId] }),
+		index('idx_draft_authors_user').on(t.userId),
+	]
 )
 
 export const articleAuthors = pgTable(
@@ -437,7 +459,7 @@ export const articleAuthorsRelations = relations(articleAuthors, ({ one }) => ({
 	}),
 }))
 
-export const articleDraftsRelations = relations(articleDrafts, ({ one }) => ({
+export const articleDraftsRelations = relations(articleDrafts, ({ one, many }) => ({
 	article: one(articles, {
 		fields: [articleDrafts.articleId],
 		references: [articles.id],
@@ -452,6 +474,18 @@ export const articleDraftsRelations = relations(articleDrafts, ({ one }) => ({
 	}),
 	lockedBy: one(user, {
 		fields: [articleDrafts.lockedByUserId],
+		references: [user.id],
+	}),
+	authors: many(draftAuthors),
+}))
+
+export const draftAuthorsRelations = relations(draftAuthors, ({ one }) => ({
+	draft: one(articleDrafts, {
+		fields: [draftAuthors.draftId],
+		references: [articleDrafts.id],
+	}),
+	user: one(user, {
+		fields: [draftAuthors.userId],
 		references: [user.id],
 	}),
 }))

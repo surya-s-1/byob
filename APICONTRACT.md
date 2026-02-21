@@ -475,7 +475,6 @@ BODY:
 
 ```
 {
-    "slug": string,
     "displayName": string,
     "displayDescription": string,
     "cover": string,
@@ -909,10 +908,10 @@ RESPONSE:
 
 ### V. Drafts API
 
-#### Create New Draft
+#### Create Draft
 
 ```
-POST /api/publications/:id/drafts
+POST /api/drafts
 ```
 
 HEADERS:
@@ -928,10 +927,7 @@ BODY:
 
 ```
 {
-    "title": string,
-    "subtitle": string,
-    "content": string, // Initial content
-    "cover": string
+    "publicationId": string
 }
 ```
 
@@ -944,7 +940,7 @@ RESPONSE:
 }
 ```
 
-#### Get Draft (Load Editor)
+#### Get Draft
 
 ```
 GET /api/drafts/:id
@@ -970,7 +966,7 @@ RESPONSE:
 #### Save Draft
 
 ```
-PUT /api/drafts/:id
+PUT /api/drafts/:id/save
 ```
 
 HEADERS:
@@ -989,7 +985,10 @@ BODY:
     "title": string,
     "subtitle": string,
     "content": string,
-    "cover": string
+    "cover": string,
+    "visibility": "PUBLIC" | "HIDDEN" | "LOCKED",
+    "scheduledAt": Date | null,
+    "excerpt": string
 }
 ```
 
@@ -1002,7 +1001,9 @@ RESPONSE:
 }
 ```
 
-#### Acquire Edit Lock (Concurrency)
+---
+
+#### Lock Draft
 
 ```
 POST /api/drafts/:id/lock
@@ -1026,12 +1027,12 @@ RESPONSE:
 }
 ```
 
-#### Publish Draft
+---
 
-_This moves data from `article_drafts` to `articles`._
+#### Add Authors to Draft
 
 ```
-POST /api/drafts/:id/publish
+POST /api/drafts/:id/authors
 ```
 
 HEADERS:
@@ -1047,10 +1048,6 @@ BODY:
 
 ```
 {
-    "slug": string,
-    "visibility": "PUBLIC" | "HIDDEN" | "LOCKED",
-    "scheduledAt": Date | null,
-    "excerpt": string,
     "authors": [ { "userId": string, "isPrimary": boolean } ]
 }
 ```
@@ -1059,9 +1056,57 @@ RESPONSE:
 
 ```
 {
-    "articleSlug": string | null,
-    "publishedAt": Date | null,
-    "scheduledAt": Date | null,
+    "added": boolean,
+    "error": string | null
+}
+```
+
+---
+
+#### Remove Authors from Draft
+
+```
+DELETE /api/drafts/:id/authors/:userId
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "removed": boolean,
+    "error": string | null
+}
+```
+
+---
+
+#### Publish Draft
+
+```
+POST /api/drafts/:id/publish
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+}
+```
+
+RESPONSE:
+
+```
+{
     "status": "PUBLISHED" | "SCHEDULED" | null,
     "error": string | null
 }
@@ -1090,7 +1135,6 @@ BODY:
 
 ```
 {
-    "slug": string,
     "publicationId": string,
     "displayName": string,
     "description": string,
@@ -1174,6 +1218,66 @@ BODY:
 ```
 {
     "articles": { "articleId": string, "sortOrder": number }[]
+}
+```
+
+RESPONSE:
+
+```
+{
+    "updated": boolean,
+    "error": string | null
+}
+```
+
+---
+
+#### Delete Series
+
+```
+DELETE /api/series/id/:id
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "deleted": boolean,
+    "error": string | null
+}
+```
+
+---
+
+#### Update Series
+
+```
+PUT /api/series/id/:id
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+}
+```
+
+BODY:
+
+```
+{
+    "displayName": string,
+    "description": string
 }
 ```
 
