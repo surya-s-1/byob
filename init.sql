@@ -47,7 +47,7 @@ CREATE TABLE publication_follows (
 CREATE TABLE articles (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     publication_id UUID NOT NULL REFERENCES publications(id),
-    slug TEXT NOT NULL,
+    slug TEXT UNIQUE NOT NULL,
     article_status TEXT NOT NULL CHECK (article_status IN ('DRAFT', 'SCHEDULED', 'PUBLISHED')),
     article_visibility TEXT NOT NULL CHECK (article_visibility IN ('PUBLIC', 'HIDDEN', 'LOCKED')),
     cover TEXT,
@@ -61,8 +61,6 @@ CREATE TABLE articles (
     updated_at TIMESTAMPTZ,
     created_by UUID NOT NULL REFERENCES users(id),
     deleted_at TIMESTAMPTZ,
-    
-    UNIQUE (publication_id, slug)
 );
 
 CREATE TABLE article_drafts (
