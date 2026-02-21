@@ -18,7 +18,7 @@ import {
 /* ************************* AUTH ************************* */
 /* ********************************************************* */
 
-export const users = pgTable('user', {
+export const user = pgTable('user', {
 	id: text('id').primaryKey(),
 	name: text('name').notNull(),
 	email: text('email').notNull().unique(),
@@ -30,9 +30,9 @@ export const users = pgTable('user', {
 	banned: boolean('banned'),
 	banReason: text('ban_reason'),
 	banExpires: timestamp('ban_expires'),
-	username: text('username').unique().notNull(),
 	bio: text('bio'),
-	dob: date('dob').notNull(),
+	dob: date('dob'),
+	username: text('username').unique().notNull(),
 })
 
 export const session = pgTable('session', {
@@ -45,7 +45,7 @@ export const session = pgTable('session', {
 	userAgent: text('user_agent'),
 	userId: text('user_id')
 		.notNull()
-		.references(() => users.id),
+		.references(() => user.id),
 })
 
 export const account = pgTable('account', {
@@ -54,7 +54,7 @@ export const account = pgTable('account', {
 	providerId: text('provider_id').notNull(),
 	userId: text('user_id')
 		.notNull()
-		.references(() => users.id),
+		.references(() => user.id),
 	accessToken: text('access_token'),
 	refreshToken: text('refresh_token'),
 	idToken: text('id_token'),
@@ -102,10 +102,10 @@ export const userFollows = pgTable(
 	{
 		followedUserId: text('followed_user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		followedByUserId: text('followed_by_user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		followedAt: timestamp('followed_at', { withTimezone: true }).defaultNow().notNull(),
 	},
 	(t) => [
@@ -132,7 +132,7 @@ export const publicationMembers = pgTable(
 			.references(() => publications.id),
 		userId: text('user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		userRole: userRoleEnum('user_role').notNull(),
 		joinedAt: timestamp('joined_at', { withTimezone: true }).defaultNow().notNull(),
 	},
@@ -150,7 +150,7 @@ export const publicationFollows = pgTable(
 			.references(() => publications.id),
 		userId: text('user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		followedAt: timestamp('followed_at', { withTimezone: true }).defaultNow().notNull(),
 	},
 	(t) => [
@@ -180,7 +180,7 @@ export const articles = pgTable(
 		updatedAt: timestamp('updated_at', { withTimezone: true }),
 		createdBy: text('created_by')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
 	},
 	(t) => [
@@ -207,8 +207,8 @@ export const articleDrafts = pgTable(
 		updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
 		createdBy: text('created_by')
 			.notNull()
-			.references(() => users.id),
-		lockedByUserId: text('locked_by_user_id').references(() => users.id),
+			.references(() => user.id),
+		lockedByUserId: text('locked_by_user_id').references(() => user.id),
 		lockedUntil: timestamp('locked_until', { withTimezone: true }),
 	},
 	(t) => [index('idx_drafts_article').on(t.articleId)]
@@ -222,7 +222,7 @@ export const articleAuthors = pgTable(
 			.references(() => articles.id),
 		userId: text('user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		isPrimary: boolean('is_primary').notNull().default(false),
 	},
 	(t) => [
@@ -270,7 +270,7 @@ export const collections = pgTable(
 		id: uuid('id').primaryKey().defaultRandom(),
 		userId: text('user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		displayName: text('display_name').notNull(),
 		visibility: collectionVisibilityEnum('visibility').notNull(),
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
@@ -301,7 +301,7 @@ export const comments = pgTable(
 		id: uuid('id').primaryKey().defaultRandom(),
 		userId: text('user_id')
 			.notNull()
-			.references(() => users.id),
+			.references(() => user.id),
 		articleId: uuid('article_id')
 			.notNull()
 			.references(() => articles.id),
@@ -322,7 +322,7 @@ export const comments = pgTable(
 /* *********************** RELATIONS *********************** */
 /* ********************************************************* */
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(user, ({ many }) => ({
 	followers: many(userFollows, { relationName: 'followers' }),
 	following: many(userFollows, { relationName: 'following' }),
 	publicationMemberships: many(publicationMembers),
@@ -335,14 +335,14 @@ export const usersRelations = relations(users, ({ many }) => ({
 }))
 
 export const userFollowsRelations = relations(userFollows, ({ one }) => ({
-	followsUser: one(users, {
+	followsUser: one(user, {
 		fields: [userFollows.followedUserId],
-		references: [users.id],
+		references: [user.id],
 		relationName: 'followers',
 	}),
-	followedByUser: one(users, {
+	followedByUser: one(user, {
 		fields: [userFollows.followedByUserId],
-		references: [users.id],
+		references: [user.id],
 		relationName: 'following',
 	}),
 }))
@@ -360,9 +360,9 @@ export const publicationMembersRelations = relations(publicationMembers, ({ one 
 		fields: [publicationMembers.publicationId],
 		references: [publications.id],
 	}),
-	user: one(users, {
+	user: one(user, {
 		fields: [publicationMembers.userId],
-		references: [users.id],
+		references: [user.id],
 	}),
 }))
 
@@ -371,16 +371,16 @@ export const publicationFollowsRelations = relations(publicationFollows, ({ one 
 		fields: [publicationFollows.publicationId],
 		references: [publications.id],
 	}),
-	user: one(users, {
+	user: one(user, {
 		fields: [publicationFollows.userId],
-		references: [users.id],
+		references: [user.id],
 	}),
 }))
 
 export const articlesRelations = relations(articles, ({ one, many }) => ({
-	uploader: one(users, {
+	uploader: one(user, {
 		fields: [articles.createdBy],
-		references: [users.id],
+		references: [user.id],
 	}),
 	authors: many(articleAuthors),
 	publication: one(publications, {
@@ -398,9 +398,9 @@ export const articleAuthorsRelations = relations(articleAuthors, ({ one }) => ({
 		fields: [articleAuthors.articleId],
 		references: [articles.id],
 	}),
-	user: one(users, {
+	user: one(user, {
 		fields: [articleAuthors.userId],
-		references: [users.id],
+		references: [user.id],
 	}),
 }))
 
@@ -413,13 +413,13 @@ export const articleDraftsRelations = relations(articleDrafts, ({ one }) => ({
 		fields: [articleDrafts.publicationId],
 		references: [publications.id],
 	}),
-	creator: one(users, {
+	creator: one(user, {
 		fields: [articleDrafts.createdBy],
-		references: [users.id],
+		references: [user.id],
 	}),
-	lockedBy: one(users, {
+	lockedBy: one(user, {
 		fields: [articleDrafts.lockedByUserId],
-		references: [users.id],
+		references: [user.id],
 	}),
 }))
 
@@ -443,9 +443,9 @@ export const seriesArticlesRelations = relations(seriesArticles, ({ one }) => ({
 }))
 
 export const collectionsRelations = relations(collections, ({ one, many }) => ({
-	user: one(users, {
+	user: one(user, {
 		fields: [collections.userId],
-		references: [users.id],
+		references: [user.id],
 	}),
 	articles: many(collectionArticles),
 }))
@@ -462,9 +462,9 @@ export const collectionArticlesRelations = relations(collectionArticles, ({ one 
 }))
 
 export const commentsRelations = relations(comments, ({ one, many }) => ({
-	author: one(users, {
+	author: one(user, {
 		fields: [comments.userId],
-		references: [users.id],
+		references: [user.id],
 	}),
 	article: one(articles, {
 		fields: [comments.articleId],

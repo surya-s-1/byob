@@ -9,12 +9,48 @@ export const auth = betterAuth({
 	database: drizzleAdapter(db, {
 		provider: 'pg',
 		schema: {
-			user: schema.users,
+			user: schema.user,
 			session: schema.session,
 			account: schema.account,
 			verification: schema.verification,
 		},
 	}),
+	user: {
+		additionalFields: {
+			username: {
+				type: "string",
+				required: false, // We will generate it, so input isn't required
+			},
+			bio: {
+				type: "string",
+				required: false,
+			},
+			dob: {
+				type: "date",
+				required: false,
+			}
+		}
+	},
+	databaseHooks: {
+		user: {
+			create: {
+				before: async (user, context) => {
+					const prefix = user.email.split('@')[0].replace(/[^a-zA-Z0-9]/g, '_')
+					const suffix = Math.floor(Math.random() * 10000)
+
+					const username = `${prefix}${suffix}`
+
+					return {
+						data: {
+							...user,
+							username: username,
+							bio: "New member of the community!"
+						}
+					}
+				}
+			}
+		}
+	},
 	socialProviders: {
 		google: {
 			clientId: process.env.GOOGLE_CLIENT_ID!,
