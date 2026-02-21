@@ -34,7 +34,10 @@ CREATE TABLE publications (
     display_name TEXT NOT NULL,
     display_description TEXT,
     publication_visibility TEXT NOT NULL CHECK (publication_visibility IN ('PUBLIC', 'HIDDEN', 'LOCKED')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_by TEXT NOT NULL REFERENCES user(id),
     deleted_at TIMESTAMPTZ
+    deleted_by TEXT NOT NULL REFERENCES user(id)
 );
 
 CREATE TABLE publication_members (
@@ -74,9 +77,10 @@ CREATE TABLE articles (
     published_at TIMESTAMPTZ,
     scheduled_at TIMESTAMPTZ,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ,
     created_by TEXT NOT NULL REFERENCES user(id),
+    updated_at TIMESTAMPTZ,
     deleted_at TIMESTAMPTZ
+    deleted_by TEXT NOT NULL REFERENCES user(id)
 );
 
 -- "Find all articles in a publication"
@@ -97,8 +101,9 @@ CREATE TABLE article_drafts (
     title TEXT,
     subtitle TEXT,
     content TEXT,
-    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     created_by TEXT NOT NULL REFERENCES user(id),
+    updated_at TIMESTAMPTZ,
     locked_by_user_id TEXT REFERENCES user(id),
     locked_until TIMESTAMPTZ
 );
@@ -124,7 +129,10 @@ CREATE TABLE series (
     display_name TEXT NOT NULL,
     display_description TEXT,
     sort_order INTEGER NOT NULL DEFAULT 0,
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    created_by TEXT NOT NULL REFERENCES user(id),
     deleted_at TIMESTAMPTZ
+    deleted_by TEXT NOT NULL REFERENCES user(id)
 );
 
 CREATE TABLE series_articles (
@@ -143,6 +151,7 @@ CREATE TABLE collections (
     user_id TEXT NOT NULL REFERENCES user(id),
     display_name TEXT NOT NULL,
     visibility TEXT NOT NULL CHECK (visibility IN ('PUBLIC', 'UNLISTED', 'PRIVATE')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     deleted_at TIMESTAMPTZ
 );
 

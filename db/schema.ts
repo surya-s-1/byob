@@ -121,7 +121,11 @@ export const publications = pgTable('publications', {
 	displayName: text('display_name').notNull(),
 	displayDescription: text('display_description'),
 	publicationVisibility: publicationVisibilityEnum('publication_visibility').notNull(),
+	createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+	createdBy: text('created_by').notNull().references(() => user.id).notNull(),
+
 	deletedAt: timestamp('deleted_at', { withTimezone: true }),
+	deletedBy: text('deleted_by').references(() => user.id),
 })
 
 export const publicationMembers = pgTable(
@@ -177,11 +181,10 @@ export const articles = pgTable(
 		publishedAt: timestamp('published_at', { withTimezone: true }),
 		scheduledAt: timestamp('scheduled_at', { withTimezone: true }),
 		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+		createdBy: text('created_by').notNull().references(() => user.id),
 		updatedAt: timestamp('updated_at', { withTimezone: true }),
-		createdBy: text('created_by')
-			.notNull()
-			.references(() => user.id),
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
+		deletedBy: text('deleted_by').references(() => user.id),
 	},
 	(t) => [
 		index('idx_articles_publication').on(t.publicationId),
@@ -196,18 +199,15 @@ export const articleDrafts = pgTable(
 	'article_drafts',
 	{
 		id: uuid('id').primaryKey().defaultRandom(),
-		publicationId: uuid('publication_id')
-			.notNull()
-			.references(() => publications.id),
+		publicationId: uuid('publication_id').notNull().references(() => publications.id),
 		articleId: uuid('article_id').references(() => articles.id),
 		cover: text('cover'),
 		title: text('title'),
 		subtitle: text('subtitle'),
 		content: text('content'),
+		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+		createdBy: text('created_by').notNull().references(() => user.id),
 		updatedAt: timestamp('updated_at', { withTimezone: true }).defaultNow().notNull(),
-		createdBy: text('created_by')
-			.notNull()
-			.references(() => user.id),
 		lockedByUserId: text('locked_by_user_id').references(() => user.id),
 		lockedUntil: timestamp('locked_until', { withTimezone: true }),
 	},
@@ -242,7 +242,10 @@ export const series = pgTable(
 		displayName: text('display_name').notNull(),
 		displayDescription: text('display_description'),
 		sortOrder: integer('sort_order').notNull().default(0),
+		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+		createdBy: text('created_by').notNull().references(() => user.id).notNull(),
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
+		deletedBy: text('deleted_by').references(() => user.id),
 	}
 )
 
@@ -267,11 +270,10 @@ export const collections = pgTable(
 	'collections',
 	{
 		id: uuid('id').primaryKey().defaultRandom(),
-		userId: text('user_id')
-			.notNull()
-			.references(() => user.id),
+		userId: text('user_id').notNull().references(() => user.id),
 		displayName: text('display_name').notNull(),
 		visibility: collectionVisibilityEnum('visibility').notNull(),
+		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
 	},
 	(t) => [index('idx_collections_user').on(t.userId)]

@@ -1,4 +1,4 @@
-**User (Public Profile)**
+**User**
 
 ```json
 {
@@ -32,7 +32,7 @@
 
 ```
 
-**Article (Public)**
+**Article**
 
 ```json
 {
@@ -41,14 +41,29 @@
   "title": "string",
   "subtitle": "string | null",
   "cover": "string | null",
-  "content": "string (HTML/Markdown)",
+  "content": "string (Markdown)",
   "excerpt": "string | null",
   "readTime": "number",
   "publishedAt": "ISO8601 Date",
   "visibility": "PUBLIC | HIDDEN | LOCKED",
-  "authors": [ { "id": "uuid", "name": "string", "image": "string", "isPrimary": "boolean" } ],
+  "authors": [ { "id": "text", "name": "string", "image": "string", "isPrimary": "boolean" } ],
   "publication": { "id": "uuid", "slug": "string", "displayName": "string" },
-  "series": { "id": "uuid", "slug": "string", "name": "string", "order": "number" } | null
+  "series": { "id": "uuid", "slug": "string", "displayName": "string", "sortOrder": "number" } | null
+}
+
+```
+
+**Series**
+
+```json
+{
+  "id": "uuid",
+  "slug": "string",
+  "displayName": "string",
+  "displayDescription": "string | null",
+  "sortOrder": "number",
+  "articleCount": "number",
+  "publication": { "id": "uuid", "slug": "string", "displayName": "string" }
 }
 
 ```
@@ -61,7 +76,7 @@
   "articleId": "uuid | null",
   "title": "string | null",
   "content": "string | null",
-  "lockedBy": { "id": "uuid", "name": "string" } | null,
+  "lockedBy": { "id": "text", "name": "string" } | null,
   "lockedUntil": "ISO8601 Date | null",
   "lastUpdated": "ISO8601 Date"
 }
@@ -75,8 +90,9 @@
   "id": "uuid",
   "content": "string",
   "createdAt": "ISO8601 Date",
-  "user": { "id": "uuid", "name": "string", "image": "string" },
+  "user": { "id": "text", "name": "string", "image": "string" },
   "parentId": "uuid | null",
+  "articleId": "uuid",
   "replyCount": "number"
 }
 
@@ -258,6 +274,93 @@ RESPONSE:
 
 ---
 
+#### Get User's Articles
+
+```
+GET /api/user/:username/articles?page=1&limit=20
+
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+
+```
+
+RESPONSE:
+
+```
+{
+    "articles": Partial<Article>[],
+    "pagination": { "total": number, "page": number },
+    "error": string | null
+}
+
+```
+
+---
+
+#### Get User's Publications Membership
+
+```
+GET /api/user/:username/publications?page=1&limit=20
+
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+
+```
+
+RESPONSE:
+
+```
+{
+    "publications": Partial<Publication>[],
+    "pagination": { "total": number, "page": number },
+    "error": string | null
+}
+
+```
+
+---
+
+#### Get User's Comments
+
+```
+GET /api/user/:username/comments?page=1&limit=20
+
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+
+```
+
+RESPONSE:
+
+```
+{
+    "comments": Partial<Comment>[],
+    "pagination": { "total": number, "page": number },
+    "error": string | null
+}
+
+```
+
+---
+
 ### III. Publication API
 
 #### Create Publication
@@ -353,6 +456,33 @@ RESPONSE:
 
 ```
 
+#### Get Publication Series
+
+```
+GET /api/publications/:slug/series?page=1&limit=20
+
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+
+```
+
+RESPONSE:
+
+```
+{
+    "series": Partial<Series>[] | null,
+    "pagination": { "total": number, "page": number },
+    "error": string | null
+}
+
+```
+
 #### Update Publication
 
 ```
@@ -387,6 +517,42 @@ RESPONSE:
 ```
 {
     "publication": Publication | null,
+    "error": string | null
+}
+
+```
+
+#### Manage Publication Series Order
+
+```
+PUT /api/publications/:id/series
+
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+}
+
+```
+
+BODY:
+
+```
+{
+    "series": { "seriesId": string, "sortOrder": number }[]
+}
+
+```
+
+RESPONSE:
+
+```
+{
+    "updated": boolean,
     "error": string | null
 }
 
@@ -625,9 +791,7 @@ RESPONSE:
 
 ---
 
-### V. Drafts & Writing API
-
-*Note: Drafts are the precursors to Articles. Editing happens here.*
+### V. Drafts API
 
 #### Create New Draft
 
@@ -809,41 +973,6 @@ RESPONSE:
 
 ### VI. Series API
 
-#### Get All Series in a Publication
-
-```
-GET /api/publications/:slug/series?page=1&limit=20
-
-```
-
-HEADERS:
-
-```
-{
-    "Authorization": "Bearer <token>" (Optional)
-}
-
-```
-
-RESPONSE:
-
-```
-{
-    "series": [
-        {
-            "id": string,
-            "slug": string,
-            "displayName": string,
-            "sortOrder": number,
-            "articleCount": number
-        }
-    ],
-    "pagination": { "total": number, "page": number },
-    "error": string | null
-}
-
-```
-
 #### Create Series
 
 ```
@@ -948,10 +1077,10 @@ RESPONSE:
 
 ```
 
-#### Manage Series Articles
+#### Manage Series Articles Order
 
 ```
-PUT /api/series/:id/articles
+PUT /api/series/:id/articles/order
 
 ```
 
@@ -969,9 +1098,7 @@ BODY:
 
 ```
 {
-    "articles": [
-        { "articleId": string, "sortOrder": number }
-    ]
+    "articles": { "articleId": string, "sortOrder": number }[]
 }
 
 ```
