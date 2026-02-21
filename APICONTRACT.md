@@ -238,8 +238,8 @@ RESPONSE:
 
 ```
 {
-    "followers": Partial<User>[],
-    "pagination": { "total": number, "page": number },
+    "followers": Partial<User>[] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -265,8 +265,8 @@ RESPONSE:
 
 ```
 {
-    "following": Partial<User>[],
-    "pagination": { "total": number, "page": number },
+    "following": Partial<User>[] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -294,8 +294,8 @@ RESPONSE:
 
 ```
 {
-    "articles": Partial<Article>[],
-    "pagination": { "total": number, "page": number },
+    "articles": Partial<Article>[] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -323,11 +323,112 @@ RESPONSE:
 
 ```
 {
-    "publications": Partial<Publication>[],
-    "pagination": { "total": number, "page": number },
+    "publications": Partial<Publication>[] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
+```
+
+---
+
+#### Get User's Publication Invitations
+
+```
+GET /api/user/:username/invitations?page=1&limit=20
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+```
+
+RESPONSE:
+
+```
+{
+    "publications": Partial<Publication>[] | null,
+    "pagination": { "total": number, "page": number } | null,
+    "error": string | null
+}
+```
+
+---
+
+#### Accept Invitation
+
+```
+POST /api/invitations/:id/accept
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "accepted": boolean,
+    "error": string | null
+}
+```
+---
+
+#### Reject Invitation
+
+```
+POST /api/invitations/:id/reject
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "rejected": boolean,
+    "error": string | null
+}
+```
+
+---
+
+#### Get User's Collections
+
+```
+GET /api/user/:username/collections?page=1&limit=20
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>" (Optional)
+}
+```
+
+RESPONSE:
+
+```
+{
+    "collections": Partial<Collection>[] | null,
+    "pagination": { "total": number, "page": number } | null,
+    "error": string | null
+}
 ```
 
 ---
@@ -352,8 +453,8 @@ RESPONSE:
 
 ```
 {
-    "comments": Partial<Comment>[],
-    "pagination": { "total": number, "page": number },
+    "comments": Partial<Comment>[] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -397,7 +498,7 @@ RESPONSE:
 
 ```
 {
-    "publication": Publication | null,
+    "publication": { "id": string, "slug": string } | null,
     "error": string | null
 }
 
@@ -450,7 +551,7 @@ RESPONSE:
 ```
 {
     "articles": Partial<Article>[] | null,
-    "pagination": { "total": number, "page": number },
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -477,7 +578,7 @@ RESPONSE:
 ```
 {
     "series": Partial<Series>[] | null,
-    "pagination": { "total": number, "page": number },
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -579,7 +680,6 @@ RESPONSE:
 ```
 {
     "deleted": boolean,
-    "deletedAt": Date,
     "error": string | null
 }
 
@@ -663,17 +763,17 @@ RESPONSE:
             "role": "OWNER" | "EDITOR" | "REVIEWER" | "ADMIN",
             "joinedAt": Date
         }
-    ],
-    "pagination": { "total": number, "page": number },
+    ] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
 ```
 
-#### Add/Invite Member
+#### Invite Member
 
 ```
-POST /api/publications/:id/members
+POST /api/publications/:id/members/invite
 
 ```
 
@@ -691,7 +791,7 @@ BODY:
 
 ```
 {
-    "userId": string, // The user to add
+    "userId": string,
     "role": "EDITOR" | "REVIEWER" | "ADMIN"
 }
 
@@ -701,7 +801,7 @@ RESPONSE:
 
 ```
 {
-    "ok": boolean,
+    "invited": boolean,
     "error": string | null
 }
 
@@ -731,6 +831,72 @@ RESPONSE:
     "error": string | null
 }
 
+```
+
+---
+
+#### Get Publication Invitations
+
+```
+GET /api/publications/:slug/invitations?page=1&limit=20
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "invitations": [
+        {
+            "user": Partial<User>,
+            "role": "EDITOR" | "REVIEWER" | "ADMIN",
+            "invitedAt": Date
+        }
+    ] | null,
+    "pagination": { "total": number, "page": number } | null,
+    "error": string | null
+}
+```
+
+---
+
+#### Update Member Role
+
+```
+PUT /api/publications/:id/members/:userId
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+}
+```
+
+BODY:
+
+```
+{
+    "role": "EDITOR" | "REVIEWER" | "ADMIN"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "updated": boolean,
+    "error": string | null
+}
 ```
 
 ---
@@ -826,7 +992,7 @@ RESPONSE:
 
 ```
 {
-    "draft": Draft,
+    "draft": { "id": string } | null,
     "error": string | null
 }
 
@@ -852,7 +1018,7 @@ RESPONSE:
 
 ```
 {
-    "draft": Draft, // Check lockedBy to see if someone else is editing
+    "draft": Draft | null, // Check lockedBy to see if someone else is editing
     "error": string | null
 }
 
@@ -892,7 +1058,6 @@ RESPONSE:
 ```
 {
     "saved": boolean,
-    "updatedAt": Date,
     "error": string | null
 }
 
@@ -919,7 +1084,7 @@ RESPONSE:
 ```
 {
     "locked": boolean,
-    "lockedUntil": Date,
+    "lockedUntil": Date | null,
     "error": string | null
 }
 
@@ -961,9 +1126,10 @@ RESPONSE:
 
 ```
 {
-    "articleSlug": string,
-    "publishedAt": Date,
-    "status": "PUBLISHED" | "SCHEDULED",
+    "articleSlug": string | null,
+    "publishedAt": Date | null,
+    "scheduledAt": Date | null,
+    "status": "PUBLISHED" | "SCHEDULED" | null,
     "error": string | null
 }
 
@@ -1006,7 +1172,7 @@ RESPONSE:
 
 ```
 {
-    "series": { "id": string, "slug": string },
+    "series": { "id": string, "slug": string } | null,
     "error": string | null
 }
 
@@ -1032,19 +1198,7 @@ RESPONSE:
 
 ```
 {
-    "series": {
-        "id": string,
-        "slug": string,
-        "displayName": string,
-        "description": string,
-        "sortOrder": number,
-        "articleCount": number,
-        "publication": {
-            "id": string,
-            "slug": string,
-            "displayName": string
-        }
-    },
+    "series": Series | null,
     "error": string | null
 }
 
@@ -1071,7 +1225,7 @@ RESPONSE:
 ```
 {
     "articles": Partial<Article>[] | null,
-    "pagination": { "total": number, "page": number },
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -1144,8 +1298,8 @@ RESPONSE:
             "visibility": "PUBLIC" | "PRIVATE",
             "count": number
         }
-    ],
-    "pagination": { "total": number, "page": number },
+    ] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -1182,7 +1336,7 @@ RESPONSE:
 
 ```
 {
-    "collection": { "id": string },
+    "collection": { "id": string } | null,
     "error": string | null
 }
 
@@ -1300,8 +1454,8 @@ RESPONSE:
 
 ```
 {
-    "comments": Comment[], // Top level comments
-    "pagination": { "total": number, "page": number },
+    "comments": Comment[] | null, // Top level comments
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -1327,8 +1481,8 @@ RESPONSE:
 
 ```
 {
-    "replies": Comment[],
-    "pagination": { "total": number, "page": number },
+    "replies": Comment[] | null,
+    "pagination": { "total": number, "page": number } | null,
     "error": string | null
 }
 
@@ -1365,7 +1519,7 @@ RESPONSE:
 
 ```
 {
-    "comment": Comment,
+    "commented": boolean,
     "error": string | null
 }
 
@@ -1401,7 +1555,7 @@ RESPONSE:
 
 ```
 {
-    "comment": Comment,
+    "updated": boolean,
     "error": string | null
 }
 
@@ -1428,7 +1582,6 @@ RESPONSE:
 ```
 {
     "deleted": boolean,
-    "deletedAt": Date,
     "error": string | null
 }
 

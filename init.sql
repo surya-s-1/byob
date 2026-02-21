@@ -49,8 +49,23 @@ CREATE TABLE publication_members (
     -- "Who are members of this publication?" is covered by this Primary Key.
 );
 
+CREATE TABLE publication_invitations (
+    publication_id UUID NOT NULL REFERENCES publications(id),
+    user_id TEXT NOT NULL REFERENCES user(id),
+    user_role TEXT NOT NULL CHECK (user_role IN ('OWNER', 'EDITOR', 'REVIEWER', 'ADMIN')),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    deleted_at TIMESTAMPTZ
+    deleted_by TEXT NOT NULL REFERENCES user(id)
+    rejected_at TIMESTAMPTZ
+    PRIMARY KEY (publication_id, user_id)
+    -- "Who are invited to this publication?" is covered by this Primary Key.
+);
+
 -- "Which publications is this user a member of?"
 CREATE INDEX idx_pub_members_user ON publication_members(user_id);
+
+-- "Which publications is this user invited to?"
+CREATE INDEX idx_pub_invitations_user ON publication_invitations(user_id);
 
 CREATE TABLE publication_follows (
     publication_id UUID NOT NULL REFERENCES publications(id),

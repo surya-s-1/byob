@@ -146,6 +146,27 @@ export const publicationMembers = pgTable(
 	]
 )
 
+export const publicationInvitations = pgTable(
+	'publication_invitations',
+	{
+		publicationId: uuid('publication_id')
+			.notNull()
+			.references(() => publications.id),
+		userId: text('user_id')
+			.notNull()
+			.references(() => user.id),
+		userRole: userRoleEnum('user_role').notNull(),
+		createdAt: timestamp('created_at', { withTimezone: true }).defaultNow().notNull(),
+		deletedAt: timestamp('deleted_at', { withTimezone: true }),
+		deletedBy: text('deleted_by').references(() => user.id),
+		rejectedAt: timestamp('rejected_at', { withTimezone: true }),
+	},
+	(t) => [
+		primaryKey({ columns: [t.publicationId, t.userId] }),
+		index('idx_pub_invitations_user').on(t.userId),
+	]
+)
+
 export const publicationFollows = pgTable(
 	'publication_follows',
 	{
