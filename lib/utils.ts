@@ -22,5 +22,5 @@ export async function getSession(headers?: Headers) {
 
 export async function getCurrentUser(headers?: Headers) {
 	const session = await getSession(headers)
-	return session || null
+	return session?.user || null
 }
