@@ -58,10 +58,14 @@ export default function Header({ user }: any) {
 
 	return (
 		<header className='sticky top-0 flex items-center justify-between px-xl py-md bg-transparent z-50'>
-			<div className='flex items-center gap-sm'>
-				<div className='w-12 h-12 bg-brand rounded-md' />
-				<h2 className='font-semibold text-main text-4xl tracking-tight'>BYOB</h2>
-			</div>
+			<Image
+				src={isDark ? '/logo-dark.png' : '/logo-light.png'}
+				alt='Logo'
+				width={120}
+				height={120}
+				// className='w-full h-full object-cover'
+				priority
+			/>
 
 			<div className='relative' ref={dropdownRef}>
 				<button

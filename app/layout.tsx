@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: 'BYOB',
-	description: 'Bring your own blog!',
+	title: 'My Own Blog',
+	description: 'My own blog!',
 }
 
 export default function RootLayout({
