@@ -114,7 +114,7 @@
 #### Get User's Profile
 
 ```
-GET /api/user/:username/profile
+GET /api/user/username/:username/profile
 
 ```
 
@@ -140,7 +140,7 @@ RESPONSE:
 #### Update User's Profile
 
 ```
-PUT /api/user/:username/profile
+PUT /api/user/username/:username/profile
 
 ```
 
@@ -178,7 +178,7 @@ RESPONSE:
 #### Follow User
 
 ```
-POST /api/user/:id/follow
+POST /api/user/id/:id/follow
 
 ```
 
@@ -202,7 +202,7 @@ RESPONSE:
 #### Unfollow User
 
 ```
-POST /api/user/:id/unfollow
+POST /api/user/id/:id/unfollow
 
 ```
 
@@ -226,7 +226,7 @@ RESPONSE:
 #### Get User's Followers
 
 ```
-GET /api/user/:username/followers?page=1&limit=20
+GET /api/user/username/:username/followers?page=1&limit=20
 ```
 
 HEADERS:
@@ -250,7 +250,7 @@ RESPONSE:
 #### Get User's Following
 
 ```
-GET /api/user/:username/following?page=1&limit=20
+GET /api/user/username/:username/following?page=1&limit=20
 ```
 
 HEADERS:
@@ -276,7 +276,7 @@ RESPONSE:
 #### Get User's Articles
 
 ```
-GET /api/user/:username/articles?page=1&limit=20
+GET /api/user/username/:username/articles?page=1&limit=20
 ```
 
 HEADERS:
@@ -302,7 +302,7 @@ RESPONSE:
 #### Get User's Publications Membership
 
 ```
-GET /api/user/:username/publications?page=1&limit=20
+GET /api/user/username/:username/publications?page=1&limit=20
 ```
 
 HEADERS:
@@ -328,7 +328,7 @@ RESPONSE:
 #### Get User's Publication Invitations
 
 ```
-GET /api/user/:username/invitations?page=1&limit=20
+GET /api/user/username/:username/invitations?page=1&limit=20
 ```
 
 HEADERS:
@@ -404,7 +404,7 @@ RESPONSE:
 #### Get User's Collections
 
 ```
-GET /api/user/:username/collections?page=1&limit=20
+GET /api/user/username/:username/collections?page=1&limit=20
 ```
 
 HEADERS:
@@ -430,7 +430,7 @@ RESPONSE:
 #### Get User's Comments
 
 ```
-GET /api/user/:username/comments?page=1&limit=20
+GET /api/user/username/:username/comments?page=1&limit=20
 ```
 
 HEADERS:
