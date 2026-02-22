@@ -16,8 +16,8 @@ const geistMono = Geist_Mono({
 })
 
 export const metadata: Metadata = {
-	title: 'My Own Blog',
-	description: 'My own blog!',
+	title: 'Running Head',
+	description: 'Create your own publication!',
 }
 
 export default function RootLayout({

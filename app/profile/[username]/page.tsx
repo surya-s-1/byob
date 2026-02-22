@@ -43,12 +43,28 @@ export default async function ProfilePage({ params }: { params: Promise<{ userna
 	)
 	const { publications = [] } = publicationsRes.ok ? await publicationsRes.json() : {}
 
+	// Fetch invitations if it's the current user's profile
+	let invitations = []
+	if (currentUser && currentUser.username === username) {
+		const invitationsRes = await fetch(
+			`${process.env.BETTER_AUTH_URL}/api/user/username/${username}/invitations`,
+			{
+				headers: headerList,
+			}
+		)
+		const { publications: invitedPubs = [] } = invitationsRes.ok
+			? await invitationsRes.json()
+			: {}
+		invitations = invitedPubs
+	}
+
 	return (
 		<ProfileClient
 			user={user}
 			currentUser={currentUser}
 			initialArticles={articles || []}
 			initialPublications={publications || []}
+			initialInvitations={invitations}
 		/>
 	)
 }

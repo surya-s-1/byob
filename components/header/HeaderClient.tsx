@@ -2,12 +2,12 @@
 
 import Image from 'next/image'
 import { useState, useEffect, useRef } from 'react'
-import { LayoutDashboard, User, Settings, LogOut, Moon, Sun } from 'lucide-react'
+import { LayoutDashboard, User, UserCog, LogOut, Moon, Sun } from 'lucide-react'
 
 import Card from '@/components/ui/Card'
 import { usePathname } from 'next/navigation'
 
-export default function HeaderComponent({ user }: { user: any }) {
+export default function HeaderClient({ user }: { user: any }) {
 	const [open, setOpen] = useState(false)
 	const [isDark, setIsDark] = useState(false)
 	const dropdownRef = useRef<HTMLDivElement>(null)
@@ -81,7 +81,7 @@ export default function HeaderComponent({ user }: { user: any }) {
 						<Card className='absolute right-0 w-48 mt-sm z-50 p-md'>
 							<button
 								onClick={toggleTheme}
-								className='flex items-center gap-sm px-md py-sm rounded-md hover:bg-secondary w-full text-left transition-colors'
+								className='flex items-center gap-sm px-md py-sm rounded-md hover:bg-secondary w-full text-left transition-colors cursor-pointer'
 							>
 								{isDark ? <Sun size={16} /> : <Moon size={16} />}
 								<span>{isDark ? 'Light Mode' : 'Dark Mode'}</span>
@@ -96,10 +96,10 @@ export default function HeaderComponent({ user }: { user: any }) {
 								<LayoutDashboard size={16} /> Dashboard
 							</a>
 							<a
-								href='/settings'
+								href={`/profile/${user.username}`}
 								className='flex items-center gap-sm px-md py-sm rounded-md hover:bg-secondary'
 							>
-								<Settings size={16} /> Settings
+								<UserCog size={16} /> Profile
 							</a>
 
 							<button
@@ -111,13 +111,15 @@ export default function HeaderComponent({ user }: { user: any }) {
 						</Card>
 					)}
 				</div>
-			) : pathname !== '/login' && (
-				<a
-					href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
-					className='px-md py-sm rounded-full text-xl btn-brand text-white cursor-pointer'
-				>
-					Join Now
-				</a>
+			) : (
+				pathname !== '/login' && (
+					<a
+						href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
+						className='px-md py-sm rounded-full text-xl btn-brand text-white cursor-pointer'
+					>
+						Join Now
+					</a>
+				)
 			)}
 		</div>
 	)
