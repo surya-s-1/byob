@@ -56,8 +56,6 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 
 		const isLocked = pub.publicationVisibility === 'LOCKED' && !isFollowing
 
-		console.log('Publication found:', pub)
-
 		const responsePub = {
 			id: pub.id,
 			slug: pub.slug,

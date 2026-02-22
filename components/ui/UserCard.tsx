@@ -18,8 +18,6 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 	const [isLoading, setIsLoading] = useState(false)
 	const isOwnProfile = currentUser?.id === user.id
 
-	console.log('user', user)
-
 	const handleFollow = async (e: React.MouseEvent) => {
 		e.preventDefault()
 		e.stopPropagation()
