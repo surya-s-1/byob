@@ -562,35 +562,43 @@ RESPONSE:
     "error": string | null
 }
 ```
+
 ```
 
 #### Get Publication Series
 
 ```
+
 GET /api/publications/slug/:slug/series?page=1&limit=20
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>" (Optional)
+"Authorization": "Bearer <token>" (Optional)
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "series": Partial<Series>[] | null,
-    "pagination": { "total": number, "page": number } | null,
-    "error": string | null
+"series": Partial<Series>[] | null,
+"pagination": { "total": number, "page": number } | null,
+"error": string | null
 }
+
 ```
 
 #### Update Publication
 
 ```
+
 PUT /api/publications/id/:id
 
 ```
@@ -598,35 +606,42 @@ PUT /api/publications/id/:id
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>",
-    "Content-Type": "application/json"
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
 }
+
 ```
 
 BODY:
 
 ```
+
 {
-    "displayName": string,
-    "displayDescription": string,
-    "cover": string,
-    "visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
+"displayName": string,
+"displayDescription": string,
+"cover": string,
+"visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "publication": Publication | null,
-    "error": string | null
+"publication": Publication | null,
+"error": string | null
 }
+
 ```
 
 #### Manage Publication Series Order
 
 ```
+
 PUT /api/publications/id/:id/series
 
 ```
@@ -634,182 +649,226 @@ PUT /api/publications/id/:id/series
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>",
-    "Content-Type": "application/json"
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
 }
+
 ```
 
 BODY:
 
 ```
+
 {
-    "series": { "seriesId": string, "sortOrder": number }[]
+"series": { "seriesId": string, "sortOrder": number }[]
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "updated": boolean,
-    "error": string | null
+"updated": boolean,
+"error": string | null
 }
+
 ```
 
 #### Delete Publication
 
 ```
+
 DELETE /api/publications/id/:id
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "deleted": boolean,
-    "error": string | null
+"deleted": boolean,
+"error": string | null
 }
+
 ```
 
 #### Follow Publication
 
 ```
+
 POST /api/publications/id/:id/follow
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "followed": boolean,
-    "error": string | null
+"followed": boolean,
+"error": string | null
 }
+
 ```
 
 #### Unfollow Publication
 
 ```
+
 POST /api/publications/id/:id/unfollow
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "unfollowed": boolean,
-    "error": string | null
+"unfollowed": boolean,
+"error": string | null
 }
+
 ```
 
 #### Get Publication Members
 
 ```
+
 GET /api/publications/slug/:slug/members?page=1&limit=20
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "members": [
-        {
-            "user": Partial<User>,
-            "role": "OWNER" | "EDITOR" | "REVIEWER" | "ADMIN",
-            "joinedAt": Date
-        }
-    ] | null,
-    "pagination": { "total": number, "page": number } | null,
-    "error": string | null
+"members": [
+{
+"user": Partial<User>,
+"role": "OWNER" | "EDITOR" | "REVIEWER" | "ADMIN",
+"joinedAt": Date
 }
+] | null,
+"pagination": { "total": number, "page": number } | null,
+"error": string | null
+}
+
 ```
 
 #### Invite Member
 
 ```
+
 POST /api/publications/id/:id/members/invite
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>",
-    "Content-Type": "application/json"
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
 }
+
 ```
 
 BODY:
 
 ```
+
 {
-    "userId": string,
-    "role": "EDITOR" | "REVIEWER" | "ADMIN"
+"userId": string,
+"role": "EDITOR" | "REVIEWER" | "ADMIN"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "invited": boolean,
-    "error": string | null
+"invited": boolean,
+"error": string | null
 }
+
 ```
 
 #### Remove Member
 
 ```
+
 DELETE /api/publications/id/:id/members/:userId
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "removed": boolean,
-    "error": string | null
+"removed": boolean,
+"error": string | null
 }
+
 ```
 
 ---
@@ -817,31 +876,37 @@ RESPONSE:
 #### Get Publication Invitations
 
 ```
+
 GET /api/publications/slug/:slug/invitations?page=1&limit=20
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "invitations": [
-        {
-            "user": Partial<User>,
-            "role": "EDITOR" | "REVIEWER" | "ADMIN",
-            "invitedAt": Date
-        }
-    ] | null,
-    "pagination": { "total": number, "page": number } | null,
-    "error": string | null
+"invitations": [
+{
+"user": Partial<User>,
+"role": "EDITOR" | "REVIEWER" | "ADMIN",
+"invitedAt": Date
 }
+] | null,
+"pagination": { "total": number, "page": number } | null,
+"error": string | null
+}
+
 ```
 
 ---
@@ -849,33 +914,41 @@ RESPONSE:
 #### Update Member Role
 
 ```
+
 PUT /api/publications/id/:id/members/:userId
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>",
-    "Content-Type": "application/json"
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
 }
+
 ```
 
 BODY:
 
 ```
+
 {
-    "role": "EDITOR" | "REVIEWER" | "ADMIN"
+"role": "EDITOR" | "REVIEWER" | "ADMIN"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "updated": boolean,
-    "error": string | null
+"updated": boolean,
+"error": string | null
 }
+
 ```
 
 ---
@@ -885,29 +958,36 @@ RESPONSE:
 #### Get Article
 
 ```
+
 GET /api/articles/slug/:slug
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>" (Optional)
+"Authorization": "Bearer <token>" (Optional)
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "article": Article | null,
-    "error": string | null
+"article": Article | null,
+"error": string | null
 }
+
 ```
 
 #### Delete Article
 
 ```
+
 DELETE /api/articles/id/:id
 
 ```
@@ -915,97 +995,122 @@ DELETE /api/articles/id/:id
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "deleted": boolean,
-    "error": string | null
+"deleted": boolean,
+"error": string | null
 }
+
 ```
 
 #### Unpublish Article
 
 ```
+
 POST /api/articles/id/:id/unpublish
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "unpublished": boolean,
-    "error": string | null
+"unpublished": boolean,
+"error": string | null
 }
+
 ```
 
 #### Edit Article (Copy to Draft)
 
 ```
+
 POST /api/articles/id/:id/edit
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>"
+"Authorization": "Bearer <token>"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "draftId": string | null,
-    "error": string | null
+"draftId": string | null,
+"error": string | null
 }
+
 ```
 
 #### Republish Article
 
 ```
+
 POST /api/articles/id/:id/republish
+
 ```
 
 HEADERS:
 
 ```
+
 {
-    "Authorization": "Bearer <token>",
-    "Content-Type": "application/json"
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
 }
+
 ```
 
 BODY:
 
 ```
+
 {
-    "visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
+"visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
 }
+
 ```
 
 RESPONSE:
 
 ```
+
 {
-    "republished": boolean,
-    "error": string | null
+"republished": boolean,
+"error": string | null
 }
+
 ```
+
 ```
 
 ---
@@ -1733,8 +1838,6 @@ RESPONSE:
     "error": string | null
 }
 ```
-
-
 
 ## TODO
 
