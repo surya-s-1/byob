@@ -28,8 +28,8 @@ export default function Head({ draft, readOnly }: any) {
 		return (
 			<div className='mb-12'>
 				<Cover cover={cover} readOnly={true} />
-				<h1 className='text-[48px] font-bold leading-tight mt-4 text-main'>{title}</h1>
-				{subtitle && <h2 className='text-xl text-subtle mt-2'>{subtitle}</h2>}
+				<h1 className='mt-4 text-[48px] leading-tight font-bold text-main'>{title}</h1>
+				{subtitle && <h2 className='mt-2 text-xl text-subtle'>{subtitle}</h2>}
 			</div>
 		)
 	}
@@ -43,7 +43,7 @@ export default function Head({ draft, readOnly }: any) {
 				maxLength={180}
 				value={title}
 				onChange={(e) => setTitle(e.target.value)}
-				className='w-full bg-transparent text-main outline-none resize-none text-[48px] font-bold leading-tight mt-md overflow-hidden'
+				className='mt-md w-full resize-none overflow-hidden bg-transparent text-[48px] leading-tight font-bold text-main outline-none'
 				rows={1}
 			/>
 			<textarea
@@ -52,7 +52,7 @@ export default function Head({ draft, readOnly }: any) {
 				maxLength={300}
 				value={subtitle}
 				onChange={(e) => setSubtitle(e.target.value)}
-				className='w-full bg-transparent text-subtle outline-none resize-none text-xl mt-sm overflow-hidden'
+				className='mt-sm w-full resize-none overflow-hidden bg-transparent text-xl text-subtle outline-none'
 				rows={1}
 			/>
 		</div>

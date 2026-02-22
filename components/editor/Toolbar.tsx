@@ -174,7 +174,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 	}
 
 	return (
-		<div className='sticky top-0 bg-primary/90 backdrop-blur-sm py-3 z-20 border-b border-border flex items-center gap-1 flex-wrap mb-lg'>
+		<div className='sticky top-0 z-20 mb-lg flex flex-wrap items-center gap-1 border-b border-border bg-primary/90 py-3 backdrop-blur-sm'>
 			<button
 				onMouseDown={(e) => handleCommand(e, 'bold')}
 				className={getBtnClass('bold')}
@@ -220,7 +220,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 				</button>
 			)}
 
-			<div className='w-px h-5 bg-border mx-1'></div>
+			<div className='mx-1 h-5 w-px bg-border'></div>
 
 			<button
 				onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H1')}
@@ -244,7 +244,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 				<Heading3 size={18} />
 			</button>
 
-			<div className='w-px h-5 bg-border mx-1'></div>
+			<div className='mx-1 h-5 w-px bg-border'></div>
 
 			<button
 				onMouseDown={(e) => handleCommand(e, 'insertUnorderedList')}
@@ -269,7 +269,7 @@ export default function Toolbar({ insert, saveStatus }: any) {
 				<Quote size={16} />
 			</button>
 
-			<div className='w-px h-5 bg-border mx-2'></div>
+			<div className='mx-2 h-5 w-px bg-border'></div>
 
 			<button
 				onClick={() => insert({ type: 'image', src: '', w: 700, align: 'center' })}
@@ -312,43 +312,43 @@ export default function Toolbar({ insert, saveStatus }: any) {
 
 			<div className='ml-auto flex items-center pr-2' title='Saving...'>
 				{(saveStatus === 'idle' || saveStatus === 'saving') && (
-					<Loader2 size={14} className='animate-spin text-brand' />
+					<Loader2 size={14} className='text-brand animate-spin' />
 				)}
 				{saveStatus === 'saved' && <Check size={14} className='text-brand' />}
 			</div>
 
 			{linkPopup.show && (
-				<div className='absolute top-full left-0 mt-2 bg-elevated border border-border p-3 rounded-md shadow-xl z-50 flex flex-col gap-2 w-[300px]'>
-					<h3 className='text-xs font-bold text-subtle uppercase tracking-wider'>
+				<div className='absolute top-full left-0 z-50 mt-2 flex w-[300px] flex-col gap-2 rounded-md border border-border bg-elevated p-3 shadow-xl'>
+					<h3 className='text-xs font-bold tracking-wider text-subtle uppercase'>
 						Insert Link
 					</h3>
 					<input
 						value={linkPopup.text}
 						onChange={(e) => setLinkPopup({ ...linkPopup, text: e.target.value })}
 						placeholder='Display text (optional)'
-						className='bg-secondary text-main border border-border px-3 py-1.5 rounded-sm outline-none focus:border-brand focus:ring-1 ring-brand text-sm transition-all'
+						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
 					/>
 					<input
 						autoFocus
 						value={linkPopup.url}
 						onChange={(e) => setLinkPopup({ ...linkPopup, url: e.target.value })}
 						placeholder='https://...'
-						className='bg-secondary text-main border border-border px-3 py-1.5 rounded-sm outline-none focus:border-brand focus:ring-1 ring-brand text-sm transition-all'
+						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
 						onKeyDown={(e) => {
 							if (e.key === 'Enter') applyLink()
 							if (e.key === 'Escape') setLinkPopup({ ...linkPopup, show: false })
 						}}
 					/>
-					<div className='flex justify-end gap-2 mt-1'>
+					<div className='mt-1 flex justify-end gap-2'>
 						<button
 							onClick={() => setLinkPopup({ ...linkPopup, show: false })}
-							className='text-sm text-subtle hover:text-main px-2'
+							className='px-2 text-sm text-subtle hover:text-main'
 						>
 							Cancel
 						</button>
 						<button
 							onClick={applyLink}
-							className='bg-main text-inverse px-3 py-1.5 rounded-sm text-sm'
+							className='rounded-sm bg-main px-3 py-1.5 text-sm text-inverse'
 						>
 							Save
 						</button>

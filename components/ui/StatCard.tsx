@@ -13,18 +13,18 @@ export default function StatCard({ title, value, change, icon, className }: Stat
 	return (
 		<Card
 			className={cn(
-				'p-4 flex flex-col justify-between min-h-[112px] border-l-4 border-l-primary w-full transition-all hover:shadow-md',
+				'flex min-h-[112px] w-full flex-col justify-between border-l-4 border-l-primary p-4 transition-all hover:shadow-md',
 				className
 			)}
 		>
-			<div className='flex justify-between items-start gap-4'>
-				<span className='text-sm font-medium text-subtle truncate'>{title}</span>
+			<div className='flex items-start justify-between gap-4'>
+				<span className='truncate text-sm font-medium text-subtle'>{title}</span>
 				<div className='flex-shrink-0'>{icon}</div>
 			</div>
-			<div className='flex items-end justify-between flex-wrap gap-2 mt-2'>
+			<div className='mt-2 flex flex-wrap items-end justify-between gap-2'>
 				<span className='text-2xl font-bold text-main'>{value}</span>
 				{change && (
-					<span className='text-xs font-bold text-green-500 bg-green-500/10 px-1.5 py-0.5 rounded whitespace-nowrap'>
+					<span className='rounded bg-green-500/10 px-1.5 py-0.5 text-xs font-bold whitespace-nowrap text-green-500'>
 						{change}
 					</span>
 				)}

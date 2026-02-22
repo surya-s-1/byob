@@ -21,20 +21,20 @@ export default function InvitationCard({
 	isLoading,
 }: InvitationCardProps) {
 	return (
-		<Card className='p-4 border-primary/20 bg-primary/5 space-y-4 hover:shadow-md transition-all'>
+		<Card className='space-y-4 border-primary/20 bg-primary/5 p-4 transition-all hover:shadow-md'>
 			<div className='flex items-start gap-4'>
-				<div className='h-10 w-10 bg-primary/20 text-main rounded-full flex items-center justify-center flex-shrink-0 animate-pulse'>
+				<div className='flex h-10 w-10 flex-shrink-0 animate-pulse items-center justify-center rounded-full bg-primary/20 text-main'>
 					<Mail size={20} />
 				</div>
-				<div className='space-y-1 min-w-0'>
-					<h4 className='font-bold text-main text-sm'>Action Required</h4>
-					<p className='text-xs text-subtle leading-relaxed overflow-hidden'>
+				<div className='min-w-0 space-y-1'>
+					<h4 className='text-sm font-bold text-main'>Action Required</h4>
+					<p className='overflow-hidden text-xs leading-relaxed text-subtle'>
 						You've been invited to join{' '}
-						<strong className='text-main truncate inline-block max-w-[120px] align-bottom'>
+						<strong className='inline-block max-w-[120px] truncate align-bottom text-main'>
 							{invitation.displayName}
 						</strong>{' '}
 						as an{' '}
-						<strong className='flex items-center gap-1 text-main font-bold'>
+						<strong className='flex items-center gap-1 font-bold text-main'>
 							<Shield size={10} />
 							{invitation.role || 'Member'}
 						</strong>
@@ -42,18 +42,18 @@ export default function InvitationCard({
 					</p>
 				</div>
 			</div>
-			<div className='flex flex-col xs:flex-row gap-2'>
+			<div className='flex flex-col gap-2 xs:flex-row'>
 				<Button
 					onClick={() => onAccept?.(invitation.id)}
 					isLoading={isLoading}
-					className='btn-brand py-2 px-4 text-xs flex-1 font-bold h-9'
+					className='btn-brand h-9 flex-1 px-4 py-2 text-xs font-bold'
 				>
 					Accept Invitation
 				</Button>
 				<Button
 					onClick={() => onReject?.(invitation.id)}
 					isLoading={isLoading}
-					className='bg-secondary text-main border border-border py-2 px-4 text-xs flex-1 font-bold h-9 hover:bg-border transition-colors'
+					className='h-9 flex-1 border border-border bg-secondary px-4 py-2 text-xs font-bold text-main transition-colors hover:bg-border'
 				>
 					Decline
 				</Button>

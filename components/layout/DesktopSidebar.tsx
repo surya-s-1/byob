@@ -65,20 +65,20 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 	return (
 		<aside
 			className={cn(
-				'fixed top-0 bottom-0 z-50 bg-primary border-border flex flex-col transition-all duration-300',
+				'fixed top-0 bottom-0 z-50 flex flex-col border-border bg-primary transition-all duration-300',
 				side === 'left' ? 'left-0 border-r' : 'right-0 border-l',
 				isExpanded ? 'w-64' : 'w-20'
 			)}
 		>
 			<div
 				className={cn(
-					'flex items-center h-16 px-4 bg-primary/50 backdrop-blur-sm sticky top-2 z-10',
-					isExpanded ? 'justify-between' : 'flex-col justify-center gap-2 py-4 h-auto'
+					'sticky top-2 z-10 flex h-16 items-center bg-primary/50 px-4 backdrop-blur-sm',
+					isExpanded ? 'justify-between' : 'h-auto flex-col justify-center gap-2 py-4'
 				)}
 			>
 				{isExpanded && (
 					<Link href='/' className='flex items-center gap-3 px-2'>
-						<div className='relative w-16 h-16 flex-shrink-0'>
+						<div className='relative h-16 w-16 flex-shrink-0'>
 							<Image
 								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
 								alt='Logo'
@@ -93,7 +93,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				<button
 					onClick={toggleSidebar}
 					className={cn(
-						'p-1.5 rounded-lg hover:bg-secondary text-subtle transition-colors',
+						'rounded-lg p-1.5 text-subtle transition-colors hover:bg-secondary',
 						!isExpanded && 'mt-2'
 					)}
 				>
@@ -111,13 +111,13 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				</button>
 			</div>
 
-			<nav className='flex-1 px-3 py-6 space-y-2 overflow-y-auto'>
+			<nav className='flex-1 space-y-2 overflow-y-auto px-3 py-6'>
 				{navItems.map((item) => (
 					<Link
 						key={item.href}
 						href={item.href}
 						className={cn(
-							'flex items-center gap-4 px-3 py-3 rounded-xl transition-all text-base font-semibold',
+							'flex items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold transition-all',
 							item.brand
 								? 'btn-brand text-white shadow-md hover:opacity-90'
 								: pathname === item.href
@@ -133,18 +133,18 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				))}
 			</nav>
 
-			<div className='p-3 border-t border-border space-y-3'>
+			<div className='space-y-3 border-t border-border p-3'>
 				<div className={cn('flex gap-1', !isExpanded && 'flex-col')}>
 					<button
 						onClick={toggleTheme}
-						className='flex-1 flex items-center justify-center p-2.5 rounded-xl hover:bg-secondary text-subtle hover:text-main transition-all'
+						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
 						title='Toggle Theme'
 					>
 						{isDark ? <Sun size={20} /> : <Moon size={20} />}
 					</button>
 					<button
 						onClick={toggleSide}
-						className='flex-1 flex items-center justify-center p-2.5 rounded-xl hover:bg-secondary text-subtle hover:text-main transition-all'
+						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
 						title='Move Sidebar'
 					>
 						<ArrowLeftRight size={20} />
@@ -159,7 +159,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 								: router.push(`/profile/${user?.username}`)
 						}
 						className={cn(
-							'w-full flex items-center gap-4 p-2.5 rounded-xl transition-all text-base font-semibold',
+							'flex w-full items-center gap-4 rounded-xl p-2.5 text-base font-semibold transition-all',
 							userMenuOpen
 								? 'bg-secondary text-main'
 								: 'text-subtle hover:bg-secondary hover:text-main',
@@ -167,28 +167,28 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 						)}
 						title={!isExpanded ? 'Profile' : ''}
 					>
-						<div className='w-8 h-8 rounded-full overflow-hidden bg-secondary flex-shrink-0'>
+						<div className='h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
 							{user?.image ? (
 								<img
 									src={user.image}
 									alt={user.name}
-									className='w-full h-full object-cover'
+									className='h-full w-full object-cover'
 								/>
 							) : (
-								<div className='w-full h-full flex items-center justify-center'>
+								<div className='flex h-full w-full items-center justify-center'>
 									<UserIcon size={18} />
 								</div>
 							)}
 						</div>
 						{isExpanded && (
 							<>
-								<span className='flex-1 text-left truncate'>
+								<span className='flex-1 truncate text-left'>
 									{user?.name?.split(' ')[0] || 'User'}
 								</span>
 								<ChevronRight
 									size={18}
 									className={cn(
-										'transition-transform opacity-50',
+										'opacity-50 transition-transform',
 										userMenuOpen && 'rotate-90'
 									)}
 								/>
@@ -197,17 +197,17 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 					</button>
 
 					{isExpanded && userMenuOpen && (
-						<div className='mt-1 space-y-1 animate-in slide-in-from-bottom-1 duration-200'>
+						<div className='animate-in slide-in-from-bottom-1 mt-1 space-y-1 duration-200'>
 							<Link
 								href={`/profile/${user?.username}`}
-								className='flex items-center gap-4 px-4 py-2.5 rounded-lg text-sm text-subtle hover:bg-secondary hover:text-main transition-all'
+								className='flex items-center gap-4 rounded-lg px-4 py-2.5 text-sm text-subtle transition-all hover:bg-secondary hover:text-main'
 							>
 								<UserIcon size={16} />
 								Profile
 							</Link>
 							<Link
 								href='/settings'
-								className='flex items-center gap-4 px-4 py-2.5 rounded-lg text-sm text-subtle hover:bg-secondary hover:text-main transition-all'
+								className='flex items-center gap-4 rounded-lg px-4 py-2.5 text-sm text-subtle transition-all hover:bg-secondary hover:text-main'
 							>
 								<SettingsIcon size={16} />
 								Settings
@@ -219,7 +219,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				<button
 					onClick={logout}
 					className={cn(
-						'w-full flex items-center gap-4 p-2.5 rounded-xl text-error/80 hover:bg-error/10 hover:text-error transition-all text-base font-semibold',
+						'flex w-full items-center gap-4 rounded-xl p-2.5 text-base font-semibold text-error/80 transition-all hover:bg-error/10 hover:text-error',
 						!isExpanded && 'justify-center'
 					)}
 					title={!isExpanded ? 'Logout' : ''}

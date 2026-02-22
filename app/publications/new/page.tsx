@@ -45,26 +45,26 @@ export default function NewPublicationPage() {
 	}
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-12 space-y-8'>
+		<div className='mx-auto max-w-3xl space-y-8 px-4 py-12'>
 			<div className='flex items-center gap-4'>
 				<Link
 					href='/dashboard'
-					className='h-10 w-10 flex items-center justify-center rounded-full bg-secondary/50 text-main hover:bg-secondary transition-colors'
+					className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main transition-colors hover:bg-secondary'
 				>
 					<ArrowLeft size={20} />
 				</Link>
 				<div>
-					<h1 className='text-2xl sm:text-3xl font-extrabold text-main tracking-tight line-height-[1.1]'>
+					<h1 className='line-height-[1.1] text-2xl font-extrabold tracking-tight text-main sm:text-3xl'>
 						Create a Publication
 					</h1>
-					<p className='text-subtle text-sm'>
+					<p className='text-sm text-subtle'>
 						Design a space for your best stories and writers.
 					</p>
 				</div>
 			</div>
 
 			<form onSubmit={handleSubmit} className='space-y-6'>
-				<Card className='p-6 sm:p-8 space-y-8'>
+				<Card className='space-y-8 p-6 sm:p-8'>
 					<div className='space-y-4'>
 						<label className='block space-y-2'>
 							<span className='text-sm font-bold text-main'>Display Name</span>
@@ -72,7 +72,7 @@ export default function NewPublicationPage() {
 								required
 								type='text'
 								placeholder="What's your publication called?"
-								className='w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 text-main focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all'
+								className='w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 								value={formData.displayName}
 								onChange={(e) =>
 									setFormData({ ...formData, displayName: e.target.value })
@@ -85,7 +85,7 @@ export default function NewPublicationPage() {
 							<textarea
 								rows={3}
 								placeholder='What is this publication about?'
-								className='w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 text-main focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all resize-none'
+								className='w-full resize-none rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 								value={formData.displayDescription}
 								onChange={(e) =>
 									setFormData({ ...formData, displayDescription: e.target.value })
@@ -96,7 +96,7 @@ export default function NewPublicationPage() {
 
 					<div className='space-y-4'>
 						<span className='text-sm font-bold text-main'>Visibility</span>
-						<div className='grid grid-cols-1 sm:grid-cols-3 gap-3'>
+						<div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
 							{[
 								{
 									id: 'PUBLIC',
@@ -122,7 +122,7 @@ export default function NewPublicationPage() {
 									type='button'
 									onClick={() => setFormData({ ...formData, visibility: opt.id })}
 									className={cn(
-										'flex flex-col items-start p-4 rounded-xl border transition-all text-left group',
+										'group flex flex-col items-start rounded-xl border p-4 text-left transition-all',
 										formData.visibility === opt.id
 											? 'border-main bg-main/5 shadow-sm'
 											: 'border-border bg-secondary/30 hover:bg-secondary/50'
@@ -130,7 +130,7 @@ export default function NewPublicationPage() {
 								>
 									<div
 										className={cn(
-											'p-2 rounded-lg mb-2 transition-colors bg-secondary text-subtle group-hover:text-main'
+											'mb-2 rounded-lg bg-secondary p-2 text-subtle transition-colors group-hover:text-main'
 										)}
 									>
 										{opt.icon}
@@ -151,7 +151,7 @@ export default function NewPublicationPage() {
 								<input
 									type='url'
 									placeholder='https://example.com/cover.png'
-									className='w-full bg-secondary/50 border border-border rounded-xl px-4 py-3 text-main focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all'
+									className='w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 									value={formData.cover}
 									onChange={(e) =>
 										setFormData({ ...formData, cover: e.target.value })
@@ -161,11 +161,11 @@ export default function NewPublicationPage() {
 						</div>
 					</div>
 
-					<div className='pt-4 flex justify-end'>
+					<div className='flex justify-end pt-4'>
 						<Button
 							type='submit'
 							isLoading={isLoading}
-							className='btn-brand px-12 py-3 rounded-full text-base font-bold shadow-md'
+							className='btn-brand rounded-full px-12 py-3 text-base font-bold shadow-md'
 						>
 							Create Publication
 						</Button>

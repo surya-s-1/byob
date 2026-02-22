@@ -5,13 +5,13 @@ export default function Button({ children, className, isLoading, disabled, ...pr
 	return (
 		<button
 			className={cn(
-				'px-lg py-sm rounded-md bg-brand text-inverse text-sm font-medium shadow-sm hover:bg-brand-hover transition-colors duration-fast disabled:opacity-50 disabled:cursor-not-allowed whitespace-nowrap flex gap-2 items-center justify-center cursor-pointer',
+				'hover:bg-brand-hover duration-fast flex cursor-pointer items-center justify-center gap-2 rounded-md bg-brand px-lg py-sm text-sm font-medium whitespace-nowrap text-inverse shadow-sm transition-colors disabled:cursor-not-allowed disabled:opacity-50',
 				className
 			)}
 			disabled={disabled || isLoading}
 			{...props}
 		>
-			{isLoading && <Loader2 className='w-4 h-4 animate-spin' />}
+			{isLoading && <Loader2 className='h-4 w-4 animate-spin' />}
 			{children}
 		</button>
 	)

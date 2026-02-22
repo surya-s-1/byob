@@ -116,14 +116,14 @@
 
 @layer components {
 	.btn-brand {
-		@apply relative overflow-hidden inline-flex items-center justify-center;
+		@apply relative inline-flex items-center justify-center overflow-hidden;
 		background: var(--brand-primary);
 		color: white;
 	}
 
 	.btn-brand::after {
 		content: '';
-		@apply absolute top-0 -left-[75%] w-1/2 h-full block;
+		@apply absolute top-0 -left-[75%] block h-full w-1/2;
 		background: linear-gradient(
 			to right,
 			rgba(255, 255, 255, 0) 0%,
@@ -139,15 +139,15 @@
 
 	/* WYSIWYG Editor Styles */
 	.wysiwyg-editor h1 {
-		@apply text-4xl font-extrabold my-4 text-main;
+		@apply my-4 text-4xl font-extrabold text-main;
 	}
 
 	.wysiwyg-editor h2 {
-		@apply text-3xl font-bold mt-3 mb-2 pb-2 text-main;
+		@apply mt-3 mb-2 pb-2 text-3xl font-bold text-main;
 	}
 
 	.wysiwyg-editor h3 {
-		@apply text-2xl font-bold mt-2 mb-1 text-main;
+		@apply mt-2 mb-1 text-2xl font-bold text-main;
 	}
 
 	.wysiwyg-editor p {
@@ -155,11 +155,11 @@
 	}
 
 	.wysiwyg-editor ul {
-		@apply ml-6 list-disc mb-3;
+		@apply mb-3 ml-6 list-disc;
 	}
 
 	.wysiwyg-editor ol {
-		@apply ml-6 list-decimal mb-3;
+		@apply mb-3 ml-6 list-decimal;
 	}
 
 	.wysiwyg-editor li {
@@ -167,7 +167,7 @@
 	}
 
 	.wysiwyg-editor blockquote {
-		@apply border-l-4 border-border pl-4 py-1 my-4 italic text-subtle rounded-r-md;
+		@apply my-4 rounded-r-md border-l-4 border-border py-1 pl-4 text-subtle italic;
 	}
 
 	.wysiwyg-editor strong,
@@ -186,20 +186,20 @@
 
 	.wysiwyg-editor s,
 	.wysiwyg-editor del {
-		@apply line-through text-subtle;
+		@apply text-subtle line-through;
 	}
 
 	.wysiwyg-editor a {
-		@apply text-main underline font-medium cursor-pointer hover:opacity-80;
+		@apply cursor-pointer font-medium text-main underline hover:opacity-80;
 	}
 
 	.wysiwyg-editor code {
-		@apply text-main p-1 rounded-sm text-sm font-mono;
+		@apply rounded-sm p-1 font-mono text-sm text-main;
 	}
 
 	.wysiwyg-editor:empty:before {
 		content: attr(placeholder);
-		@apply text-muted pointer-events-none;
+		@apply pointer-events-none text-muted;
 	}
 }
 

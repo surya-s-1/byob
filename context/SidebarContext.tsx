@@ -55,7 +55,7 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 			pathname.includes('/draft/')
 		setIsExpanded(!isArticleOrDraft)
 
-		// Reset to default items on navigation if desired, 
+		// Reset to default items on navigation if desired,
 		// but usually we want the page to control this via a hook.
 		// For now, let's keep it simple.
 		setNavItems(DEFAULT_NAV_ITEMS)

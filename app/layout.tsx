@@ -31,7 +31,7 @@ export default async function RootLayout({
 	return (
 		<html lang='en' suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 antialiased min-h-screen bg-primary`}
+				className={`${geistSans.variable} ${geistMono.variable} m-0 min-h-screen bg-primary p-0 antialiased`}
 			>
 				<ClientLayout user={user}>{children}</ClientLayout>
 			</body>

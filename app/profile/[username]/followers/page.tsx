@@ -23,19 +23,19 @@ export default async function FollowersPage({ params }: { params: Promise<{ user
 	const { followers = [] } = await res.json()
 
 	return (
-		<div className='max-w-3xl mx-auto px-4 py-12 space-y-8'>
+		<div className='mx-auto max-w-3xl space-y-8 px-4 py-12'>
 			<div className='flex items-center gap-4'>
 				<Link
 					href={`/profile/${username}`}
-					className='h-10 w-10 flex items-center justify-center rounded-full bg-secondary/50 text-main hover:bg-secondary transition-colors'
+					className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main transition-colors hover:bg-secondary'
 				>
 					<ArrowLeft size={20} />
 				</Link>
 				<div>
-					<h1 className='text-2xl sm:text-3xl font-extrabold text-main tracking-tight'>
+					<h1 className='text-2xl font-extrabold tracking-tight text-main sm:text-3xl'>
 						Followers
 					</h1>
-					<p className='text-subtle text-sm'>People following @{username}</p>
+					<p className='text-sm text-subtle'>People following @{username}</p>
 				</div>
 			</div>
 
@@ -45,11 +45,11 @@ export default async function FollowersPage({ params }: { params: Promise<{ user
 						<UserCard key={user.id} user={user} currentUser={currentUser} />
 					))
 				) : (
-					<div className='py-24 text-center space-y-4 bg-secondary/20 rounded-3xl border border-dashed border-border/50'>
-						<div className='bg-secondary/50 h-16 w-16 rounded-full flex items-center justify-center mx-auto'>
+					<div className='space-y-4 rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-24 text-center'>
+						<div className='mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-secondary/50'>
 							<Users size={32} className='text-muted/30' />
 						</div>
-						<p className='text-muted font-medium'>No followers yet.</p>
+						<p className='font-medium text-muted'>No followers yet.</p>
 					</div>
 				)}
 			</div>

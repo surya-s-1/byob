@@ -55,34 +55,34 @@ export default function Mermaid({ block, update, readOnly }: any) {
 
 	if (readOnly) {
 		return (
-			<div className='w-full my-8 bg-primary p-6 rounded-lg border border-border flex items-center justify-center overflow-auto shadow-sm'>
+			<div className='my-8 flex w-full items-center justify-center overflow-auto rounded-lg border border-border bg-primary p-6 shadow-sm'>
 				<div ref={ref} className='mermaid-preview text-main' />
 			</div>
 		)
 	}
 
 	return (
-		<div className='w-full flex flex-col border border-border bg-elevated shadow-sm rounded-lg overflow-hidden'>
-			<div className='border-b border-border flex justify-between items-center bg-secondary'>
-				<div className='text-xs text-subtle font-bold px-4 py-2'>Mermaid Editor</div>
+		<div className='flex w-full flex-col overflow-hidden rounded-lg border border-border bg-elevated shadow-sm'>
+			<div className='flex items-center justify-between border-b border-border bg-secondary'>
+				<div className='px-4 py-2 text-xs font-bold text-subtle'>Mermaid Editor</div>
 			</div>
 			<textarea
 				ref={textareaRef}
 				value={block.content}
 				onChange={(e) => update({ content: e.target.value })}
-				className='w-full bg-transparent text-main p-4 font-mono text-sm outline-none resize-none min-h-[120px]'
+				className='min-h-[120px] w-full resize-none bg-transparent p-4 font-mono text-sm text-main outline-none'
 				spellCheck={false}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>
-			<div className='bg-primary p-6 flex flex-col items-center justify-center min-h-[200px] overflow-auto border-t border-border'>
+			<div className='flex min-h-[200px] flex-col items-center justify-center overflow-auto border-t border-border bg-primary p-6'>
 				{error && (
-					<div className='text-error text-sm font-mono whitespace-pre-wrap mb-4'>
+					<div className='mb-4 font-mono text-sm whitespace-pre-wrap text-error'>
 						{error}
 					</div>
 				)}
 				<div
 					ref={ref}
-					className={`w-full flex justify-center mermaid-preview text-main ${error ? 'hidden' : 'block'}`}
+					className={`mermaid-preview flex w-full justify-center text-main ${error ? 'hidden' : 'block'}`}
 				/>
 			</div>
 		</div>

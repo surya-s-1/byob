@@ -130,7 +130,7 @@ export default function Content({ initialMarkdown }: any) {
 					})
 				}
 			}}
-			className='relative min-h-[60vh] pb-32 cursor-text'
+			className='relative min-h-[60vh] cursor-text pb-32'
 			id='editor-content'
 			onClick={handleContainerClick}
 		>

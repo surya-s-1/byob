@@ -121,7 +121,7 @@ export default function PublicationClient({
 	const canManage = publication.myRole === 'OWNER' || publication.myRole === 'ADMIN'
 
 	return (
-		<div className='max-w-6xl mx-auto px-4 py-8 lg:py-12 space-y-12'>
+		<div className='mx-auto max-w-6xl space-y-12 px-4 py-8 lg:py-12'>
 			{canManage && (
 				<FloatingActions
 					actions={[
@@ -145,8 +145,8 @@ export default function PublicationClient({
 				onWriteArticle={handleWriteArticle}
 			/>
 
-			<div className='grid grid-cols-1 lg:grid-cols-4 gap-8'>
-				<div className='lg:col-span-1 space-y-6 lg:order-2'>
+			<div className='grid grid-cols-1 gap-8 lg:grid-cols-4'>
+				<div className='space-y-6 lg:order-2 lg:col-span-1'>
 					<PublicationAbout
 						publication={publication}
 						followersCount={followersCount}
@@ -154,9 +154,9 @@ export default function PublicationClient({
 					/>
 				</div>
 
-				<div className='lg:col-span-3 space-y-8 lg:order-1'>
+				<div className='space-y-8 lg:order-1 lg:col-span-3'>
 					{/* Tabs */}
-					<div className='-mx-4 sm:mx-0 mb-6'>
+					<div className='-mx-4 mb-6 sm:mx-0'>
 						<Tabs
 							tabs={[
 								{ id: 'articles', label: 'Articles' },
@@ -168,7 +168,7 @@ export default function PublicationClient({
 							onChange={(id) => setActiveTab(id as TabType)}
 							className='border-b-0'
 						/>
-						<div className='h-px bg-border w-full mt-0' />
+						<div className='mt-0 h-px w-full bg-border' />
 					</div>
 
 					{/* Tab Content */}
@@ -180,9 +180,12 @@ export default function PublicationClient({
 										<ArticleCard key={article.id} article={article} />
 									))
 								) : (
-									<div className='py-20 text-center rounded-3xl bg-secondary/20 border border-dashed border-border/50'>
-										<BookOpen size={48} className='text-muted/20 mx-auto mb-4' />
-										<p className='text-muted font-medium'>
+									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-20 text-center'>
+										<BookOpen
+											size={48}
+											className='mx-auto mb-4 text-muted/20'
+										/>
+										<p className='font-medium text-muted'>
 											No articles published yet.
 										</p>
 									</div>
@@ -197,9 +200,12 @@ export default function PublicationClient({
 										<DraftCard key={draft.id} draft={draft} />
 									))
 								) : (
-									<div className='py-20 text-center rounded-3xl bg-secondary/20 border border-dashed border-border/50'>
-										<FileText size={48} className='text-muted/20 mx-auto mb-4' />
-										<p className='text-muted font-medium'>
+									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-20 text-center'>
+										<FileText
+											size={48}
+											className='mx-auto mb-4 text-muted/20'
+										/>
+										<p className='font-medium text-muted'>
 											No drafts published yet.
 										</p>
 									</div>

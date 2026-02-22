@@ -56,8 +56,8 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 				style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 			>
 				{isInsecure ? (
-					<div className='w-full h-full rounded-lg border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
-						<div className='bg-error/10 text-error p-2 rounded-full'>
+					<div className='flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border border-border bg-secondary p-4 text-center text-sm text-subtle'>
+						<div className='rounded-full bg-error/10 p-2 text-error'>
 							<AlertTriangle size={20} />
 						</div>
 						<span className='font-bold text-main'>Unsupported Content</span>
@@ -66,7 +66,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 				) : (
 					<iframe
 						src={embedUrl}
-						className='w-full h-full rounded-lg border border-border shadow-sm bg-secondary'
+						className='h-full w-full rounded-lg border border-border bg-secondary shadow-sm'
 						allowFullScreen={settings.fullscreen}
 						title='Embedded content'
 						loading='lazy'
@@ -80,7 +80,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	const ResizeHandle = ({ position, cursor, onDrag }: any) => (
 		<div
-			className={`absolute ${position} w-4 h-4 ${cursor} z-30 opacity-0 group-hover:opacity-100 transition-opacity`}
+			className={`absolute ${position} h-4 w-4 ${cursor} z-30 opacity-0 transition-opacity group-hover:opacity-100`}
 			onMouseDown={(e) => {
 				e.preventDefault()
 				setIsResizing(true)
@@ -103,12 +103,12 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	return (
 		<div
-			className='relative inline-block rounded-lg hover:px-4 hover:ring-1 ring-brand transition-all duration-200 group'
+			className='ring-brand group relative inline-block rounded-lg transition-all duration-200 hover:px-4 hover:ring-1'
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
 			{isInsecure ? (
-				<div className='w-full h-full rounded-lg border border-border bg-secondary flex flex-col items-center justify-center text-subtle text-sm gap-2 p-4 text-center'>
-					<div className='bg-error/10 text-error p-2 rounded-full'>
+				<div className='flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border border-border bg-secondary p-4 text-center text-sm text-subtle'>
+					<div className='rounded-full bg-error/10 p-2 text-error'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							width='20'
@@ -131,7 +131,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 			) : (
 				<iframe
 					src={embedUrl}
-					className='w-full h-full rounded-lg border border-border shadow-sm bg-secondary block'
+					className='block h-full w-full rounded-lg border border-border bg-secondary shadow-sm'
 					title='Embedded content'
 					loading='lazy'
 					referrerPolicy='no-referrer-when-downgrade'
@@ -144,24 +144,24 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 				style={{ pointerEvents: isResizing || !isFocused ? 'auto' : 'none' }}
 			/>
 
-			<div className='absolute -top-3 left-1/2 -translate-x-1/2 bg-elevated border border-border rounded-lg opacity-0 group-hover:opacity-100 transition-opacity shadow-md flex items-center z-20 overflow-hidden'>
+			<div className='absolute -top-3 left-1/2 z-20 flex -translate-x-1/2 items-center overflow-hidden rounded-lg border border-border bg-elevated opacity-0 shadow-md transition-opacity group-hover:opacity-100'>
 				<button
 					onClick={() => update({ align: 'left' })}
-					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Left'
 				>
 					<AlignLeft size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'center' })}
-					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Center'
 				>
 					<AlignCenter size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'right' })}
-					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Right'
 				>
 					<AlignRight size={14} />
@@ -171,7 +171,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 						setTempUrl(block.src)
 						setShowEditUrl(true)
 					}}
-					className='p-1.5 hover:bg-secondary transition-colors text-subtle font-medium text-xs px-2 flex items-center gap-1'
+					className='flex items-center gap-1 p-1.5 px-2 text-xs font-medium text-subtle transition-colors hover:bg-secondary'
 					title='Settings'
 				>
 					<Edit2 size={14} />
@@ -179,9 +179,9 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 			</div>
 
 			{showEditUrl && (
-				<div className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-elevated border border-border p-4 rounded-lg shadow-xl z-30 flex flex-col gap-4 w-[90%] max-w-[400px] animate-in fade-in zoom-in duration-200'>
+				<div className='animate-in fade-in zoom-in absolute top-1/2 left-1/2 z-30 flex w-[90%] max-w-[400px] -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-lg border border-border bg-elevated p-4 shadow-xl duration-200'>
 					<div className='flex flex-col gap-1.5'>
-						<label className='text-[10px] font-bold uppercase tracking-wider text-muted'>
+						<label className='text-[10px] font-bold tracking-wider text-muted uppercase'>
 							Source URL
 						</label>
 						<div className='flex gap-2'>
@@ -189,7 +189,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								autoFocus
 								value={tempUrl}
 								onChange={(e) => setTempUrl(e.target.value)}
-								className='flex-1 bg-secondary text-main border border-border px-3 py-1.5 rounded-md outline-none focus:border-brand focus:ring-1 ring-brand text-sm transition-all'
+								className='focus:border-brand ring-brand flex-1 rounded-md border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
 								onKeyDown={(e) => {
 									e.stopPropagation()
 									if (e.key === 'Enter') {
@@ -202,7 +202,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 					</div>
 
 					<div className='grid grid-cols-2 gap-3'>
-						<label className='flex items-center gap-2 cursor-pointer group'>
+						<label className='group flex cursor-pointer items-center gap-2'>
 							<input
 								type='checkbox'
 								checked={settings.autoplay}
@@ -211,13 +211,13 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 										settings: { ...settings, autoplay: e.target.checked },
 									})
 								}
-								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
+								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
-							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Autoplay
 							</span>
 						</label>
-						<label className='flex items-center gap-2 cursor-pointer group'>
+						<label className='group flex cursor-pointer items-center gap-2'>
 							<input
 								type='checkbox'
 								checked={settings.fullscreen}
@@ -226,35 +226,35 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 										settings: { ...settings, fullscreen: e.target.checked },
 									})
 								}
-								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
+								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
-							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Fullscreen
 							</span>
 						</label>
-						<label className='flex items-center gap-2 cursor-pointer group'>
+						<label className='group flex cursor-pointer items-center gap-2'>
 							<input
 								type='checkbox'
 								checked={settings.sensors}
 								onChange={(e) =>
 									update({ settings: { ...settings, sensors: e.target.checked } })
 								}
-								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
+								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
-							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Sensors
 							</span>
 						</label>
-						<label className='flex items-center gap-2 cursor-pointer group'>
+						<label className='group flex cursor-pointer items-center gap-2'>
 							<input
 								type='checkbox'
 								checked={settings.pip}
 								onChange={(e) =>
 									update({ settings: { ...settings, pip: e.target.checked } })
 								}
-								className='w-4 h-4 rounded border-border text-brand focus:ring-brand bg-secondary transition-all'
+								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
-							<span className='text-xs text-subtle group-hover:text-main transition-colors font-medium'>
+							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Picture-in-Picture
 							</span>
 						</label>
@@ -265,7 +265,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 							update({ src: tempUrl })
 							setShowEditUrl(false)
 						}}
-						className='w-full bg-main text-inverse py-2 rounded-md text-sm font-semibold hover:opacity-90 transition-opacity'
+						className='w-full rounded-md bg-main py-2 text-sm font-semibold text-inverse transition-opacity hover:opacity-90'
 					>
 						Done
 					</button>

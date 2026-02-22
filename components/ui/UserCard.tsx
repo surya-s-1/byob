@@ -46,23 +46,23 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 	}
 
 	return (
-		<Link href={`/profile/${user.username}`} className='block group'>
-			<div className='flex items-center gap-4 p-4 rounded-2xl bg-secondary/30 border border-border/50 hover:bg-secondary/50 hover:border-border transition-all hover:shadow-md'>
-				<div className='relative h-12 w-12 sm:h-14 sm:w-14 rounded-full overflow-hidden bg-elevated border border-border group-hover:border-primary/30 transition-colors'>
+		<Link href={`/profile/${user.username}`} className='group block'>
+			<div className='flex items-center gap-4 rounded-2xl border border-border/50 bg-secondary/30 p-4 transition-all hover:border-border hover:bg-secondary/50 hover:shadow-md'>
+				<div className='relative h-12 w-12 overflow-hidden rounded-full border border-border bg-elevated transition-colors group-hover:border-primary/30 sm:h-14 sm:w-14'>
 					{user.image ? (
 						<Image src={user.image} alt={user.name} fill className='object-cover' />
 					) : (
-						<div className='h-full w-full flex items-center justify-center bg-secondary'>
+						<div className='flex h-full w-full items-center justify-center bg-secondary'>
 							<UserIcon size={24} className='text-muted' />
 						</div>
 					)}
 				</div>
 
-				<div className='flex-1 min-w-0 text-subtle hover:text-main transition-colors'>
+				<div className='min-w-0 flex-1 text-subtle transition-colors hover:text-main'>
 					<h3 className='font-bold'>{user.name}</h3>
 					<p className='text-sm text-subtle'>@{user.username}</p>
 					{user.bio && (
-						<p className='text-xs text-muted mt-1 max-w-[50%] hidden sm:block'>
+						<p className='mt-1 hidden max-w-[50%] text-xs text-muted sm:block'>
 							{user.bio}
 						</p>
 					)}
@@ -72,7 +72,7 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 					<Button
 						onClick={handleFollow}
 						isLoading={isLoading}
-						className='px-4 py-1.5 h-auto text-xs font-bold btn-brand shadow-sm'
+						className='btn-brand h-auto px-4 py-1.5 text-xs font-bold shadow-sm'
 					>
 						{isFollowing ? 'Unfollow' : 'Follow'}
 					</Button>

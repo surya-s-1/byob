@@ -28,12 +28,12 @@ export default function Code({ block, update, readOnly }: any) {
 
 	if (readOnly) {
 		return (
-			<div className='w-full my-8 rounded-lg overflow-hidden border border-border shadow-sm bg-elevated'>
-				<div className='bg-secondary px-4 py-2 border-b border-border text-xs text-subtle font-mono uppercase tracking-wider'>
+			<div className='my-8 w-full overflow-hidden rounded-lg border border-border bg-elevated shadow-sm'>
+				<div className='border-b border-border bg-secondary px-4 py-2 font-mono text-xs tracking-wider text-subtle uppercase'>
 					{block.lang || 'text'}
 				</div>
-				<div className='p-4 overflow-x-auto'>
-					<pre className='font-mono text-sm text-main leading-relaxed'>
+				<div className='overflow-x-auto p-4'>
+					<pre className='font-mono text-sm leading-relaxed text-main'>
 						<code>{block.content}</code>
 					</pre>
 				</div>
@@ -42,12 +42,12 @@ export default function Code({ block, update, readOnly }: any) {
 	}
 
 	return (
-		<div className='w-full rounded-lg overflow-hidden border border-border bg-elevated'>
-			<div className='bg-secondary px-4 py-2 flex items-center justify-between border-b border-border'>
+		<div className='w-full overflow-hidden rounded-lg border border-border bg-elevated'>
+			<div className='flex items-center justify-between border-b border-border bg-secondary px-4 py-2'>
 				<select
 					value={LANGUAGES.find((l) => l.value === block.lang) ? block.lang : 'text'}
 					onChange={(e) => update({ lang: e.target.value })}
-					className='text-sm bg-elevated text-main border border-border rounded-sm px-2 py-1 outline-none focus:border-main min-w-[140px] shadow-sm cursor-pointer'
+					className='min-w-[140px] cursor-pointer rounded-sm border border-border bg-elevated px-2 py-1 text-sm text-main shadow-sm outline-none focus:border-main'
 				>
 					{LANGUAGES.map((l) => (
 						<option key={l.value} value={l.value}>
@@ -60,7 +60,7 @@ export default function Code({ block, update, readOnly }: any) {
 				ref={textareaRef}
 				value={block.content}
 				onChange={(e) => update({ content: e.target.value })}
-				className='w-full bg-transparent text-main p-4 font-mono text-sm outline-none resize-none block leading-relaxed'
+				className='block w-full resize-none bg-transparent p-4 font-mono text-sm leading-relaxed text-main outline-none'
 				spellCheck={false}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>

@@ -9,9 +9,9 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 
 	if (cover) {
 		return (
-			<div className='relative mb-xl group'>
-				<div className='w-full aspect-[2/1] overflow-hidden rounded-lg bg-secondary border border-border'>
-					<img src={cover} alt='Cover' className='w-full h-full object-cover' />
+			<div className='group relative mb-xl'>
+				<div className='aspect-[2/1] w-full overflow-hidden rounded-lg border border-border bg-secondary'>
+					<img src={cover} alt='Cover' className='h-full w-full object-cover' />
 				</div>
 				{!readOnly && (
 					<button
@@ -19,7 +19,7 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 							setUrl('')
 							setCover('')
 						}}
-						className='absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity shadow-md p-1.5 text-subtle rounded-md bg-elevated/50 hover:text-error transition-colors'
+						className='absolute right-4 bottom-4 rounded-md bg-elevated/50 p-1.5 text-subtle opacity-0 shadow-md transition-colors transition-opacity group-hover:opacity-100 hover:text-error'
 					>
 						<Trash2 size={16} />
 					</button>
@@ -31,18 +31,18 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 	if (readOnly) return null
 
 	return (
-		<div className='mb-xl border border-border rounded-lg p-md'>
-			<div className='flex gap-4 px-2 mb-3 text-sm'>
+		<div className='mb-xl rounded-lg border border-border p-md'>
+			<div className='mb-3 flex gap-4 px-2 text-sm'>
 				<span className='font-semibold'>Cover Image</span>
 				<button
 					onClick={() => setTab('url')}
-					className={`transition-colors font-medium ${tab === 'url' ? 'text-brand' : 'text-subtle hover:text-main'}`}
+					className={`font-medium transition-colors ${tab === 'url' ? 'text-brand' : 'text-subtle hover:text-main'}`}
 				>
 					URL
 				</button>
 				<button
 					onClick={() => setTab('upload')}
-					className={`transition-colors font-medium ${tab === 'upload' ? 'text-brand' : 'text-subtle hover:text-main'}`}
+					className={`font-medium transition-colors ${tab === 'upload' ? 'text-brand' : 'text-subtle hover:text-main'}`}
 				>
 					Upload
 				</button>
@@ -54,7 +54,7 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 						value={url}
 						onChange={(e) => setUrl(e.target.value)}
 						placeholder='Paste image URL...'
-						className='flex-1 border border-border bg-transparent text-main rounded-md px-3 py-1.5 text-sm outline-none transition-all'
+						className='flex-1 rounded-md border border-border bg-transparent px-3 py-1.5 text-sm text-main transition-all outline-none'
 						onKeyDown={(e) => {
 							e.stopPropagation()
 							if (e.key === 'Enter' && url.trim()) setCover(url.trim())
@@ -64,14 +64,14 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 						onClick={() => {
 							if (url.trim()) setCover(url.trim())
 						}}
-						className='px-4 py-1.5 bg-main text-inverse rounded-md text-sm font-medium hover:opacity-80 transition-opacity flex items-center gap-1'
+						className='flex items-center gap-1 rounded-md bg-main px-4 py-1.5 text-sm font-medium text-inverse transition-opacity hover:opacity-80'
 					>
 						<CornerDownLeft size={16} />
 					</button>
 				</div>
 			)}
 			{tab === 'upload' && (
-				<div className='text-sm text-muted p-2'>Upload not available right now.</div>
+				<div className='p-2 text-sm text-muted'>Upload not available right now.</div>
 			)}
 		</div>
 	)

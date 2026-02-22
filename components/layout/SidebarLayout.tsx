@@ -17,7 +17,7 @@ export default function SidebarLayout({ user, children }: SidebarLayoutProps) {
 	const { isExpanded, side, navItems } = useSidebar()
 
 	return (
-		<div className='min-h-screen flex flex-col md:flex-row'>
+		<div className='flex min-h-screen flex-col md:flex-row'>
 			<MobileHeader user={user} navItems={navItems} />
 
 			<div className='hidden md:block'>
@@ -25,12 +25,12 @@ export default function SidebarLayout({ user, children }: SidebarLayoutProps) {
 				{!isExpanded && (
 					<div
 						className={cn(
-							'fixed top-4 z-[40] transition-all duration-300 animate-in fade-in',
+							'animate-in fade-in fixed top-4 z-[40] transition-all duration-300',
 							side === 'left' ? 'left-24' : 'right-24'
 						)}
 					>
 						<Link href='/'>
-							<div className='relative w-24 h-24'>
+							<div className='relative h-24 w-24'>
 								<Image
 									src='/logo-light.png'
 									alt='Logo'
@@ -41,7 +41,7 @@ export default function SidebarLayout({ user, children }: SidebarLayoutProps) {
 									src='/logo-dark.png'
 									alt='Logo'
 									fill
-									className='object-contain hidden dark:block'
+									className='hidden object-contain dark:block'
 								/>
 							</div>
 						</Link>
@@ -51,7 +51,7 @@ export default function SidebarLayout({ user, children }: SidebarLayoutProps) {
 
 			<main
 				className={cn(
-					'flex-1 transition-all duration-300 min-h-screen',
+					'min-h-screen flex-1 transition-all duration-300',
 					'pt-16 md:pt-0',
 					side === 'left' && (isExpanded ? 'md:ml-64' : 'md:ml-20'),
 					side === 'right' && (isExpanded ? 'md:mr-64' : 'md:mr-20')

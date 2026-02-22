@@ -21,8 +21,8 @@ export default async function Page({ params }: any) {
 	}
 
 	return (
-		<div className='bg-primary text-main pb-2xl'>
-			<div className='max-w-4xl mx-auto px-xl py-2xl'>
+		<div className='bg-primary pb-2xl text-main'>
+			<div className='mx-auto max-w-4xl px-xl py-2xl'>
 				<Head draft={draft} />
 				<Content initialMarkdown={draft.content || ''} />
 			</div>

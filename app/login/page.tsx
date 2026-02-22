@@ -15,11 +15,11 @@ export default async function LoginPage({
 	const { callbackUrl } = await searchParams
 
 	return (
-		<div className='w-full h-full flex items-center justify-center'>
+		<div className='flex h-full w-full items-center justify-center'>
 			<Card className='w-fit max-w-[40%] p-2xl'>
-				<div className='text-center mb-xl'>
+				<div className='mb-xl text-center'>
 					<h1 className='text-2xl font-semibold text-main'>Welcome to Running Head!</h1>
-					<p className='text-subtle text-sm mt-sm'>Sign in to continue</p>
+					<p className='mt-sm text-sm text-subtle'>Sign in to continue</p>
 				</div>
 				<LoginButtons callbackUrl={callbackUrl} />
 			</Card>

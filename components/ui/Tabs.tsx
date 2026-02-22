@@ -18,7 +18,7 @@ export default function Tabs({ tabs, activeTab, onChange, className }: TabsProps
 	return (
 		<div
 			className={cn(
-				'flex w-full border-b border-border overflow-x-auto thin-scrollbar whitespace-nowrap scroll-smooth',
+				'thin-scrollbar flex w-full overflow-x-auto scroll-smooth border-b border-border whitespace-nowrap',
 				className
 			)}
 		>
@@ -27,16 +27,16 @@ export default function Tabs({ tabs, activeTab, onChange, className }: TabsProps
 					key={tab.id}
 					onClick={() => onChange(tab.id)}
 					className={cn(
-						'flex-1 sm:flex-none px-4 sm:px-6 py-3 transition-all relative text-sm sm:text-base outline-none text-center',
+						'relative flex-1 px-4 py-3 text-center text-sm transition-all outline-none sm:flex-none sm:px-6 sm:text-base',
 						activeTab === tab.id
-							? 'text-main font-bold'
-							: 'text-muted hover:text-subtle font-semibold'
+							? 'font-bold text-main'
+							: 'font-semibold text-muted hover:text-subtle'
 					)}
 				>
 					{tab.label}
 					<div
 						className={cn(
-							'absolute bottom-0 left-0 w-full h-0.5 bg-primary transition-transform duration-300 origin-left',
+							'absolute bottom-0 left-0 h-0.5 w-full origin-left bg-primary transition-transform duration-300',
 							activeTab === tab.id ? 'scale-x-100' : 'scale-x-0'
 						)}
 					/>

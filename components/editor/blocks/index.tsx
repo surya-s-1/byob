@@ -96,15 +96,15 @@ export default function Block({
 			tabIndex={0}
 			onClick={() => setFocusId(block.id)}
 			onKeyDown={handleKeyDown}
-			className={`relative group outline-none focus-within:ring-1 focus:ring-1 ring-brand rounded-lg transition-all my-8 leading-none ${isFullWidth ? 'w-full' : 'w-fit ' + alignClass}`}
+			className={`group ring-brand relative my-8 rounded-lg leading-none transition-all outline-none focus-within:ring-1 focus:ring-1 ${isFullWidth ? 'w-full' : 'w-fit ' + alignClass}`}
 		>
-			<div className='absolute -top-3 right-2 flex items-center bg-elevated border border-border rounded-md shadow-md opacity-0 group-hover:opacity-100 transition-opacity z-40 overflow-hidden'>
+			<div className='absolute -top-3 right-2 z-40 flex items-center overflow-hidden rounded-md border border-border bg-elevated opacity-0 shadow-md transition-opacity group-hover:opacity-100'>
 				<button
 					onClick={(e) => {
 						e.stopPropagation()
 						copyBlock()
 					}}
-					className={`p-1.5 hover:bg-secondary transition-colors border-r border-border ${copied ? 'text-green-500' : 'text-subtle hover:text-main'}`}
+					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${copied ? 'text-green-500' : 'text-subtle hover:text-main'}`}
 					title='Copy Block'
 				>
 					{copied ? (
@@ -118,7 +118,7 @@ export default function Block({
 						e.stopPropagation()
 						cutBlock()
 					}}
-					className='p-1.5 hover:bg-secondary text-subtle hover:text-main transition-colors border-r border-border'
+					className='border-r border-border p-1.5 text-subtle transition-colors hover:bg-secondary hover:text-main'
 					title='Cut Block'
 				>
 					<Scissors size={14} />
@@ -128,7 +128,7 @@ export default function Block({
 						e.stopPropagation()
 						removeBlock(index)
 					}}
-					className='p-1.5 text-subtle hover:bg-error/10 hover:text-error transition-colors'
+					className='p-1.5 text-subtle transition-colors hover:bg-error/10 hover:text-error'
 					title='Delete Block'
 				>
 					<Trash2 size={14} />

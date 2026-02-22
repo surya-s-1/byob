@@ -18,7 +18,7 @@ export default function Badge({ children, className, variant = 'primary' }: Badg
 	return (
 		<span
 			className={cn(
-				'inline-flex items-center px-2 py-0.5 rounded-full text-xs font-semibold border transition-colors',
+				'inline-flex items-center rounded-full border px-2 py-0.5 text-xs font-semibold transition-colors',
 				variants[variant],
 				className
 			)}
