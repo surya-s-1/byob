@@ -9,13 +9,15 @@ import DraftCard from '@/components/ui/DraftCard'
 import Tabs from '@/components/ui/Tabs'
 import FloatingActions from '@/components/ui/FloatingActions'
 import Link from 'next/link'
-import { PlusCircle, BookOpen, FileText } from 'lucide-react'
+import { PlusCircle, BookOpen, FileText, Trash2 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import PublicationHeader from './PublicationHeader'
 import PublicationAbout from './PublicationAbout'
 import PublicationSeries from './PublicationSeries'
 import PublicationInvitations from './PublicationInvitations'
+import InviteMemberModal from './InviteMemberModal'
+import Modal from '@/components/ui/Modal'
 
 interface PublicationClientProps {
 	publication: Publication
@@ -26,7 +28,7 @@ interface PublicationClientProps {
 	drafts: any[]
 }
 
-type TabType = 'articles' | 'series' | 'invitations' | 'drafts'
+type TabType = 'articles' | 'series' | 'invitations' | 'drafts' | 'danger'
 
 export default function PublicationClient({
 	publication,
@@ -41,8 +43,11 @@ export default function PublicationClient({
 	const [isFollowing, setIsFollowing] = useState(publication.isFollowing)
 	const [followersCount, setFollowersCount] = useState(publication.followersCount)
 	const [isLoading, setIsLoading] = useState(false)
-	const [localInvitations, setLocalInvitations] = useState(invitations)
+	const [localInvitations, setLocalInvitations] = useState(invitations || [])
 	const [reinvitingIds, setReinvitingIds] = useState<Set<string>>(new Set())
+	const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
+	const [isDeleting, setIsDeleting] = useState(false)
 
 	const handleFollow = async () => {
 		if (!currentUser) {
@@ -118,6 +123,58 @@ export default function PublicationClient({
 		}
 	}
 
+	const handleDeletePublication = async () => {
+		setIsDeleting(true)
+		try {
+			const res = await fetch(`/api/publications/id/${publication.id}`, {
+				method: 'DELETE',
+			})
+
+			if (res.ok) {
+				router.push('/dashboard')
+			} else {
+				const data = await res.json()
+				alert(data.error || 'Failed to delete publication')
+			}
+		} catch (error) {
+			console.error('Error deleting publication:', error)
+			alert('An error occurred while deleting the publication.')
+		} finally {
+			setIsDeleting(false)
+			setIsDeleteModalOpen(false)
+		}
+	}
+
+	const handleInviteMember = async (userId: string) => {
+		try {
+			const res = await fetch(`/api/publications/id/${publication.id}/members/invite`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ userId, role: 'EDITOR' }),
+			});
+			if (res.ok) {
+				router.refresh()
+			}
+		} catch (error) {
+			console.error('Error inviting member:', error)
+		}
+	}
+
+	const handleCancelInvite = async (userId: string) => {
+		try {
+			const res = await fetch(`/api/publications/id/${publication.id}/members/cancel-invite`, {
+				method: 'POST',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ userId }),
+			});
+			if (res.ok) {
+				router.refresh()
+			}
+		} catch (error) {
+			console.error('Error canceling invite:', error)
+		}
+	}
+
 	const canManage = publication.myRole === 'OWNER' || publication.myRole === 'ADMIN'
 
 	return (
@@ -151,6 +208,7 @@ export default function PublicationClient({
 						publication={publication}
 						followersCount={followersCount}
 						canManage={canManage}
+						onInviteClick={() => setIsInviteModalOpen(true)}
 					/>
 				</div>
 
@@ -160,9 +218,10 @@ export default function PublicationClient({
 						<Tabs
 							tabs={[
 								{ id: 'articles', label: 'Articles' },
-								{ id: 'drafts', label: 'Drafts' },
+								...(publication.myRole ? [{ id: 'drafts', label: 'Drafts' }] : []),
 								{ id: 'series', label: 'Series' },
 								...(canManage ? [{ id: 'invitations', label: 'Invitations' }] : []),
+								...(publication.myRole === 'OWNER' ? [{ id: 'danger', label: 'Danger', variant: 'danger' } as const] : []),
 							]}
 							activeTab={activeTab}
 							onChange={(id) => setActiveTab(id as TabType)}
@@ -193,7 +252,7 @@ export default function PublicationClient({
 							</>
 						)}
 
-						{activeTab === 'drafts' && (
+						{activeTab === 'drafts' && publication.myRole && (
 							<>
 								{drafts.length > 0 ? (
 									drafts.map((draft) => (
@@ -224,9 +283,78 @@ export default function PublicationClient({
 								onReinvite={handleReinvite}
 							/>
 						)}
+
+						{activeTab === 'danger' && publication.myRole === 'OWNER' && (
+							<div className='animate-in fade-in slide-in-from-top-2 duration-300'>
+								<Card className='border-red-500/20 bg-red-500/5 p-8'>
+									<div className='flex flex-col items-center gap-6 text-center'>
+										<div className='flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-red-500'>
+											<Trash2 size={32} />
+										</div>
+										<div className='space-y-2'>
+											<h3 className='text-xl font-bold text-main'>Delete Publication</h3>
+											<p className='max-w-[90%] text-sm text-subtle'>
+												Permanently delete this publication and all its content.
+												This action cannot be undone. All articles and drafts will be lost.
+											</p>
+										</div>
+										<Button
+											onClick={() => setIsDeleteModalOpen(true)}
+											variant='danger'
+											size='lg'
+											className='px-8'
+										>
+											Delete {publication.displayName}
+										</Button>
+									</div>
+								</Card>
+							</div>
+						)}
 					</div>
 				</div>
 			</div>
+
+			{canManage && (
+				<InviteMemberModal
+					isOpen={isInviteModalOpen}
+					onClose={() => setIsInviteModalOpen(false)}
+					publicationId={publication.id}
+					localInvitations={localInvitations}
+					onInvite={handleInviteMember}
+					onCancelInvite={handleCancelInvite}
+				/>
+			)}
+
+			<Modal
+				isOpen={isDeleteModalOpen}
+				onClose={() => setIsDeleteModalOpen(false)}
+				title='Delete Publication'
+			>
+				<div className='space-y-6'>
+					<p className='text-sm leading-relaxed text-subtle'>
+						Are you sure you want to delete <span className='font-bold text-main'>{publication.displayName}</span>?
+						This action is permanent and will delete all associated articles, series, and drafts.
+					</p>
+
+					<div className='flex items-center gap-3'>
+						<Button
+							onClick={() => setIsDeleteModalOpen(false)}
+							variant='secondary'
+							className='flex-1'
+						>
+							Cancel
+						</Button>
+						<Button
+							onClick={handleDeletePublication}
+							isLoading={isDeleting}
+							variant='danger'
+							className='flex-1'
+						>
+							Delete
+						</Button>
+					</div>
+				</div>
+			</Modal>
 		</div>
 	)
 }

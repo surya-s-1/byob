@@ -176,7 +176,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 
 						<div className='flex justify-end gap-3 pt-6'>
 							<Link href={`/profile/${user.username}`}>
-								<Button className='border border-border bg-secondary px-6 text-main'>
+								<Button className='border border-border bg-error px-6 text-main'>
 									Cancel
 								</Button>
 							</Link>

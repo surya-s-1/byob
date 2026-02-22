@@ -30,7 +30,7 @@ export default function SidebarLayout({ user, children }: SidebarLayoutProps) {
 						)}
 					>
 						<Link href='/'>
-							<div className='relative h-24 w-24'>
+							<div className='hidden relative h-24 w-24 lg:block'>
 								<Image
 									src='/logo-light.png'
 									alt='Logo'

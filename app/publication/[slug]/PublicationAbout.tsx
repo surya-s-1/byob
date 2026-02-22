@@ -7,12 +7,14 @@ interface PublicationAboutProps {
 	publication: Publication
 	followersCount: number
 	canManage: boolean
+	onInviteClick?: () => void
 }
 
 export default function PublicationAbout({
 	publication,
 	followersCount,
 	canManage,
+	onInviteClick,
 }: PublicationAboutProps) {
 	return (
 		<Card className='sticky top-24 space-y-6 p-6'>
@@ -44,7 +46,7 @@ export default function PublicationAbout({
 
 			{canManage && (
 				<div className='space-y-3 border-t border-border pt-6'>
-					<Button className='btn-brand flex w-full items-center justify-center gap-2'>
+					<Button onClick={onInviteClick} className='btn-brand flex w-full items-center justify-center gap-2'>
 						<PlusCircle size={16} />
 						Invite Member
 					</Button>

@@ -5,6 +5,7 @@ import { cn } from '@/lib/utils'
 interface Tab {
 	id: string
 	label: string
+	variant?: 'default' | 'danger'
 }
 
 interface TabsProps {
@@ -29,14 +30,19 @@ export default function Tabs({ tabs, activeTab, onChange, className }: TabsProps
 					className={cn(
 						'relative flex-1 px-4 py-3 text-center text-sm transition-all outline-none sm:flex-none sm:px-6 sm:text-base',
 						activeTab === tab.id
-							? 'font-bold text-main'
-							: 'font-semibold text-muted hover:text-subtle'
+							? tab.variant === 'danger'
+								? 'font-bold text-red-500'
+								: 'font-bold text-main'
+							: tab.variant === 'danger'
+								? 'font-semibold text-red-400 hover:text-red-500'
+								: 'font-semibold text-muted hover:text-subtle'
 					)}
 				>
 					{tab.label}
 					<div
 						className={cn(
-							'absolute bottom-0 left-0 h-0.5 w-full origin-left bg-primary transition-transform duration-300',
+							'absolute bottom-0 left-0 h-0.5 w-full origin-left transition-transform duration-300',
+							tab.variant === 'danger' ? 'bg-red-500' : 'bg-primary',
 							activeTab === tab.id ? 'scale-x-100' : 'scale-x-0'
 						)}
 					/>

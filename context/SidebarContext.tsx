@@ -42,6 +42,11 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 	useEffect(() => {
 		const savedSide = localStorage.getItem('sidebar-side') as SidebarSide
 		if (savedSide) setSide(savedSide)
+
+		// Check for tablet/mobile on initial load
+		if (window.innerWidth < 1024) {
+			setIsExpanded(false)
+		}
 	}, [])
 
 	useEffect(() => {

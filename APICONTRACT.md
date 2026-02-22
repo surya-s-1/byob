@@ -138,6 +138,31 @@ RESPONSE:
 
 ---
 
+#### Search Users
+
+```
+GET /api/user/search?q=:query
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "users": Partial<User>[] | null,
+    "error": string | null
+}
+```
+
+---
+
 #### Update User's Profile
 
 ```
@@ -881,6 +906,38 @@ RESPONSE:
 "error": string | null
 }
 
+```
+
+#### Cancel Invite
+
+```
+POST /api/publications/id/:id/members/cancel-invite
+```
+
+HEADERS:
+
+```
+{
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
+}
+```
+
+BODY:
+
+```
+{
+"userId": string
+}
+```
+
+RESPONSE:
+
+```
+{
+"canceled": boolean,
+"error": string | null
+}
 ```
 
 #### Remove Member

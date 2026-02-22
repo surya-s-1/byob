@@ -53,15 +53,24 @@ export default function DraftCard({ draft, variant = 'full' }: ArticleCardProps)
 								{new Date(draft.updatedAt).toLocaleDateString()}
 							</span>
 						</div>
+						{draft.subtitle && (
+							<p className='text-sm font-medium text-subtle'>{draft.subtitle}</p>
+						)}
 						{draft.excerpt && (
 							<p className='line-clamp-2 text-sm leading-relaxed text-subtle'>
 								{draft.excerpt}
 							</p>
 						)}
+						{draft.lockedBy && (
+							<div className='flex items-center gap-2 text-xs font-semibold text-amber-500'>
+								<span className='flex h-2 w-2 rounded-full bg-amber-500'></span>
+								{draft.lockedBy.name} is editing right now
+							</div>
+						)}
 						{draft.authors && draft.authors.length > 0 && (
 							<div className='flex items-center gap-2 pt-2'>
 								<div className='flex -space-x-2'>
-									{draft.authors.slice(0, 3).map((author, i) => (
+									{draft.authors.slice(0, 5).map((author, i) => (
 										<div
 											key={i}
 											className='relative h-6 w-6 overflow-hidden rounded-full border-2 border-primary bg-secondary'
@@ -82,9 +91,9 @@ export default function DraftCard({ draft, variant = 'full' }: ArticleCardProps)
 									))}
 								</div>
 								<span className='text-xs text-muted'>
-									{draft.authors[0].name}{' '}
-									{draft.authors.length > 1 &&
-										`+ ${draft.authors.length - 1} more`}
+									{draft.authors.length === 1
+										? draft.authors[0].name
+										: draft.authors.slice(0, 5).map(a => a.name).join(', ') + (draft.authors.length > 5 ? ` + ${draft.authors.length - 5} more` : '')}
 								</span>
 							</div>
 						)}

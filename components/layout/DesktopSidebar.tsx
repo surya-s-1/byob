@@ -76,8 +76,9 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 					isExpanded ? 'justify-between' : 'h-auto flex-col justify-center gap-2 py-4'
 				)}
 			>
-				{isExpanded && (
-					<Link href='/' className='flex items-center gap-3 px-2'>
+				<Link href='/' className='flex items-center gap-3 px-2'>
+				{isExpanded ? (
+					
 						<div className='relative h-16 w-16 flex-shrink-0'>
 							<Image
 								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
@@ -87,8 +88,18 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 								priority
 							/>
 						</div>
-					</Link>
-				)}
+					) : (
+						<div className='hidden md:block lg:hidden relative h-8 w-8 flex-shrink-0'>
+							<Image
+								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
+								alt='Logo'
+								fill
+								className='object-contain'
+								priority
+							/>
+						</div>
+					)}
+				</Link>
 
 				<button
 					onClick={toggleSidebar}

@@ -53,7 +53,7 @@ export default function InvitationCard({
 				<Button
 					onClick={() => onReject?.(invitation.id)}
 					isLoading={isLoading}
-					className='h-9 flex-1 border border-border bg-secondary px-4 py-2 text-xs font-bold text-main transition-colors hover:bg-border'
+					className='h-9 flex-1 btn-secondary px-4 py-2 text-xs font-bold'
 				>
 					Decline
 				</Button>

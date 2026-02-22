@@ -28,6 +28,7 @@
 	--color-muted: var(--text-muted);
 	--color-inverse: var(--text-inverse);
 	--color-border: var(--border-default);
+	--background-image-secondary: none;
 
 	--background-image-brand: var(--brand-primary);
 	--color-error: #ef4444;
@@ -135,6 +136,30 @@
 
 	.btn-brand:hover::after {
 		@apply animate-shine;
+	}
+
+	.btn-secondary {
+		@apply border border-border bg-secondary text-main transition-all hover:bg-border/20;
+	}
+
+	.btn-danger {
+		@apply bg-red-500 text-white transition-all hover:bg-red-600;
+	}
+
+	.btn-ghost {
+		@apply bg-transparent text-main transition-all hover:bg-secondary;
+	}
+
+	.btn-sm {
+		@apply px-4 py-2 text-xs font-bold;
+	}
+
+	.btn-md {
+		@apply px-6 py-2.5 text-sm font-bold;
+	}
+
+	.btn-lg {
+		@apply px-8 py-3 text-base font-extrabold;
 	}
 
 	/* WYSIWYG Editor Styles */
