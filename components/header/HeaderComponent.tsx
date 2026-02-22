@@ -111,7 +111,7 @@ export default function HeaderComponent({ user }: { user: any }) {
 						</Card>
 					)}
 				</div>
-			) : (
+			) : pathname !== '/login' && (
 				<a
 					href={`/login?callbackUrl=${encodeURIComponent(pathname)}`}
 					className='px-md py-sm rounded-full text-xl btn-brand text-white cursor-pointer'

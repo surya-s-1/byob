@@ -18,7 +18,7 @@ export default async function LoginPage({
 		<div className='w-full h-full flex items-center justify-center'>
 			<Card className='w-fit max-w-[40%] p-2xl'>
 				<div className='text-center mb-xl'>
-					<h1 className='text-2xl font-semibold text-main'>Welcome to BYOB!</h1>
+					<h1 className='text-2xl font-semibold text-main'>Welcome to Running Head!</h1>
 					<p className='text-subtle text-sm mt-sm'>Sign in to continue</p>
 				</div>
 				<LoginButtons callbackUrl={callbackUrl} />
