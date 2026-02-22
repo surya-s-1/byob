@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db/client'
-import { publications, publicationMembers } from '@/db/schema'
+import { publications, publicationMembers, publicationFollows } from '@/db/schema'
 import { auth } from '@/lib/auth'
 import { eq, count, sql } from 'drizzle-orm'
 import { slugify } from '@/lib/utils'
@@ -59,6 +59,12 @@ export async function POST(req: NextRequest) {
                 publicationId: pub.id,
                 userId: currentUser.id,
                 userRole: 'OWNER',
+            })
+
+            // Automatically follow
+            await tx.insert(publicationFollows).values({
+                publicationId: pub.id,
+                userId: currentUser.id,
             })
 
             return [pub]

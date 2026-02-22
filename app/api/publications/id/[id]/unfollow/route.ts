@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db/client'
-import { publicationFollows } from '@/db/schema'
+import { publicationFollows, publicationMembers } from '@/db/schema'
 import { eq, and } from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
@@ -15,6 +15,21 @@ export async function POST(
 
         if (!currentUser) {
             return NextResponse.json({ unfollowed: false, error: 'Unauthorized' }, { status: 401 })
+        }
+
+        // Check if user is a member
+        const member = await db.query.publicationMembers.findFirst({
+            where: and(
+                eq(publicationMembers.publicationId, id),
+                eq(publicationMembers.userId, currentUser.id)
+            ),
+        })
+
+        if (member) {
+            return NextResponse.json(
+                { unfollowed: false, error: 'A member cannot unfollow the publication' },
+                { status: 400 }
+            )
         }
 
         await db

@@ -63,8 +63,15 @@ export async function GET(
             }
         }
 
+        // Visibility checks
+        if (articleData.articleVisibility === 'HIDDEN' && !followsPublication) {
+            return NextResponse.json({ article: null, error: 'Article not found' }, { status: 404 })
+        }
+
+        const isLocked = articleData.articleVisibility === 'LOCKED' && !followsPublication
+
         // Calculate read time
-        const wordCount = articleData.content?.split(/\s+/).length || 0
+        const wordCount = (isLocked ? 'Content is locked. Follow the publication to unlock.' : (articleData.content || '')).split(/\s+/).length || 0
         const readTime = Math.ceil(wordCount / 200) || 1
 
         const formattedArticle = {
@@ -72,9 +79,9 @@ export async function GET(
             slug: articleData.slug,
             title: articleData.title,
             subtitle: articleData.subtitle,
-            content: articleData.content,
+            content: isLocked ? 'Content is locked. Follow the publication to unlock.' : articleData.content,
             cover: articleData.cover,
-            excerpt: articleData.excerpt,
+            excerpt: isLocked ? null : articleData.excerpt,
             readTime,
             publishedAt: articleData.publishedAt,
             visibility: articleData.articleVisibility,

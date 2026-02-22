@@ -46,13 +46,20 @@ export async function GET(
             myRole = memberRecord?.userRole || null
         }
 
+        // Visibility checks
+        if (pub.publicationVisibility === 'HIDDEN' && !isFollowing) {
+            return NextResponse.json({ publication: null, error: 'Publication not found' }, { status: 404 })
+        }
+
+        const isLocked = pub.publicationVisibility === 'LOCKED' && !isFollowing
+
         console.log('Publication found:', pub)
 
         const responsePub = {
             id: pub.id,
             slug: pub.slug,
             displayName: pub.displayName,
-            displayDescription: pub.displayDescription,
+            displayDescription: isLocked ? 'Content is locked' : pub.displayDescription,
             cover: pub.cover,
             visibility: pub.publicationVisibility,
             followersCount: pub.followers.length,

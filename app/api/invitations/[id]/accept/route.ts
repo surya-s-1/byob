@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db/client'
-import { publicationInvitations, publicationMembers } from '@/db/schema'
+import { publicationInvitations, publicationMembers, publicationFollows } from '@/db/schema'
 import { eq, and, isNull } from 'drizzle-orm'
 import { auth } from '@/lib/auth'
 
@@ -48,6 +48,21 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 						eq(publicationInvitations.userId, currentUser.id)
 					)
 				)
+
+			// Automatically follow
+			const existingFollow = await tx.query.publicationFollows.findFirst({
+				where: and(
+					eq(publicationFollows.publicationId, publicationId),
+					eq(publicationFollows.userId, currentUser.id)
+				),
+			})
+
+			if (!existingFollow) {
+				await tx.insert(publicationFollows).values({
+					publicationId,
+					userId: currentUser.id,
+				})
+			}
 		})
 
 		return NextResponse.json({ accepted: true, error: null })
