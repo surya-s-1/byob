@@ -137,6 +137,16 @@ CREATE TABLE article_authors (
 -- "Find all articles where this user is a co-author"
 CREATE INDEX idx_article_authors_user ON article_authors(user_id);
 
+CREATE TABLE draft_authors (
+    draft_id UUID NOT NULL REFERENCES article_drafts(id),
+    user_id TEXT NOT NULL REFERENCES user(id),
+    is_primary BOOLEAN NOT NULL DEFAULT FALSE,
+    PRIMARY KEY (draft_id, user_id)
+    -- "Who are authors of this draft?" is covered by this Primary Key.
+);
+
+CREATE INDEX idx_draft_authors_user ON draft_authors(user_id);
+
 CREATE TABLE series (
     id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
     publication_id UUID NOT NULL REFERENCES publications(id),
