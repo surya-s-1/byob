@@ -64,6 +64,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 			cover: pub.cover,
 			visibility: pub.publicationVisibility,
 			followersCount: pub.followers.length,
+			memberCount: pub.members.length,
 			isFollowing,
 			isMember: !!myRole,
 			myRole,

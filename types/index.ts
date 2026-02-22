@@ -19,6 +19,7 @@ export interface Publication {
 	cover: string | null
 	visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
 	followersCount: number
+	memberCount: number
 	isFollowing: boolean
 	isMember: boolean
 	myRole: 'OWNER' | 'EDITOR' | 'REVIEWER' | 'ADMIN' | null
@@ -35,9 +36,37 @@ export interface Article {
 	readTime: number
 	publishedAt: string
 	visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
-	authors: { id: string; name: string; image: string; isPrimary: boolean }[]
+	authors: { id: string; name: string; image: string | null; isPrimary: boolean }[]
 	publication: { id: string; slug: string; displayName: string } | null
 	series: { id: string; slug: string; displayName: string; sortOrder: number } | null
+}
+
+export interface Draft {
+	id: string
+	cover: string | null
+	title: string
+	subtitle: string | null
+	content: string
+	excerpt: string | null
+	updatedAt: Date
+	createdAt: Date
+	createdBy: { id: string; name: string; image: string | null }
+	articleVisibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
+	scheduledAt: Date | null
+	authors: { id: string; name: string; image: string | null; isPrimary: boolean }[]
+	publication: { id: string; slug: string; displayName: string } | null
+	lockedBy: { id: string; name: string; image: string | null } | null
+	lockedUntil: Date | null
+}
+
+export interface Series {
+	id: string
+	slug: string
+	displayName: string
+	displayDescription: string | null
+	sortOrder: number
+	articleCount: number
+	publication: { id: string; slug: string; displayName: string }
 }
 
 export interface NavItem {

@@ -38,10 +38,10 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 				userRole: invitation.userRole,
 			})
 
-			// Mark invitation as deleted
+			// Mark invitation as accepted
 			await tx
 				.update(publicationInvitations)
-				.set({ deletedAt: new Date(), deletedBy: currentUser.id })
+				.set({ acceptedAt: new Date() })
 				.where(
 					and(
 						eq(publicationInvitations.publicationId, publicationId),

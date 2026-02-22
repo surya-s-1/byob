@@ -168,6 +168,7 @@ export const publicationInvitations = pgTable(
 		deletedAt: timestamp('deleted_at', { withTimezone: true }),
 		deletedBy: text('deleted_by').references(() => user.id),
 		rejectedAt: timestamp('rejected_at', { withTimezone: true }),
+		acceptedAt: timestamp('accepted_at', { withTimezone: true }),
 	},
 	(t) => [
 		primaryKey({ columns: [t.publicationId, t.userId] }),

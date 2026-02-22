@@ -119,7 +119,7 @@ export default function DashboardClient({
 			</div>
 
 			<div className='grid grid-cols-1 lg:grid-cols-3 gap-8'>
-				<div className='lg:col-span-2 space-y-8 order-2 lg:order-1'>
+				<div className='lg:col-span-2 space-y-12 order-2 lg:order-1'>
 					<section className='space-y-4'>
 						<div className='flex items-center justify-between px-1'>
 							<h2 className='text-xl font-bold text-main flex items-center gap-2'>
@@ -154,6 +154,40 @@ export default function DashboardClient({
 							)}
 						</div>
 					</section>
+
+					<section className='space-y-4'>
+						<div className='flex items-center justify-between px-1'>
+							<h2 className='text-xl font-bold text-main flex items-center gap-2'>
+								<BookOpen size={22} className='text-main' />
+								Your Publications
+							</h2>
+							<Link
+								href={`/profile/${user.username}?tab=publications`}
+								className='text-xs sm:text-sm font-semibold text-main hover:underline'
+							>
+								Manage All
+							</Link>
+						</div>
+						<div className='grid grid-cols-1 gap-4'>
+							{publications.length > 0 ? (
+								publications
+									.slice(0, 3)
+									.map((pub) => <PublicationCard key={pub.id} publication={pub} />)
+							) : (
+								<Card className='p-12 text-center text-muted bg-primary/5 border-dashed border-2 rounded-3xl'>
+									<div className='flex flex-col items-center gap-3'>
+										<BookOpen size={48} className='text-muted/30' />
+										<p>You haven't joined or created any publications yet.</p>
+										<Link href='/publications/new'>
+											<Button className='btn-brand btn-sm'>
+												Create First Publication
+											</Button>
+										</Link>
+									</div>
+								</Card>
+							)}
+						</div>
+					</section>
 				</div>
 
 				<div className='space-y-8 order-1 lg:order-2'>
@@ -175,53 +209,13 @@ export default function DashboardClient({
 								))}
 							</div>
 						) : (
-							<Card className='p-12 text-center text-muted bg-primary/5 border-dashed border-2'>
+							<Card className='p-12 text-center text-muted bg-primary/5 border-dashed border-2 rounded-3xl'>
 								<div className='flex flex-col items-center gap-3'>
 									<Mail size={48} className='text-muted/30' />
-									<p>You haven't received any new invitations.</p>
+									<p>No pending invitations.</p>
 								</div>
 							</Card>
 						)}
-					</section>
-
-					<section className='space-y-4'>
-						<div className='flex items-center justify-between px-1'>
-							<h2 className='text-xl font-bold text-main flex items-center gap-2'>
-								<BookOpen size={22} className='text-main' />
-								Publications
-							</h2>
-							<Link
-								href={`/profile/${user.username}?tab=publications`}
-								className='text-xs sm:text-sm font-semibold text-main hover:underline'
-							>
-								Manage
-							</Link>
-						</div>
-						<div className='space-y-3'>
-							{publications.length > 0 ? (
-								publications
-									.slice(0, 4)
-									.map((pub) => (
-										<PublicationCard
-											key={pub.id}
-											publication={pub}
-											variant='mini'
-										/>
-									))
-							) : (
-								<Card className='p-6 text-center text-sm text-muted bg-secondary'>
-									Not part of any publications yet.
-								</Card>
-							)}
-							{publications.length > 4 && (
-								<Link
-									href={`/profile/${user.username}?tab=publications`}
-									className='block text-center text-xs font-bold text-main hover:text-main/80 transition-colors py-2'
-								>
-									View All {publications.length} Publications
-								</Link>
-							)}
-						</div>
 					</section>
 				</div>
 			</div>

@@ -49,14 +49,11 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 		}
 
 		const invitationsData = await db.query.publicationInvitations.findMany({
-			where: and(
-				eq(publicationInvitations.publicationId, pub.id),
-				isNull(publicationInvitations.rejectedAt),
-				isNull(publicationInvitations.deletedAt)
-			),
+			where: eq(publicationInvitations.publicationId, pub.id),
 			with: {
 				user: true,
 			},
+			orderBy: (inv, { desc }) => [desc(inv.createdAt)],
 			limit: limit,
 			offset: offset,
 		})
@@ -64,24 +61,28 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ slug
 		const [totalCount] = await db
 			.select({ value: count() })
 			.from(publicationInvitations)
-			.where(
-				and(
-					eq(publicationInvitations.publicationId, pub.id),
-					isNull(publicationInvitations.rejectedAt),
-					isNull(publicationInvitations.deletedAt)
-				)
-			)
+			.where(eq(publicationInvitations.publicationId, pub.id))
 
-		const formattedInvitations = invitationsData.map((inv) => ({
-			user: {
-				id: inv.user.id,
-				username: inv.user.username,
-				name: inv.user.name,
-				image: inv.user.image,
-			},
-			role: inv.userRole,
-			invitedAt: inv.createdAt,
-		}))
+		const formattedInvitations = invitationsData.map((inv) => {
+			let status = 'pending'
+			if (inv.acceptedAt) status = 'accepted'
+			else if (inv.rejectedAt) status = 'rejected'
+			else if (inv.deletedAt) status = 'deleted'
+
+			return {
+				user: {
+					id: inv.user.id,
+					username: inv.user.username,
+					name: inv.user.name,
+					image: inv.user.image,
+				},
+				role: inv.userRole,
+				invitedAt: inv.createdAt,
+				acceptedAt: inv.acceptedAt,
+				rejectedAt: inv.rejectedAt,
+				status,
+			}
+		})
 
 		return NextResponse.json({
 			invitations: formattedInvitations,

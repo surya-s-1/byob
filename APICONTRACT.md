@@ -26,6 +26,7 @@
 	"cover": "string | null",
 	"visibility": "PUBLIC | HIDDEN | LOCKED",
 	"followersCount": "number",
+	"memberCount": "number",
 	"isFollowing": "boolean",
 	"isMember": "boolean",
 	"myRole": "OWNER | EDITOR | REVIEWER | ADMIN | null"
@@ -842,6 +843,46 @@ RESPONSE:
 
 ```
 
+#### Reinvite Member
+
+```
+
+POST /api/publications/id/:id/members/reinvite
+
+```
+
+HEADERS:
+
+```
+
+{
+"Authorization": "Bearer <token>",
+"Content-Type": "application/json"
+}
+
+```
+
+BODY:
+
+```
+
+{
+"userId": string
+}
+
+```
+
+RESPONSE:
+
+```
+
+{
+"reinvited": boolean,
+"error": string | null
+}
+
+```
+
 #### Remove Member
 
 ```
@@ -900,7 +941,10 @@ RESPONSE:
 {
 "user": Partial<User>,
 "role": "EDITOR" | "REVIEWER" | "ADMIN",
-"invitedAt": Date
+"invitedAt": Date,
+"acceptedAt": Date | null,
+"rejectedAt": Date | null,
+"status": "pending | accepted | rejected | deleted"
 }
 ] | null,
 "pagination": { "total": number, "page": number } | null,
