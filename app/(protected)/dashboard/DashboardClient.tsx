@@ -89,8 +89,8 @@ export default function DashboardClient({
 					},
 				]}
 			/>
-			<div className='flex flex-col sm:flex-row sm:items-center justify-between gap-6'>
-				<div className='space-y-1'>
+			<div className='flex flex-col sm:flex-row sm:items-center justify-between gap-4 sm:gap-6 text-center sm:text-left'>
+				<div className='space-y-1 mx-auto sm:mx-0'>
 					<h1 className='text-2xl sm:text-3xl font-extrabold text-main tracking-tight'>
 						Welcome back, {user.name.split(' ')[0]} 👋
 					</h1>

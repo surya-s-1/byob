@@ -6,6 +6,8 @@ import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import ArticleCard from '@/components/ui/ArticleCard'
 import DraftCard from '@/components/ui/DraftCard'
+import Tabs from '@/components/ui/Tabs'
+import FloatingActions from '@/components/ui/FloatingActions'
 import Image from 'next/image'
 import Link from 'next/link'
 import {
@@ -133,9 +135,22 @@ export default function PublicationClient({
 
 	return (
 		<div className='max-w-6xl mx-auto px-4 py-8 lg:py-12 space-y-12'>
+			{canManage && (
+				<FloatingActions
+					actions={[
+						{
+							icon: <PlusCircle size={20} />,
+							label: 'Write Article',
+							onClick: handleWriteArticle,
+							variant: 'brand',
+						},
+					]}
+				/>
+			)}
+
 			{/* Publication Header */}
 			<div className='flex flex-col md:flex-row gap-8 items-start md:items-center'>
-				<div className='relative w-32 h-32 md:w-40 md:h-40 rounded-3xl overflow-hidden bg-secondary border-2 border-border shadow-xl flex-shrink-0'>
+				<div className='relative w-32 h-32 md:w-40 md:h-40 rounded-3xl overflow-hidden bg-secondary border-2 border-border shadow-xl flex-shrink-0 mx-auto md:mx-0'>
 					{publication.cover ? (
 						<Image
 							src={publication.cover}
@@ -150,19 +165,19 @@ export default function PublicationClient({
 					)}
 				</div>
 
-				<div className='flex-1 space-y-4'>
+				<div className='flex-1 space-y-4 text-center md:text-left'>
 					<div className='space-y-1'>
 						<h1 className='text-3xl md:text-5xl font-bold text-main tracking-tight'>
 							{publication.displayName}
 						</h1>
 						{publication.displayDescription && (
-							<p className='text-lg md:text-xl text-subtle max-w-[90%]'>
+							<p className='text-lg md:text-xl text-subtle max-w-full md:max-w-[90%] mx-auto md:mx-0'>
 								{publication.displayDescription}
 							</p>
 						)}
 					</div>
 
-					<div className='flex flex-wrap gap-2 pt-2'>
+					<div className='flex flex-wrap items-center justify-center md:justify-start gap-2 pt-2'>
 						{!publication.isMember && (
 							<Button
 								onClick={handleFollow}
@@ -176,7 +191,7 @@ export default function PublicationClient({
 							</Button>
 						)}
 						{canManage && (
-							<Button onClick={handleWriteArticle} className='rounded-full px-6 btn-brand flex items-center gap-2'>
+							<Button onClick={handleWriteArticle} className='hidden md:flex rounded-full px-6 btn-brand items-center gap-2'>
 								<PlusCircle size={18} />
 								Write Article
 							</Button>
@@ -234,63 +249,19 @@ export default function PublicationClient({
 
 				<div className='lg:col-span-3 space-y-8 lg:order-1'>
 					{/* Tabs */}
-					<div className='flex items-center gap-8 border-b border-border'>
-						<button
-							onClick={() => setActiveTab('articles')}
-							className={cn(
-								'pb-4 text-sm font-bold transition-all relative',
-								activeTab === 'articles'
-									? 'text-main'
-									: 'text-subtle hover:text-main'
-							)}
-						>
-							Articles
-							{activeTab === 'articles' && (
-								<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-main' />
-							)}
-						</button>
-						<button
-							onClick={() => setActiveTab('drafts')}
-							className={cn(
-								'pb-4 text-sm font-bold transition-all relative',
-								activeTab === 'drafts'
-									? 'text-main'
-									: 'text-subtle hover:text-main'
-							)}
-						>
-							Drafts
-							{activeTab === 'drafts' && (
-								<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-main' />
-							)}
-						</button>
-						<button
-							onClick={() => setActiveTab('series')}
-							className={cn(
-								'pb-4 text-sm font-bold transition-all relative',
-								activeTab === 'series' ? 'text-main' : 'text-subtle hover:text-main'
-							)}
-						>
-							Series
-							{activeTab === 'series' && (
-								<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-main' />
-							)}
-						</button>
-						{canManage && (
-							<button
-								onClick={() => setActiveTab('invitations')}
-								className={cn(
-									'pb-4 text-sm font-bold transition-all relative',
-									activeTab === 'invitations'
-										? 'text-main'
-										: 'text-subtle hover:text-main'
-								)}
-							>
-								Invitations
-								{activeTab === 'invitations' && (
-									<div className='absolute bottom-0 left-0 right-0 h-0.5 bg-main' />
-								)}
-							</button>
-						)}
+					<div className='-mx-4 sm:mx-0 mb-6'>
+						<Tabs
+							tabs={[
+								{ id: 'articles', label: 'Articles' },
+								{ id: 'drafts', label: 'Drafts' },
+								{ id: 'series', label: 'Series' },
+								...(canManage ? [{ id: 'invitations', label: 'Invitations' }] : []),
+							]}
+							activeTab={activeTab}
+							onChange={(id) => setActiveTab(id as TabType)}
+							className='border-b-0'
+						/>
+						<div className='h-px bg-border w-full mt-0' />
 					</div>
 
 					{/* Tab Content */}
