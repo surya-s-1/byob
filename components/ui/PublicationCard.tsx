@@ -87,7 +87,7 @@ export default function PublicationCard({ publication, variant = 'full' }: Publi
 							)}
 						</p>
 					</div>
-					<div className='p-2 rounded-full hover:bg-secondary text-muted hover:text-main transition-all'>
+					<div className='hidden sm:block p-2 rounded-full hover:bg-secondary text-muted hover:text-main transition-all'>
 						<ChevronRight size={24} />
 					</div>
 				</div>
