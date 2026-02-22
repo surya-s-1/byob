@@ -1,15 +1,22 @@
 import Card from './Card'
+import { cn } from '@/lib/utils'
 
 interface StatCardProps {
 	title: string
 	value: string
 	change?: string
 	icon: React.ReactNode
+	className?: string
 }
 
-export default function StatCard({ title, value, change, icon }: StatCardProps) {
+export default function StatCard({ title, value, change, icon, className }: StatCardProps) {
 	return (
-		<Card className='p-4 flex flex-col justify-between min-h-[112px] border-l-4 border-l-primary w-full transition-all hover:shadow-md'>
+		<Card
+			className={cn(
+				'p-4 flex flex-col justify-between min-h-[112px] border-l-4 border-l-primary w-full transition-all hover:shadow-md',
+				className
+			)}
+		>
 			<div className='flex justify-between items-start gap-4'>
 				<span className='text-sm font-medium text-subtle truncate'>{title}</span>
 				<div className='flex-shrink-0'>{icon}</div>

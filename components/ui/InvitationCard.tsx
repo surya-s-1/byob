@@ -23,14 +23,14 @@ export default function InvitationCard({
 	return (
 		<Card className='p-4 border-primary/20 bg-primary/5 space-y-4 hover:shadow-md transition-all'>
 			<div className='flex items-start gap-4'>
-				<div className='h-10 w-10 bg-primary/20 text-primary rounded-full flex items-center justify-center flex-shrink-0 animate-pulse'>
+				<div className='h-10 w-10 bg-primary/20 text-main rounded-full flex items-center justify-center flex-shrink-0 animate-pulse'>
 					<Mail size={20} />
 				</div>
 				<div className='space-y-1 min-w-0'>
 					<h4 className='font-bold text-main text-sm'>Action Required</h4>
 					<p className='text-xs text-subtle leading-relaxed overflow-hidden'>
 						You've been invited to join{' '}
-						<strong className='text-primary truncate inline-block max-w-[120px] align-bottom'>
+						<strong className='text-main truncate inline-block max-w-[120px] align-bottom'>
 							{invitation.displayName}
 						</strong>{' '}
 						as an{' '}

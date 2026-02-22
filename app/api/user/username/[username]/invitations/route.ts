@@ -63,7 +63,7 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ user
 				followersCount: pub.followers.length,
 				isFollowing: false, // Default for invitations
 				isMember: false,
-				myRole: invitation.userRole, // This is the role they are invited for
+				role: invitation.userRole,
 			}
 		})
 

@@ -18,7 +18,6 @@ interface ProfileClientProps {
 	currentUser: any | null
 	initialArticles: Article[]
 	initialPublications: Publication[]
-	initialInvitations: any[]
 }
 
 export default function ProfileClient({
@@ -26,15 +25,12 @@ export default function ProfileClient({
 	currentUser,
 	initialArticles,
 	initialPublications,
-	initialInvitations,
 }: ProfileClientProps) {
 	const [activeTab, setActiveTab] = useState('articles')
 	const isOwnProfile = currentUser?.id === user.id
 	const [isFollowing, setIsFollowing] = useState(user.isFollowing)
 	const [followersCount, setFollowersCount] = useState(user.followersCount)
-	const [invitations, setInvitations] = useState(initialInvitations || [])
 	const [isLoadingFollow, setIsLoadingFollow] = useState(false)
-	const [actionLoadingIds, setActionLoadingIds] = useState<Set<string>>(new Set())
 
 	const profileTabs = [
 		{ id: 'articles', label: 'Articles' },
@@ -66,46 +62,6 @@ export default function ProfileClient({
 		}
 	}
 
-	const handleAcceptInvitation = async (id: string) => {
-		if (actionLoadingIds.has(id)) return
-
-		setActionLoadingIds((prev) => new Set(prev).add(id))
-		try {
-			const res = await fetch(`/api/invitations/${id}/accept`, { method: 'POST' })
-			if (res.ok) {
-				setInvitations((prev) => prev.filter((i) => i.id !== id))
-				window.location.reload()
-			}
-		} catch (error) {
-			console.error('Error accepting invitation:', error)
-		} finally {
-			setActionLoadingIds((prev) => {
-				const next = new Set(prev)
-				next.delete(id)
-				return next
-			})
-		}
-	}
-
-	const handleRejectInvitation = async (id: string) => {
-		if (actionLoadingIds.has(id)) return
-
-		setActionLoadingIds((prev) => new Set(prev).add(id))
-		try {
-			const res = await fetch(`/api/invitations/${id}/reject`, { method: 'POST' })
-			if (res.ok) {
-				setInvitations((prev) => prev.filter((i) => i.id !== id))
-			}
-		} catch (error) {
-			console.error('Error rejecting invitation:', error)
-		} finally {
-			setActionLoadingIds((prev) => {
-				const next = new Set(prev)
-				next.delete(id)
-				return next
-			})
-		}
-	}
 
 	return (
 		<div className='max-w-5xl mx-auto px-4 py-8 space-y-8'>
@@ -165,24 +121,6 @@ export default function ProfileClient({
 
 			<div className='grid grid-cols-1 md:grid-cols-4 gap-8 mt-4'>
 				<div className='md:col-span-1 space-y-6 order-1'>
-					{isOwnProfile && invitations.length > 0 && (
-						<div className='space-y-4'>
-							<h3 className='text-sm font-bold uppercase tracking-wider text-muted px-1'>
-								Invitations
-							</h3>
-							<div className='space-y-3'>
-								{invitations.map((invitation) => (
-									<InvitationCard
-										key={invitation.id}
-										invitation={invitation}
-										onAccept={handleAcceptInvitation}
-										onReject={handleRejectInvitation}
-										isLoading={actionLoadingIds.has(invitation.id)}
-									/>
-								))}
-							</div>
-						</div>
-					)}
 					<div className='space-y-6 bg-secondary/30 p-5 rounded-2xl border border-border/50'>
 						<div className='space-y-4'>
 							<h3 className='text-sm font-bold uppercase tracking-wider text-muted'>
@@ -196,25 +134,31 @@ export default function ProfileClient({
 						<div className='space-y-3 pt-4 border-t border-border/50'>
 							{isOwnProfile && user.dob && (
 								<div className='flex items-center gap-3 text-xs sm:text-sm text-subtle'>
-									<Calendar size={16} className='text-primary' />
+									<Calendar size={16} className='text-main' />
 									<span>Born {new Date(user.dob).toLocaleDateString()}</span>
 								</div>
 							)}
 							<div className='flex items-center gap-3 text-xs sm:text-sm text-subtle'>
-								<Users size={16} className='text-primary' />
-								<div className='flex gap-3'>
-									<span>
+								<Users size={16} className='text-main' />
+								<div className='flex gap-4'>
+									<Link
+										href={`/profile/${user.username}/followers`}
+										className='hover:underline hover:text-main transition-colors'
+									>
 										<strong className='text-main font-bold'>
 											{followersCount}
 										</strong>{' '}
 										Followers
-									</span>
-									<span>
+									</Link>
+									<Link
+										href={`/profile/${user.username}/following`}
+										className='hover:underline hover:text-main transition-colors'
+									>
 										<strong className='text-main font-bold'>
 											{user.followingCount}
 										</strong>{' '}
 										Following
-									</span>
+									</Link>
 								</div>
 							</div>
 						</div>

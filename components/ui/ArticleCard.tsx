@@ -29,7 +29,7 @@ export default function ArticleCard({ article, variant = 'full' }: ArticleCardPr
 							)}
 						</div>
 						<div className='min-w-0'>
-							<h4 className='font-bold text-main text-sm sm:text-base truncate group-hover:text-primary transition-colors'>
+							<h4 className='font-bold text-main text-sm sm:text-base truncate group-hover:text-main transition-colors'>
 								{article.title}
 							</h4>
 							<div className='flex items-center gap-2 text-[10px] sm:text-xs text-muted'>
@@ -50,11 +50,23 @@ export default function ArticleCard({ article, variant = 'full' }: ArticleCardPr
 				<div className='flex flex-col-reverse sm:flex-row gap-4 sm:gap-6'>
 					<div className='flex-1 space-y-2 min-w-0'>
 						<div className='flex items-center gap-2 text-xs text-muted'>
+							{article.publication && (
+								<>
+									<Link
+										href={`/publication/${article.publication.slug}`}
+										className='text-main font-bold hover:underline'
+										onClick={(e) => e.stopPropagation()}
+									>
+										{article.publication.displayName}
+									</Link>
+									<span>·</span>
+								</>
+							)}
 							<span>{new Date(article.publishedAt).toLocaleDateString()}</span>
 							<span>·</span>
 							<span>{article.readTime} min read</span>
 						</div>
-						<h3 className='text-lg sm:text-xl font-bold text-main group-hover:text-primary transition-colors line-clamp-2'>
+						<h3 className='text-lg sm:text-xl font-bold text-main group-hover:text-main transition-colors line-clamp-2'>
 							{article.title}
 						</h3>
 						{article.excerpt && (

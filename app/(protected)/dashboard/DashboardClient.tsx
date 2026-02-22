@@ -1,5 +1,6 @@
 'use client'
 
+import { useState } from 'react'
 import { User, Article, Publication } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
@@ -22,8 +23,60 @@ export default function DashboardClient({
 	user,
 	articles,
 	publications,
-	invitations,
+	invitations: initialInvitations,
 }: DashboardClientProps) {
+	const [invitations, setInvitations] = useState(initialInvitations || [])
+	const [actionLoadingIds, setActionLoadingIds] = useState<Set<string>>(new Set())
+
+	const handleAcceptInvitation = async (id: string) => {
+		if (actionLoadingIds.has(id)) return
+
+		setActionLoadingIds((prev) => {
+			const next = new Set(prev)
+			next.add(id)
+			return next
+		})
+		try {
+			const res = await fetch(`/api/invitations/${id}/accept`, { method: 'POST' })
+			if (res.ok) {
+				setInvitations((prev: any[]) => prev.filter((i) => i.id !== id))
+				window.location.reload()
+			}
+		} catch (error) {
+			console.error('Error accepting invitation:', error)
+		} finally {
+			setActionLoadingIds((prev) => {
+				const next = new Set(prev)
+				next.delete(id)
+				return next
+			})
+		}
+	}
+
+	const handleRejectInvitation = async (id: string) => {
+		if (actionLoadingIds.has(id)) return
+
+		setActionLoadingIds((prev) => {
+			const next = new Set(prev)
+			next.add(id)
+			return next
+		})
+		try {
+			const res = await fetch(`/api/invitations/${id}/reject`, { method: 'POST' })
+			if (res.ok) {
+				setInvitations((prev: any[]) => prev.filter((i) => i.id !== id))
+			}
+		} catch (error) {
+			console.error('Error rejecting invitation:', error)
+		} finally {
+			setActionLoadingIds((prev) => {
+				const next = new Set(prev)
+				next.delete(id)
+				return next
+			})
+		}
+	}
+
 	return (
 		<div className='max-w-6xl mx-auto px-4 py-8 space-y-8'>
 			<FloatingActions
@@ -53,20 +106,26 @@ export default function DashboardClient({
 			</div>
 
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-				<StatCard
-					title='Followers'
-					value={user.followersCount.toString()}
-					icon={<Users className='text-primary' size={20} />}
-				/>
-				<StatCard
-					title='Following'
-					value={user.followingCount.toString()}
-					icon={<Users className='text-primary' size={20} />}
-				/>
+				<Link href={`/profile/${user.username}/followers`} className='block'>
+					<StatCard
+						title='Followers'
+						value={user.followersCount.toString()}
+						icon={<Users className='text-main' size={20} />}
+						className='hover:scale-[1.02] transition-transform'
+					/>
+				</Link>
+				<Link href={`/profile/${user.username}/following`} className='block'>
+					<StatCard
+						title='Following'
+						value={user.followingCount.toString()}
+						icon={<Users className='text-main' size={20} />}
+						className='hover:scale-[1.02] transition-transform'
+					/>
+				</Link>
 				<StatCard
 					title='Published Articles'
 					value={articles.length.toString()}
-					icon={<FileText className='text-primary' size={20} />}
+					icon={<FileText className='text-main' size={20} />}
 				/>
 			</div>
 
@@ -75,12 +134,12 @@ export default function DashboardClient({
 					<section className='space-y-4'>
 						<div className='flex items-center justify-between px-1'>
 							<h2 className='text-xl font-bold text-main flex items-center gap-2'>
-								<FileText size={22} className='text-primary' />
+								<FileText size={22} className='text-main' />
 								Your Recent Articles
 							</h2>
 							<Link
 								href={`/profile/${user.username}?tab=articles`}
-								className='text-xs sm:text-sm font-semibold text-primary hover:underline'
+								className='text-xs sm:text-sm font-semibold text-main hover:underline'
 							>
 								View All
 							</Link>
@@ -109,29 +168,42 @@ export default function DashboardClient({
 				</div>
 
 				<div className='space-y-8 order-1 lg:order-2'>
-					{invitations.length > 0 && (
-						<section className='space-y-4'>
-							<h2 className='text-xl font-bold text-main flex items-center gap-2'>
-								<Mail size={22} className='text-primary' />
-								Invitations
-							</h2>
-							<div className='space-y-4'>
-								{invitations.map((invitation) => (
-									<InvitationCard key={invitation.id} invitation={invitation} />
-								))}
-							</div>
-						</section>
-					)}
+
+					<section className='space-y-4'>
+						<h2 className='text-xl font-bold text-main flex items-center gap-2'>
+							<Mail size={22} className='text-main' />
+							Invitations
+						</h2>
+						{invitations.length > 0 ? (<div className='space-y-4'>
+							{invitations.map((invitation: any) => (
+								<InvitationCard
+									key={invitation.id}
+									invitation={invitation}
+									onAccept={handleAcceptInvitation}
+									onReject={handleRejectInvitation}
+									isLoading={actionLoadingIds.has(invitation.id)}
+								/>
+							))}
+						</div>
+						) : (
+							<Card className='p-12 text-center text-muted bg-primary/5 border-dashed border-2'>
+								<div className='flex flex-col items-center gap-3'>
+									<Mail size={48} className='text-muted/30' />
+									<p>You haven't received any new invitations.</p>
+								</div>
+							</Card>
+						)}
+					</section>
 
 					<section className='space-y-4'>
 						<div className='flex items-center justify-between px-1'>
 							<h2 className='text-xl font-bold text-main flex items-center gap-2'>
-								<BookOpen size={22} className='text-primary' />
+								<BookOpen size={22} className='text-main' />
 								Publications
 							</h2>
 							<Link
 								href={`/profile/${user.username}?tab=publications`}
-								className='text-xs sm:text-sm font-semibold text-primary hover:underline'
+								className='text-xs sm:text-sm font-semibold text-main hover:underline'
 							>
 								Manage
 							</Link>
@@ -155,7 +227,7 @@ export default function DashboardClient({
 							{publications.length > 4 && (
 								<Link
 									href={`/profile/${user.username}?tab=publications`}
-									className='block text-center text-xs font-bold text-primary hover:text-primary/80 transition-colors py-2'
+									className='block text-center text-xs font-bold text-main hover:text-main/80 transition-colors py-2'
 								>
 									View All {publications.length} Publications
 								</Link>

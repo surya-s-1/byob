@@ -99,7 +99,13 @@ export default function HeaderClient({ user }: { user: any }) {
 								href={`/profile/${user.username}`}
 								className='flex items-center gap-sm px-md py-sm rounded-md hover:bg-secondary'
 							>
-								<UserCog size={16} /> Profile
+								<User size={16} /> Profile
+							</a>
+							<a
+								href='/settings'
+								className='flex items-center gap-sm px-md py-sm rounded-md hover:bg-secondary'
+							>
+								<UserCog size={16} /> Settings
 							</a>
 
 							<button
