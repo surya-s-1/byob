@@ -85,7 +85,7 @@ export const publicationVisibilityEnum = pgEnum('publication_visibility', [
 	'LOCKED',
 ])
 export const userRoleEnum = pgEnum('user_role', ['OWNER', 'EDITOR', 'REVIEWER', 'ADMIN'])
-export const articleStatusEnum = pgEnum('article_status', ['DRAFT', 'SCHEDULED', 'PUBLISHED'])
+export const articleStatusEnum = pgEnum('article_status', ['DRAFT', 'SCHEDULED', 'PUBLISHED', 'UNPUBLISHED'])
 export const articleVisibilityEnum = pgEnum('article_visibility', ['PUBLIC', 'HIDDEN', 'LOCKED'])
 export const collectionVisibilityEnum = pgEnum('collection_visibility', [
 	'PUBLIC',

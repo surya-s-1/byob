@@ -539,6 +539,31 @@ RESPONSE:
 }
 ```
 
+#### Get Publication Unpublished Articles
+
+```
+GET /api/publications/id/:id/articles/unpublished?page=1&limit=20
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "articles": Partial<Article>[] | null,
+    "pagination": { "total": number, "page": number } | null,
+    "error": string | null
+}
+```
+```
+
 #### Get Publication Series
 
 ```
@@ -902,6 +927,85 @@ RESPONSE:
     "deleted": boolean,
     "error": string | null
 }
+```
+
+#### Unpublish Article
+
+```
+POST /api/articles/id/:id/unpublish
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "unpublished": boolean,
+    "error": string | null
+}
+```
+
+#### Edit Article (Copy to Draft)
+
+```
+POST /api/articles/id/:id/edit
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "draftId": string | null,
+    "error": string | null
+}
+```
+
+#### Republish Article
+
+```
+POST /api/articles/id/:id/republish
+```
+
+HEADERS:
+
+```
+{
+    "Authorization": "Bearer <token>",
+    "Content-Type": "application/json"
+}
+```
+
+BODY:
+
+```
+{
+    "visibility": "PUBLIC" | "HIDDEN" | "LOCKED"
+}
+```
+
+RESPONSE:
+
+```
+{
+    "republished": boolean,
+    "error": string | null
+}
+```
 ```
 
 ---
@@ -1630,13 +1734,9 @@ RESPONSE:
 }
 ```
 
+
+
 ## TODO
-
-#### Get article based on article hidden or locked or public status
-
-#### Add draft authors table in schema file
-
-#### Unpublish Article
 
 #### Move article to review after publish
 
