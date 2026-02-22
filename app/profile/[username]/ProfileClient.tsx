@@ -62,7 +62,6 @@ export default function ProfileClient({
 		}
 	}
 
-
 	return (
 		<div className='max-w-5xl mx-auto px-4 py-8 space-y-8'>
 			{isOwnProfile && (
@@ -138,29 +137,6 @@ export default function ProfileClient({
 									<span>Born {new Date(user.dob).toLocaleDateString()}</span>
 								</div>
 							)}
-							<div className='flex items-center gap-3 text-xs sm:text-sm text-subtle'>
-								<Users size={16} className='text-main' />
-								<div className='flex gap-4'>
-									<Link
-										href={`/profile/${user.username}/followers`}
-										className='hover:underline hover:text-main transition-colors'
-									>
-										<strong className='text-main font-bold'>
-											{followersCount}
-										</strong>{' '}
-										Followers
-									</Link>
-									<Link
-										href={`/profile/${user.username}/following`}
-										className='hover:underline hover:text-main transition-colors'
-									>
-										<strong className='text-main font-bold'>
-											{user.followingCount}
-										</strong>{' '}
-										Following
-									</Link>
-								</div>
-							</div>
 						</div>
 					</div>
 				</div>

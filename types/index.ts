@@ -39,3 +39,10 @@ export interface Article {
 	publication: { id: string; slug: string; displayName: string } | null
 	series: { id: string; slug: string; displayName: string; sortOrder: number } | null
 }
+
+export interface NavItem {
+	label: string
+	href: string
+	icon: React.ReactNode
+	brand?: boolean
+}

@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { Geist, Geist_Mono } from 'next/font/google'
 import './globals.css'
 
-import Header from '@/components/header'
-import Footer from '@/components/Footer'
+import { headers } from 'next/headers'
+import { getCurrentUser } from '@/lib/utils'
+import ClientLayout from './ClientLayout'
 
 const geistSans = Geist({
 	variable: '--font-geist-sans',
@@ -20,19 +21,19 @@ export const metadata: Metadata = {
 	description: 'Create your own publication!',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
 	children,
 }: Readonly<{
 	children: React.ReactNode
 }>) {
+	const user = await getCurrentUser(await headers())
+
 	return (
-		<html lang='en'>
+		<html lang='en' suppressHydrationWarning>
 			<body
-				className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 antialiased min-h-screen bg-primary flex flex-col`}
+				className={`${geistSans.variable} ${geistMono.variable} m-0 p-0 antialiased min-h-screen bg-primary`}
 			>
-				<Header />
-				<div className='flex-1'>{children}</div>
-				<Footer />
+				<ClientLayout user={user}>{children}</ClientLayout>
 			</body>
 		</html>
 	)

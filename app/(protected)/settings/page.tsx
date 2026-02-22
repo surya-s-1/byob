@@ -4,11 +4,11 @@ import SettingsClient from './SettingsClient'
 import { redirect } from 'next/navigation'
 
 export default async function SettingsPage() {
-    const user = await getCurrentUser(await headers())
+	const user = await getCurrentUser(await headers())
 
-    if (!user) {
-        redirect('/login')
-    }
+	if (!user) {
+		redirect('/login')
+	}
 
-    return <SettingsClient user={user} />
+	return <SettingsClient user={user} />
 }

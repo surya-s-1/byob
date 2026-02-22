@@ -106,26 +106,15 @@ export default function DashboardClient({
 			</div>
 
 			<div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4'>
-				<Link href={`/profile/${user.username}/followers`} className='block'>
-					<StatCard
-						title='Followers'
-						value={user.followersCount.toString()}
-						icon={<Users className='text-main' size={20} />}
-						className='hover:scale-[1.02] transition-transform'
-					/>
-				</Link>
-				<Link href={`/profile/${user.username}/following`} className='block'>
-					<StatCard
-						title='Following'
-						value={user.followingCount.toString()}
-						icon={<Users className='text-main' size={20} />}
-						className='hover:scale-[1.02] transition-transform'
-					/>
-				</Link>
 				<StatCard
 					title='Published Articles'
 					value={articles.length.toString()}
 					icon={<FileText className='text-main' size={20} />}
+				/>
+				<StatCard
+					title='Active Publications'
+					value={publications.length.toString()}
+					icon={<BookOpen className='text-main' size={20} />}
 				/>
 			</div>
 
@@ -168,23 +157,23 @@ export default function DashboardClient({
 				</div>
 
 				<div className='space-y-8 order-1 lg:order-2'>
-
 					<section className='space-y-4'>
 						<h2 className='text-xl font-bold text-main flex items-center gap-2'>
 							<Mail size={22} className='text-main' />
 							Invitations
 						</h2>
-						{invitations.length > 0 ? (<div className='space-y-4'>
-							{invitations.map((invitation: any) => (
-								<InvitationCard
-									key={invitation.id}
-									invitation={invitation}
-									onAccept={handleAcceptInvitation}
-									onReject={handleRejectInvitation}
-									isLoading={actionLoadingIds.has(invitation.id)}
-								/>
-							))}
-						</div>
+						{invitations.length > 0 ? (
+							<div className='space-y-4'>
+								{invitations.map((invitation: any) => (
+									<InvitationCard
+										key={invitation.id}
+										invitation={invitation}
+										onAccept={handleAcceptInvitation}
+										onReject={handleRejectInvitation}
+										isLoading={actionLoadingIds.has(invitation.id)}
+									/>
+								))}
+							</div>
 						) : (
 							<Card className='p-12 text-center text-muted bg-primary/5 border-dashed border-2'>
 								<div className='flex flex-col items-center gap-3'>
