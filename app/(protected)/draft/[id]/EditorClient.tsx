@@ -195,12 +195,12 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
                         Are you sure you want to delete this draft? This action cannot be undone and will permanently
                         remove the content from the publication.
                     </p>
-                    <div className='flex justify-end gap-md'>
-                        <Button variant='ghost' onClick={() => setIsDeleteDialogOpen(false)}>
-                            Cancel
-                        </Button>
+                    <div className='flex flex-col items-center md:flex-row-reverse gap-md'>
                         <Button variant='danger' onClick={handleDelete}>
                             Delete Permanently
+                        </Button>
+                        <Button variant='ghost' onClick={() => setIsDeleteDialogOpen(false)}>
+                            Cancel
                         </Button>
                     </div>
                 </div>

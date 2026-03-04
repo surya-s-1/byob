@@ -22,10 +22,10 @@ export default function Modal({ isOpen, onClose, title, children }: ModalProps) 
 
     return createPortal(
         <div className='fixed inset-0 z-100 flex items-center justify-center bg-black/80 px-lg py-3xl backdrop-blur-sm'>
-            <div className='relative flex min-h-[200px] w-full max-w-4xl flex-col rounded-3xl border border-border/50 bg-transparent shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] animate-in fade-in zoom-in-95 duration-300 md:w-[70vw] lg:w-[50vw]'>
+            <div className='relative flex min-h-[200px] w-full md:max-w-[50vw] flex-col rounded-3xl border border-border/50 bg-transparent shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] animate-in fade-in zoom-in-95 duration-300 md:w-[70vw] lg:w-[50vw]'>
                 <button
                     onClick={onClose}
-                    className='fixed right-lg top-lg z-110 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20 sm:absolute sm:-right-[56px] sm:top-0 sm:h-12 sm:w-12'
+                    className='fixed right-lg top-lg z-110 flex h-10 w-10 items-center justify-center rounded-full bg-white/10 text-white backdrop-blur-md transition-all hover:bg-white/20 sm:absolute sm:-right-[40px] sm:-top-[40px] sm:h-12 sm:w-12 cursor-pointer'
                     aria-label='Close'
                 >
                     <X size={24} />
