@@ -172,7 +172,7 @@ export default function Toolbar({ insert }: any) {
 
 	return (
 		<div className='sticky top-0 z-20 mb-lg flex items-center justify-between border-b border-border bg-primary/95 py-sm backdrop-blur-sm px-xs'>
-			<div className='flex items-center gap-xs overflow-x-auto no-scrollbar flex-nowrap md:pr-0'>
+			<div className='flex items-center gap-sm overflow-x-auto no-scrollbar flex-nowrap'>
 				<button
 					onMouseDown={(e) => handleCommand(e, 'bold')}
 					className={getBtnClass('bold')}
