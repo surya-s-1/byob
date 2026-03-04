@@ -13,7 +13,7 @@ export default function Image({ block, update, readOnly }: any) {
 	if (readOnly) {
 		return (
 			<div
-				className={`my-8 block ${alignClass}`}
+				className={`my-4xl block ${alignClass}`}
 				style={{ width: block.w || 700, maxWidth: '100%' }}
 			>
 				<img
@@ -27,8 +27,8 @@ export default function Image({ block, update, readOnly }: any) {
 
 	if (!block.src) {
 		return (
-			<div className='rounded-lg border border-dashed border-border p-4 outline-none'>
-				<div className='mb-3 flex items-center gap-4 px-2 text-sm'>
+			<div className='rounded-lg border border-dashed border-border p-lg outline-none'>
+				<div className='mb-sm flex items-center gap-lg px-sm text-sm'>
 					<span className='font-semibold'>Image</span>
 					<button
 						onClick={() => setTab('url')}
@@ -44,12 +44,12 @@ export default function Image({ block, update, readOnly }: any) {
 					</button>
 				</div>
 				{tab === 'url' && (
-					<div className='flex gap-3'>
+					<div className='flex gap-md'>
 						<input
 							value={tempUrl}
 							onChange={(e) => setTempUrl(e.target.value)}
 							placeholder='Paste image URL...'
-							className='flex-1 rounded-md border border-border bg-transparent px-3 py-1.5 text-sm text-main transition-all outline-none'
+							className='flex-1 rounded-md border border-border bg-transparent px-md py-sm text-sm text-main transition-all outline-none'
 							onKeyDown={(e) => {
 								e.stopPropagation()
 								if (e.key === 'Enter' && tempUrl) update({ src: tempUrl })
@@ -59,14 +59,14 @@ export default function Image({ block, update, readOnly }: any) {
 							onClick={() => {
 								if (tempUrl) update({ src: tempUrl })
 							}}
-							className='flex items-center gap-1 rounded-md bg-main px-4 py-1.5 text-sm font-medium text-inverse transition-opacity hover:opacity-80'
+							className='flex items-center gap-xs rounded-md bg-main px-lg py-sm text-sm font-medium text-inverse transition-opacity hover:opacity-80'
 						>
 							<CornerDownLeft size={16} />
 						</button>
 					</div>
 				)}
 				{tab === 'upload' && (
-					<div className='p-2 text-sm text-muted'>Upload not available right now.</div>
+					<div className='p-sm text-sm text-muted'>Upload not available right now.</div>
 				)}
 			</div>
 		)
@@ -101,21 +101,21 @@ export default function Image({ block, update, readOnly }: any) {
 			<div className='absolute -top-3 left-1/2 z-20 flex -translate-x-1/2 items-center overflow-hidden rounded-md border border-border bg-elevated opacity-0 shadow-md transition-opacity group-hover:opacity-100'>
 				<button
 					onClick={() => update({ align: 'left' })}
-					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-xs transition-colors hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Left'
 				>
 					<AlignLeft size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'center' })}
-					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-xs transition-colors hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Center'
 				>
 					<AlignCenter size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'right' })}
-					className={`p-1.5 transition-colors hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					className={`p-xs transition-colors hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Right'
 				>
 					<AlignRight size={14} />

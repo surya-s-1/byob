@@ -216,7 +216,7 @@ export default function PublicationClient({
 	const canManage = publication.myRole === 'OWNER' || publication.myRole === 'ADMIN'
 
 	return (
-		<div className='mx-auto max-w-6xl space-y-12 px-4 py-8 lg:py-12'>
+		<div className='mx-auto max-w-6xl space-y-5xl px-lg py-3xl lg:py-5xl'>
 			{canManage && (
 				<FloatingActions
 					actions={[
@@ -240,8 +240,8 @@ export default function PublicationClient({
 				onWriteArticle={handleWriteArticle}
 			/>
 
-			<div className='grid grid-cols-1 gap-8 lg:grid-cols-4'>
-				<div className='space-y-6 lg:order-2 lg:col-span-1'>
+			<div className='grid grid-cols-1 gap-3xl lg:grid-cols-4'>
+				<div className='space-y-2xl lg:order-2 lg:col-span-1'>
 					<PublicationAbout
 						publication={publication}
 						followersCount={followersCount}
@@ -250,9 +250,9 @@ export default function PublicationClient({
 					/>
 				</div>
 
-				<div className='space-y-8 lg:order-1 lg:col-span-3'>
+				<div className='space-y-3xl lg:order-1 lg:col-span-3'>
 					{/* Tabs */}
-					<div className='-mx-4 mb-6 sm:mx-0'>
+					<div className='-mx-lg mb-2xl sm:mx-0'>
 						<Tabs
 							tabs={[
 								{ id: 'articles', label: 'Articles' },
@@ -269,7 +269,7 @@ export default function PublicationClient({
 					</div>
 
 					{/* Tab Content */}
-					<div className='space-y-6'>
+					<div className='space-y-2xl'>
 						{activeTab === 'articles' && (
 							<>
 								{initialArticles.length > 0 ? (
@@ -282,10 +282,10 @@ export default function PublicationClient({
 										/>
 									))
 								) : (
-									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-20 text-center'>
+									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-7xl text-center'>
 										<BookOpen
 											size={48}
-											className='mx-auto mb-4 text-muted/20'
+											className='mx-auto mb-lg text-muted/20'
 										/>
 										<p className='font-medium text-muted'>
 											No articles published yet.
@@ -306,10 +306,10 @@ export default function PublicationClient({
 										/>
 									))
 								) : (
-									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-20 text-center'>
+									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-7xl text-center'>
 										<FileText
 											size={48}
-											className='mx-auto mb-4 text-muted/20'
+											className='mx-auto mb-lg text-muted/20'
 										/>
 										<p className='font-medium text-muted'>
 											No drafts published yet.
@@ -335,12 +335,12 @@ export default function PublicationClient({
 
 						{activeTab === 'danger' && publication.myRole === 'OWNER' && (
 							<div className='animate-in fade-in slide-in-from-top-2 duration-300'>
-								<Card className='border-red-500/20 bg-red-500/5 p-8'>
-									<div className='flex flex-col items-center gap-6 text-center'>
+								<Card className='border-red-500/20 bg-red-500/5 p-3xl'>
+									<div className='flex flex-col items-center gap-2xl text-center'>
 										<div className='flex h-16 w-16 items-center justify-center rounded-full bg-red-500/10 text-red-500'>
 											<Trash2 size={32} />
 										</div>
-										<div className='space-y-2'>
+										<div className='space-y-sm'>
 											<h3 className='text-xl font-bold text-main'>Delete Publication</h3>
 											<p className='max-w-[90%] text-sm text-subtle'>
 												Permanently delete this publication and all its content.
@@ -351,7 +351,6 @@ export default function PublicationClient({
 											onClick={() => setIsDeleteModalOpen(true)}
 											variant='danger'
 											size='lg'
-											className='px-8'
 										>
 											Delete {publication.displayName}
 										</Button>
@@ -379,13 +378,13 @@ export default function PublicationClient({
 				onClose={() => setIsDeleteModalOpen(false)}
 				title='Delete Publication'
 			>
-				<div className='space-y-6'>
+				<div className='space-y-2xl'>
 					<p className='text-sm leading-relaxed text-subtle'>
 						Are you sure you want to delete <span className='font-bold text-main'>{publication.displayName}</span>?
 						This action is permanent and will delete all associated articles, series, and drafts.
 					</p>
 
-					<div className='flex items-center gap-3'>
+					<div className='flex items-center gap-md'>
 						<Button
 							onClick={() => setIsDeleteModalOpen(false)}
 							variant='secondary'

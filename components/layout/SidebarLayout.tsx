@@ -36,8 +36,8 @@ export default function SidebarLayout({
 				{!isExpanded && !secondarySidebar && (
 					<div
 						className={cn(
-							'animate-in fade-in fixed top-4 z-[40] transition-all duration-300',
-							side === 'left' ? 'left-24' : 'right-24'
+							'animate-in fade-in fixed top-lg z-[40] transition-all duration-300',
+							side === 'left' ? 'left-8xl' : 'right-8xl'
 						)}
 					>
 						<Link href='/'>
@@ -53,9 +53,9 @@ export default function SidebarLayout({
 			<main
 				className={cn(
 					'min-h-screen flex-1 transition-all duration-300',
-					'pt-16 md:pt-0',
-					side === 'left' && (isExpanded ? 'md:ml-64' : 'md:ml-20'),
-					side === 'right' && (isExpanded ? 'md:mr-64' : 'md:mr-20'),
+					'pt-6xl md:pt-0',
+					side === 'left' && (isExpanded ? 'md:ml-64' : 'md:ml-7xl'),
+					side === 'right' && (isExpanded ? 'md:mr-64' : 'md:mr-7xl'),
 					secondarySidebar &&
 					secondarySidebarOpen &&
 					(secondarySide === 'left' ? 'md:ml-[320px]' : 'md:mr-[320px]')
@@ -86,7 +86,7 @@ export default function SidebarLayout({
 						{/* Mobile Close Button */}
 						<button
 							onClick={() => setIsSecondaryOpen(false)}
-							className='absolute top-4 right-4 z-50 flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main backdrop-blur-md md:hidden'
+							className='absolute top-lg right-lg z-50 flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main backdrop-blur-md md:hidden'
 						>
 							<X size={20} />
 						</button>
@@ -101,15 +101,15 @@ export default function SidebarLayout({
 							'fixed top-1/2 z-[120] hidden -translate-y-1/2 items-center justify-center rounded-full bg-primary border border-border text-main transition-all duration-300 shadow-lg hover:bg-secondary hover:scale-110 md:flex',
 							secondaryIcon ? 'h-10 w-10' : 'h-24 w-4',
 							secondarySide === 'left'
-								? secondarySidebarOpen ? 'left-[320px] -translate-x-1/2' : 'left-4'
-								: secondarySidebarOpen ? 'right-[320px] translate-x-1/2' : 'right-4'
+								? secondarySidebarOpen ? 'left-[320px] -translate-x-1/2' : 'left-lg'
+								: secondarySidebarOpen ? 'right-[320px] translate-x-1/2' : 'right-lg'
 						)}
 						title={secondarySidebarOpen ? 'Close Panel' : 'Open Panel'}
 					>
 						{secondaryIcon ? (
 							secondaryIcon
 						) : (
-							<div className='flex flex-col gap-1'>
+							<div className='flex flex-col gap-xs'>
 								<div className='h-1 w-1 rounded-full bg-current' />
 								<div className='h-1 w-1 rounded-full bg-current' />
 								<div className='h-1 w-1 rounded-full bg-current' />

@@ -63,7 +63,7 @@ export default function ProfileClient({
 	}
 
 	return (
-		<div className='mx-auto max-w-5xl space-y-8 px-4 py-8'>
+		<div className='mx-auto max-w-5xl space-y-3xl px-lg py-3xl'>
 			{isOwnProfile && (
 				<FloatingActions
 					actions={[
@@ -84,24 +84,24 @@ export default function ProfileClient({
 				onFollow={handleFollow}
 			/>
 
-			<div className='mt-4 grid grid-cols-1 gap-8 md:grid-cols-4'>
-				<div className='order-1 space-y-6 md:col-span-1'>
+			<div className='mt-lg grid grid-cols-1 gap-3xl md:grid-cols-4'>
+				<div className='order-1 space-y-2xl md:col-span-1'>
 					<ProfileBio user={user} isOwnProfile={isOwnProfile} />
 				</div>
 
-				<div className='order-2 space-y-6 md:col-span-3'>
+				<div className='order-2 space-y-2xl md:col-span-3'>
 					<Tabs tabs={profileTabs} activeTab={activeTab} onChange={setActiveTab} />
 
 					<div className='min-h-[400px]'>
 						{activeTab === 'articles' && (
-							<div className='animate-in fade-in slide-in-from-bottom-2 space-y-4 duration-300'>
+							<div className='animate-in fade-in slide-in-from-bottom-2 space-y-lg duration-300'>
 								{initialArticles.length > 0 ? (
 									initialArticles.map((article) => (
 										<ArticleCard key={article.id} article={article} />
 									))
 								) : (
-									<div className='py-20 text-center'>
-										<div className='mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-secondary/50'>
+									<div className='py-7xl text-center'>
+										<div className='mx-auto mb-lg flex h-20 w-20 items-center justify-center rounded-full bg-secondary/50'>
 											<UserIcon size={32} className='text-muted/30' />
 										</div>
 										<p className='font-medium text-muted'>
@@ -113,13 +113,13 @@ export default function ProfileClient({
 						)}
 
 						{activeTab === 'publications' && (
-							<div className='animate-in fade-in slide-in-from-bottom-2 grid grid-cols-1 gap-4 duration-300 sm:grid-cols-2'>
+							<div className='animate-in fade-in slide-in-from-bottom-2 grid grid-cols-1 gap-lg duration-300 sm:grid-cols-2'>
 								{initialPublications.length > 0 ? (
 									initialPublications.map((pub) => (
 										<PublicationCard key={pub.id} publication={pub} />
 									))
 								) : (
-									<div className='col-span-full py-20 text-center'>
+									<div className='col-span-full py-7xl text-center'>
 										<p className='font-medium text-muted'>
 											No publications found.
 										</p>

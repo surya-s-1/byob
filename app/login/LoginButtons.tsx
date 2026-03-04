@@ -1,6 +1,7 @@
 'use client'
 
 import Image from 'next/image'
+import Button from '@/components/ui/Button'
 
 export default function LoginButtons({ callbackUrl }: { callbackUrl?: string }) {
 	const handleSignIn = async (provider: 'google' | 'github') => {
@@ -28,16 +29,20 @@ export default function LoginButtons({ callbackUrl }: { callbackUrl?: string }) 
 
 	return (
 		<div className='flex flex-col gap-md'>
-			<button
+			<Button
+				variant='secondary'
+				size='lg'
 				onClick={() => handleSignIn('google')}
-				className='duration-fast flex w-full cursor-pointer items-center justify-center gap-md rounded-md border border-border bg-transparent px-lg py-md text-center transition-all hover:scale-[1.02] active:scale-[0.98]'
+				className='w-full'
 			>
 				<Image src='/Google.svg' alt='Google' width={20} height={20} />
 				<span>Continue with Google</span>
-			</button>
-			<button
+			</Button>
+			<Button
+				variant='secondary'
+				size='lg'
 				onClick={() => handleSignIn('github')}
-				className='duration-fast flex w-full cursor-pointer items-center justify-center gap-md rounded-md border border-border bg-transparent px-lg py-md text-center transition-all hover:scale-[1.02] active:scale-[0.98]'
+				className='w-full'
 			>
 				<Image
 					src='/GitHub.svg'
@@ -47,7 +52,7 @@ export default function LoginButtons({ callbackUrl }: { callbackUrl?: string }) 
 					className='dark:invert'
 				/>
 				<span>Continue with GitHub</span>
-			</button>
+			</Button>
 		</div>
 	)
 }

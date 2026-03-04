@@ -4,12 +4,14 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { cn } from '@/lib/utils'
 
+import Button from './Button'
+
 export interface FloatingAction {
 	icon: ReactNode
 	label: string
 	link?: string
 	onClick?: () => void
-	variant?: 'primary' | 'secondary' | 'brand'
+	variant?: 'primary' | 'secondary' | 'brand' | 'danger'
 }
 
 interface FloatingActionsProps {
@@ -20,26 +22,26 @@ export default function FloatingActions({ actions }: FloatingActionsProps) {
 	if (!actions || actions.length === 0) return null
 
 	return (
-		<div className='animate-in fade-in slide-in-from-bottom-5 fixed right-6 bottom-6 z-50 flex flex-col items-end gap-3 duration-500 lg:hidden'>
+		<div className='animate-in fade-in slide-in-from-bottom-5 fixed right-2xl bottom-2xl z-50 flex flex-col items-end gap-md duration-500 lg:hidden'>
 			{actions.map((action, index) => {
+				const buttonVariant = action.variant === 'primary' ? 'brand' : (action.variant || 'brand') as any
+
 				const content = (
-					<button
+					<Button
 						key={index}
 						onClick={action.onClick}
+						variant={buttonVariant}
 						className={cn(
-							'group flex items-center gap-2 rounded-full px-4 py-3 text-sm font-bold shadow-lg transition-all active:scale-95',
-							action.variant === 'brand' && 'btn-brand px-6 py-4 text-white',
-							action.variant === 'secondary' &&
-								'border border-border bg-elevated/80 text-main backdrop-blur-md hover:bg-secondary',
-							(!action.variant || action.variant === 'primary') &&
-								'border border-primary/20 bg-primary text-white hover:opacity-90'
+							'group rounded-full shadow-lg h-fit w-fit gap-sm',
+							action.variant === 'secondary' && 'bg-elevated/80 backdrop-blur-md'
 						)}
+						size={action.variant === 'brand' ? 'lg' : 'md'}
 					>
 						<span className='transition-transform group-hover:scale-110'>
 							{action.icon}
 						</span>
 						<span>{action.label}</span>
-					</button>
+					</Button>
 				)
 
 				if (action.link) {

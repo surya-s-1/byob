@@ -190,12 +190,12 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
         <div className='flex h-full flex-col bg-primary text-main'>
             {/* Delete Confirmation Modal */}
             <Modal isOpen={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)} title='Delete Draft'>
-                <div className='space-y-6'>
+                <div className='space-y-2xl'>
                     <p className='text-subtle'>
                         Are you sure you want to delete this draft? This action cannot be undone and will permanently
                         remove the content from the publication.
                     </p>
-                    <div className='flex justify-end gap-3'>
+                    <div className='flex justify-end gap-md'>
                         <Button variant='ghost' onClick={() => setIsDeleteDialogOpen(false)}>
                             Cancel
                         </Button>
@@ -209,13 +209,13 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
             {/* Main Editor Area */}
             <div className='flex flex-1 flex-col overflow-y-auto no-scrollbar'>
                 <header className='sticky top-0 z-30 border-b border-border bg-primary/80 backdrop-blur-md'>
-                    <div className='mx-auto flex h-14 w-full max-w-4xl items-center justify-between px-6 lg:px-12'>
+                    <div className='mx-auto flex h-14 w-full max-w-4xl items-center justify-between px-2xl lg:px-5xl'>
                         <div className='flex items-center justify-start'>
                             <Button
                                 variant='ghost'
                                 size='sm'
                                 onClick={() => router.push(`/publication/${draft.publication?.slug}`)}
-                                className='-ml-3 flex items-center gap-2 text-sm font-bold text-subtle hover:text-main'
+                                className='-ml-md flex items-center gap-sm text-sm font-bold text-subtle hover:text-main'
                             >
                                 <ArrowLeft size={16} />
                                 <span className='hidden sm:inline'>Back to </span>
@@ -225,10 +225,10 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
                             </Button>
                         </div>
 
-                        <div className='flex items-center justify-end gap-4'>
+                        <div className='flex items-center justify-end gap-lg'>
                             <div
                                 className={cn(
-                                    'flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors',
+                                    'flex items-center gap-sm text-[10px] font-bold uppercase tracking-widest transition-colors',
                                     saveState === 'error' ? 'text-red-500' : 'text-muted'
                                 )}
                             >
@@ -246,7 +246,7 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
                     </div>
                 </header>
 
-                <div className='mx-auto w-full max-w-4xl flex-1 px-6 py-12 lg:px-12'>
+                <div className='mx-auto w-full max-w-4xl flex-1 px-2xl py-5xl lg:px-5xl'>
                     <Head draft={draft} onSave={(data: any) => handleSaveSettings(data)} />
                     <Content
                         initialMarkdown={draft.content || ''}

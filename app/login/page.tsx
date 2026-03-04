@@ -16,7 +16,7 @@ export default async function LoginPage({
 
 	return (
 		<div className='flex h-full w-full items-center justify-center'>
-			<Card className='w-fit max-w-[40%] p-2xl'>
+			<Card className='w-fit max-w-[40%] p-3xl'>
 				<div className='mb-xl text-center'>
 					<h1 className='text-2xl font-semibold text-main'>Welcome to Running Head!</h1>
 					<p className='mt-sm text-sm text-subtle'>Sign in to continue</p>

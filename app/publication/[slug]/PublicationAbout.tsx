@@ -17,12 +17,12 @@ export default function PublicationAbout({
 	onInviteClick,
 }: PublicationAboutProps) {
 	return (
-		<Card className='sticky top-24 space-y-6 p-6'>
-			<div className='space-y-4'>
+		<Card className='sticky top-24 space-y-2xl p-2xl'>
+			<div className='space-y-lg'>
 				<h4 className='text-xs font-bold tracking-widest text-muted uppercase'>About</h4>
-				<div className='space-y-3'>
+				<div className='space-y-md'>
 					<div className='flex items-center justify-between text-sm'>
-						<span className='flex items-center gap-2 text-subtle'>
+						<span className='flex items-center gap-sm text-subtle'>
 							<Globe size={16} /> Visibility
 						</span>
 						<span className='font-bold text-main capitalize'>
@@ -30,13 +30,13 @@ export default function PublicationAbout({
 						</span>
 					</div>
 					<div className='flex items-center justify-between text-sm'>
-						<span className='flex items-center gap-2 text-subtle'>
+						<span className='flex items-center gap-sm text-subtle'>
 							<Users size={16} /> Followers
 						</span>
 						<span className='font-bold text-main'>{followersCount}</span>
 					</div>
 					<div className='flex items-center justify-between text-sm'>
-						<span className='flex items-center gap-2 text-subtle'>
+						<span className='flex items-center gap-sm text-subtle'>
 							<Shield size={16} /> Members
 						</span>
 						<span className='font-bold text-main'>{publication.memberCount || 0}</span>
@@ -45,8 +45,8 @@ export default function PublicationAbout({
 			</div>
 
 			{canManage && (
-				<div className='space-y-3 border-t border-border pt-6'>
-					<Button onClick={onInviteClick} className='btn-brand flex w-full items-center justify-center gap-2'>
+				<div className='space-y-md border-t border-border pt-2xl'>
+					<Button onClick={onInviteClick} variant='brand' className='w-full gap-sm'>
 						<PlusCircle size={16} />
 						Invite Member
 					</Button>

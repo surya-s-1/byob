@@ -5,12 +5,12 @@ export default function Footer() {
 	return (
 		<footer className='mt-auto border-t border-border bg-secondary px-xl py-xl'>
 			<div className='mx-auto flex max-w-7xl flex-col items-center justify-between gap-md md:flex-row'>
-				<div className='flex items-center gap-1 text-sm text-subtle italic'>
+				<div className='flex items-center gap-xs text-sm text-subtle italic'>
 					<span>Running Head | Made by </span>
 					<a
 						href='https://github.com/surya-s-1'
 						target='_blank'
-						className='flex items-center gap-1 bg-[image:var(--brand-primary)] bg-clip-text font-bold text-transparent underline'
+						className='flex items-center gap-xs bg-[image:var(--brand-primary)] bg-clip-text font-bold text-transparent underline'
 					>
 						Surya S
 						<SquareArrowOutUpRight color='indigo' size={16} />

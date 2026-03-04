@@ -14,10 +14,10 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 	const article = await getArticle(slug)
 
 	return (
-		<article className='bg-primary pb-32 text-main'>
-			<div className='mx-auto max-w-4xl px-6 py-16'>
+		<article className='bg-primary pb-[128px] text-main'>
+			<div className='mx-auto max-w-4xl px-2xl py-6xl'>
 				{article.cover && (
-					<div className='mb-12 aspect-2/1 w-full overflow-hidden rounded-lg border border-border bg-secondary'>
+					<div className='mb-5xl aspect-2/1 w-full overflow-hidden rounded-lg border border-border bg-secondary'>
 						<img
 							src={article.cover}
 							alt='Cover'
@@ -25,9 +25,9 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 						/>
 					</div>
 				)}
-				<h1 className='mb-4 text-[48px] leading-tight font-bold'>{article.title}</h1>
+				<h1 className='mb-lg text-[48px] leading-tight font-bold'>{article.title}</h1>
 				{article.subtitle && (
-					<h2 className='mb-12 text-xl text-subtle'>{article.subtitle}</h2>
+					<h2 className='mb-5xl text-xl text-subtle'>{article.subtitle}</h2>
 				)}
 				<ReadOnlyRenderer markdown={article.content} />
 			</div>

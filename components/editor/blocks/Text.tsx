@@ -53,7 +53,7 @@ export default function Text({ block, update, isFocused, setFocusId, removeBlock
 	if (readOnly) {
 		return (
 			<div
-				className='wysiwyg-editor my-2 w-full text-lg leading-relaxed text-main'
+				className='wysiwyg-editor my-sm w-full text-lg leading-relaxed text-main'
 				dangerouslySetInnerHTML={{ __html: parseInitialMarkdown(block.content) }}
 			/>
 		)
@@ -156,12 +156,12 @@ export default function Text({ block, update, isFocused, setFocusId, removeBlock
 				}}
 				onInput={handleInput}
 				onKeyDown={handleKeyDown}
-				className='wysiwyg-editor -mx-2 min-h-[2rem] w-full rounded-md p-2 text-lg leading-relaxed text-main transition-colors outline-none empty:before:text-subtle empty:before:content-[attr(data-placeholder)] hover:bg-secondary focus:bg-transparent'
+				className='wysiwyg-editor -mx-sm min-h-[2rem] w-full rounded-md p-sm text-lg leading-relaxed text-main transition-colors outline-none empty:before:text-subtle empty:before:content-[attr(data-placeholder)] hover:bg-secondary focus:bg-transparent'
 				data-placeholder='Start writing...'
 			/>
 
 			{linkPopup.show && (
-				<div className='absolute top-full left-0 z-50 mt-2 flex w-[300px] flex-col gap-2 rounded-md border border-border bg-elevated p-3 shadow-xl'>
+				<div className='absolute top-full left-0 z-50 mt-sm flex w-[300px] flex-col gap-sm rounded-md border border-border bg-elevated p-md shadow-xl'>
 					<h3 className='text-xs font-bold tracking-wider text-subtle uppercase'>
 						Insert Link
 					</h3>
@@ -169,30 +169,30 @@ export default function Text({ block, update, isFocused, setFocusId, removeBlock
 						value={linkPopup.text}
 						onChange={(e) => setLinkPopup({ ...linkPopup, text: e.target.value })}
 						placeholder='Display text (optional)'
-						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
+						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 					/>
 					<input
 						autoFocus
 						value={linkPopup.url}
 						onChange={(e) => setLinkPopup({ ...linkPopup, url: e.target.value })}
 						placeholder='https://...'
-						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
+						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 						onKeyDown={(e) => {
 							e.stopPropagation()
 							if (e.key === 'Enter') applyLink()
 							if (e.key === 'Escape') setLinkPopup({ ...linkPopup, show: false })
 						}}
 					/>
-					<div className='mt-1 flex justify-end gap-2'>
+					<div className='mt-xs flex justify-end gap-sm'>
 						<button
 							onClick={() => setLinkPopup({ ...linkPopup, show: false })}
-							className='px-2 text-sm text-subtle hover:text-main'
+							className='px-sm text-sm text-subtle hover:text-main'
 						>
 							Cancel
 						</button>
 						<button
 							onClick={applyLink}
-							className='rounded-sm bg-main px-3 py-1.5 text-sm text-inverse'
+							className='rounded-sm bg-main px-md py-sm text-sm text-inverse'
 						>
 							Save
 						</button>

@@ -19,7 +19,7 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 							setUrl('')
 							setCover('')
 						}}
-						className='absolute right-4 bottom-4 rounded-md bg-elevated/50 p-1.5 text-subtle opacity-0 shadow-md transition-colors transition-opacity group-hover:opacity-100 hover:text-error'
+						className='absolute right-lg bottom-lg rounded-md bg-elevated/50 p-xs text-subtle opacity-0 shadow-md transition-colors transition-opacity group-hover:opacity-100 hover:text-error'
 					>
 						<Trash2 size={16} />
 					</button>
@@ -32,7 +32,7 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 
 	return (
 		<div className='mb-xl rounded-lg border border-border p-md'>
-			<div className='mb-3 flex gap-4 px-2 text-sm'>
+			<div className='mb-sm flex gap-lg px-sm text-sm'>
 				<span className='font-semibold'>Cover Image</span>
 				<button
 					onClick={() => setTab('url')}
@@ -49,7 +49,7 @@ export default function Cover({ cover, setCover, readOnly }: any) {
 			</div>
 
 			{tab === 'url' && (
-				<div className='flex gap-3'>
+				<div className='flex gap-md'>
 					<input
 						value={url}
 						onChange={(e) => setUrl(e.target.value)}

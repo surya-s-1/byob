@@ -7,8 +7,8 @@ interface DashboardHeaderProps {
 
 export default function DashboardHeader({ userName }: DashboardHeaderProps) {
 	return (
-		<div className='flex flex-col justify-between gap-4 text-center sm:flex-row sm:items-center sm:gap-6 sm:text-left'>
-			<div className='mx-auto space-y-1 sm:mx-0'>
+		<div className='flex flex-col justify-between gap-lg text-center sm:flex-row sm:items-center sm:gap-2xl sm:text-left'>
+			<div className='mx-auto space-y-xs sm:mx-0'>
 				<h1 className='text-2xl font-extrabold tracking-tight text-main sm:text-3xl'>
 					Welcome, {userName}.
 				</h1>
@@ -16,9 +16,9 @@ export default function DashboardHeader({ userName }: DashboardHeaderProps) {
 					Here's a snapshot of your content and community.
 				</p>
 			</div>
-			<div className='hidden flex-col gap-3 xs:flex-row lg:flex'>
+			<div className='hidden flex-col gap-md xs:flex-row lg:flex'>
 				<Link href='/publications/new' className='w-full xs:w-auto'>
-					<Button className='btn-brand w-full'>Create Publication</Button>
+					<Button variant='brand' className='w-full'>Create Publication</Button>
 				</Link>
 			</div>
 		</div>

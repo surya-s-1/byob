@@ -23,16 +23,16 @@ export default function PublicationInvitations({
 				<table className='w-full border-collapse text-left'>
 					<thead className='bg-secondary/50'>
 						<tr>
-							<th className='px-6 py-4 text-xs font-bold tracking-wider text-muted uppercase'>
+							<th className='px-2xl py-lg text-xs font-bold tracking-wider text-muted uppercase'>
 								User
 							</th>
-							<th className='px-6 py-4 text-xs font-bold tracking-wider text-muted uppercase'>
+							<th className='px-2xl py-lg text-xs font-bold tracking-wider text-muted uppercase'>
 								Role
 							</th>
-							<th className='px-6 py-4 text-xs font-bold tracking-wider text-muted uppercase'>
+							<th className='px-2xl py-lg text-xs font-bold tracking-wider text-muted uppercase'>
 								Status
 							</th>
-							<th className='px-6 py-4 text-right text-xs font-bold tracking-wider text-muted uppercase'>
+							<th className='px-2xl py-lg text-right text-xs font-bold tracking-wider text-muted uppercase'>
 								Actions
 							</th>
 						</tr>
@@ -44,8 +44,8 @@ export default function PublicationInvitations({
 									key={inv.user.id}
 									className='transition-colors hover:bg-secondary/30'
 								>
-									<td className='px-6 py-4'>
-										<div className='flex items-center gap-3'>
+									<td className='px-2xl py-lg'>
+										<div className='flex items-center gap-md'>
 											<div className='relative h-8 w-8 overflow-hidden rounded-full bg-secondary'>
 												{inv.user.image ? (
 													<img
@@ -56,7 +56,7 @@ export default function PublicationInvitations({
 												) : (
 													<Users
 														size={14}
-														className='m-auto h-full w-full p-2'
+														className='m-auto h-full w-full p-sm'
 													/>
 												)}
 											</div>
@@ -70,13 +70,13 @@ export default function PublicationInvitations({
 											</div>
 										</div>
 									</td>
-									<td className='px-6 py-4'>
-										<span className='rounded-md bg-primary/10 px-2 py-1 text-[10px] font-bold text-main uppercase'>
+									<td className='px-2xl py-lg'>
+										<span className='rounded-sm bg-primary/10 px-sm py-2xs text-[10px] font-bold text-main uppercase'>
 											{inv.role}
 										</span>
 									</td>
-									<td className='px-6 py-4'>
-										<div className='flex items-center gap-2'>
+									<td className='px-2xl py-lg'>
+										<div className='flex items-center gap-sm'>
 											{inv.status === 'accepted' && (
 												<>
 													<CheckCircle2
@@ -106,13 +106,14 @@ export default function PublicationInvitations({
 											)}
 										</div>
 									</td>
-									<td className='px-6 py-4 text-right'>
-										<div className='flex items-center justify-end gap-3'>
+									<td className='px-2xl py-lg text-right'>
+										<div className='flex items-center justify-end gap-md'>
 											{inv.status === 'rejected' ? (
 												<Button
 													onClick={() => onReinvite(inv.user.id)}
 													isLoading={reinvitingIds.has(inv.user.id)}
-													className='btn-brand btn-xs px-3 py-1 text-[10px]'
+													variant='brand'
+													size='xs'
 												>
 													Reinvite
 												</Button>
@@ -120,7 +121,8 @@ export default function PublicationInvitations({
 												<Button
 													onClick={() => onCancelInvite(inv.user.id)}
 													isLoading={cancellingIds.has(inv.user.id)}
-													className='btn-secondary btn-xs px-3 py-1 text-[10px]'
+													variant='secondary'
+													size='xs'
 												>
 													Cancel
 												</Button>
@@ -145,7 +147,7 @@ export default function PublicationInvitations({
 							<tr>
 								<td
 									colSpan={5}
-									className='px-6 py-12 text-center text-sm text-muted'
+									className='px-2xl py-5xl text-center text-sm text-muted'
 								>
 									No invitation history found.
 								</td>

@@ -45,8 +45,8 @@ export default function NewPublicationPage() {
 	}
 
 	return (
-		<div className='mx-auto max-w-3xl space-y-8 px-4 py-12'>
-			<div className='flex items-center gap-4'>
+		<div className='mx-auto max-w-3xl space-y-3xl px-lg py-5xl'>
+			<div className='flex items-center gap-lg'>
 				<Link
 					href='/dashboard'
 					className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main transition-colors hover:bg-secondary'
@@ -63,16 +63,16 @@ export default function NewPublicationPage() {
 				</div>
 			</div>
 
-			<form onSubmit={handleSubmit} className='space-y-6'>
-				<Card className='space-y-8 p-6 sm:p-8'>
-					<div className='space-y-4'>
-						<label className='block space-y-2'>
+			<form onSubmit={handleSubmit} className='space-y-2xl'>
+				<Card className='space-y-3xl p-2xl sm:p-3xl'>
+					<div className='space-y-lg'>
+						<label className='block space-y-sm'>
 							<span className='text-sm font-bold text-main'>Display Name</span>
 							<input
 								required
 								type='text'
 								placeholder="What's your publication called?"
-								className='w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
+								className='w-full rounded-xl border border-border bg-secondary/50 px-lg py-md text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 								value={formData.displayName}
 								onChange={(e) =>
 									setFormData({ ...formData, displayName: e.target.value })
@@ -80,12 +80,12 @@ export default function NewPublicationPage() {
 							/>
 						</label>
 
-						<label className='block space-y-2'>
+						<label className='block space-y-sm'>
 							<span className='text-sm font-bold text-main'>Description</span>
 							<textarea
 								rows={3}
 								placeholder='What is this publication about?'
-								className='w-full resize-none rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
+								className='w-full resize-none rounded-xl border border-border bg-secondary/50 px-lg py-md text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 								value={formData.displayDescription}
 								onChange={(e) =>
 									setFormData({ ...formData, displayDescription: e.target.value })
@@ -94,9 +94,9 @@ export default function NewPublicationPage() {
 						</label>
 					</div>
 
-					<div className='space-y-4'>
+					<div className='space-y-lg'>
 						<span className='text-sm font-bold text-main'>Visibility</span>
-						<div className='grid grid-cols-1 gap-3 sm:grid-cols-3'>
+						<div className='grid grid-cols-1 gap-md sm:grid-cols-3'>
 							{[
 								{
 									id: 'PUBLIC',
@@ -122,7 +122,7 @@ export default function NewPublicationPage() {
 									type='button'
 									onClick={() => setFormData({ ...formData, visibility: opt.id })}
 									className={cn(
-										'group flex flex-col items-start rounded-xl border p-4 text-left transition-all',
+										'group flex flex-col items-start rounded-xl border p-lg text-left transition-all',
 										formData.visibility === opt.id
 											? 'border-main bg-main/5 shadow-sm'
 											: 'border-border bg-secondary/30 hover:bg-secondary/50'
@@ -130,7 +130,7 @@ export default function NewPublicationPage() {
 								>
 									<div
 										className={cn(
-											'mb-2 rounded-lg bg-secondary p-2 text-subtle transition-colors group-hover:text-main'
+											'mb-xs rounded-lg bg-secondary p-sm text-subtle transition-colors group-hover:text-main'
 										)}
 									>
 										{opt.icon}
@@ -142,16 +142,16 @@ export default function NewPublicationPage() {
 						</div>
 					</div>
 
-					<div className='space-y-4'>
+					<div className='space-y-lg'>
 						<span className='text-sm font-bold text-main'>
 							Cover Image URL (Optional)
 						</span>
-						<div className='flex gap-3'>
+						<div className='flex gap-md'>
 							<div className='flex-1'>
 								<input
 									type='url'
 									placeholder='https://example.com/cover.png'
-									className='w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
+									className='w-full rounded-xl border border-border bg-secondary/50 px-lg py-md text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 									value={formData.cover}
 									onChange={(e) =>
 										setFormData({ ...formData, cover: e.target.value })
@@ -161,11 +161,13 @@ export default function NewPublicationPage() {
 						</div>
 					</div>
 
-					<div className='flex justify-end pt-4'>
+					<div className='flex justify-end pt-lg'>
 						<Button
 							type='submit'
 							isLoading={isLoading}
-							className='btn-brand rounded-full px-12 py-3 text-base font-bold shadow-md'
+							variant='brand'
+							size='lg'
+							className='rounded-full'
 						>
 							Create Publication
 						</Button>

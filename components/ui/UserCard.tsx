@@ -47,8 +47,8 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 
 	return (
 		<Link href={`/profile/${user.username}`} className='group block'>
-			<div className='flex items-center gap-4 rounded-2xl border border-border/50 bg-secondary/30 p-4 transition-all hover:border-border hover:bg-secondary/50 hover:shadow-md'>
-				<div className='relative h-12 w-12 overflow-hidden rounded-full border border-border bg-elevated transition-colors group-hover:border-primary/30 sm:h-14 sm:w-14'>
+			<div className='flex items-center gap-lg rounded-2xl border border-border/50 bg-secondary/30 p-lg transition-all hover:border-border hover:bg-secondary/50 hover:shadow-md'>
+				<div className='relative h-5xl w-5xl overflow-hidden rounded-full border border-border bg-elevated transition-colors group-hover:border-primary/30 sm:h-[56px] sm:w-[56px]'>
 					{user.image ? (
 						<Image src={user.image} alt={user.name} fill className='object-cover' />
 					) : (
@@ -62,7 +62,7 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 					<h3 className='font-bold'>{user.name}</h3>
 					<p className='text-sm text-subtle'>@{user.username}</p>
 					{user.bio && (
-						<p className='mt-1 hidden max-w-[50%] text-xs text-muted sm:block'>
+						<p className='mt-xs hidden max-w-[50%] text-xs text-muted sm:block'>
 							{user.bio}
 						</p>
 					)}
@@ -72,7 +72,9 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 					<Button
 						onClick={handleFollow}
 						isLoading={isLoading}
-						className='btn-brand h-auto px-4 py-1.5 text-xs font-bold shadow-sm'
+						variant='brand'
+						size='xs'
+						className='h-auto font-bold shadow-sm'
 					>
 						{isFollowing ? 'Unfollow' : 'Follow'}
 					</Button>

@@ -52,12 +52,12 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 	if (readOnly) {
 		return (
 			<div
-				className={`my-8 block ${alignClass}`}
+				className={`my-4xl block ${alignClass}`}
 				style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 			>
 				{isInsecure ? (
-					<div className='flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border border-border bg-secondary p-4 text-center text-sm text-subtle'>
-						<div className='rounded-full bg-error/10 p-2 text-error'>
+					<div className='flex h-full w-full flex-col items-center justify-center gap-sm rounded-lg border border-border bg-secondary p-lg text-center text-sm text-subtle'>
+						<div className='rounded-full bg-error/10 p-sm text-error'>
 							<AlertTriangle size={20} />
 						</div>
 						<span className='font-bold text-main'>Unsupported Content</span>
@@ -103,12 +103,12 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	return (
 		<div
-			className='ring-brand group relative inline-block rounded-lg transition-all duration-200 hover:px-4 hover:ring-1'
+			className='ring-brand group relative inline-block rounded-lg transition-all duration-200 hover:px-lg hover:ring-1'
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
 			{isInsecure ? (
-				<div className='flex h-full w-full flex-col items-center justify-center gap-2 rounded-lg border border-border bg-secondary p-4 text-center text-sm text-subtle'>
-					<div className='rounded-full bg-error/10 p-2 text-error'>
+				<div className='flex h-full w-full flex-col items-center justify-center gap-sm rounded-lg border border-border bg-secondary p-lg text-center text-sm text-subtle'>
+					<div className='rounded-full bg-error/10 p-sm text-error'>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							width='20'
@@ -147,21 +147,21 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 			<div className='absolute -top-3 left-1/2 z-20 flex -translate-x-1/2 items-center overflow-hidden rounded-lg border border-border bg-elevated opacity-0 shadow-md transition-opacity group-hover:opacity-100'>
 				<button
 					onClick={() => update({ align: 'left' })}
-					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-xs transition-colors hover:bg-secondary ${block.align === 'left' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Left'
 				>
 					<AlignLeft size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'center' })}
-					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-xs transition-colors hover:bg-secondary ${block.align === 'center' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Center'
 				>
 					<AlignCenter size={14} />
 				</button>
 				<button
 					onClick={() => update({ align: 'right' })}
-					className={`border-r border-border p-1.5 transition-colors hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
+					className={`border-r border-border p-xs transition-colors hover:bg-secondary ${block.align === 'right' ? 'text-brand' : 'text-subtle'}`}
 					title='Align Right'
 				>
 					<AlignRight size={14} />
@@ -171,7 +171,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 						setTempUrl(block.src)
 						setShowEditUrl(true)
 					}}
-					className='flex items-center gap-1 p-1.5 px-2 text-xs font-medium text-subtle transition-colors hover:bg-secondary'
+					className='flex items-center gap-xs p-xs px-sm text-xs font-medium text-subtle transition-colors hover:bg-secondary'
 					title='Settings'
 				>
 					<Edit2 size={14} />
@@ -179,17 +179,17 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 			</div>
 
 			{showEditUrl && (
-				<div className='animate-in fade-in zoom-in absolute top-1/2 left-1/2 z-30 flex w-[90%] max-w-[400px] -translate-x-1/2 -translate-y-1/2 flex-col gap-4 rounded-lg border border-border bg-elevated p-4 shadow-xl duration-200'>
-					<div className='flex flex-col gap-1.5'>
+				<div className='animate-in fade-in zoom-in absolute top-1/2 left-1/2 z-30 flex w-[90%] max-w-[400px] -translate-x-1/2 -translate-y-1/2 flex-col gap-lg rounded-lg border border-border bg-elevated p-lg shadow-xl duration-200'>
+					<div className='flex flex-col gap-sm'>
 						<label className='text-[10px] font-bold tracking-wider text-muted uppercase'>
 							Source URL
 						</label>
-						<div className='flex gap-2'>
+						<div className='flex gap-sm'>
 							<input
 								autoFocus
 								value={tempUrl}
 								onChange={(e) => setTempUrl(e.target.value)}
-								className='focus:border-brand ring-brand flex-1 rounded-md border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
+								className='focus:border-brand ring-brand flex-1 rounded-md border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 								onKeyDown={(e) => {
 									e.stopPropagation()
 									if (e.key === 'Enter') {
@@ -201,8 +201,8 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 						</div>
 					</div>
 
-					<div className='grid grid-cols-2 gap-3'>
-						<label className='group flex cursor-pointer items-center gap-2'>
+					<div className='grid grid-cols-2 gap-md'>
+						<label className='group flex cursor-pointer items-center gap-sm'>
 							<input
 								type='checkbox'
 								checked={settings.autoplay}
@@ -217,7 +217,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								Autoplay
 							</span>
 						</label>
-						<label className='group flex cursor-pointer items-center gap-2'>
+						<label className='group flex cursor-pointer items-center gap-sm'>
 							<input
 								type='checkbox'
 								checked={settings.fullscreen}
@@ -232,7 +232,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								Fullscreen
 							</span>
 						</label>
-						<label className='group flex cursor-pointer items-center gap-2'>
+						<label className='group flex cursor-pointer items-center gap-sm'>
 							<input
 								type='checkbox'
 								checked={settings.sensors}
@@ -245,7 +245,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								Sensors
 							</span>
 						</label>
-						<label className='group flex cursor-pointer items-center gap-2'>
+						<label className='group flex cursor-pointer items-center gap-sm'>
 							<input
 								type='checkbox'
 								checked={settings.pip}
@@ -265,7 +265,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 							update({ src: tempUrl })
 							setShowEditUrl(false)
 						}}
-						className='w-full rounded-md bg-main py-2 text-sm font-semibold text-inverse transition-opacity hover:opacity-90'
+						className='w-full rounded-md bg-main py-sm text-sm font-semibold text-inverse transition-opacity hover:opacity-90'
 					>
 						Done
 					</button>

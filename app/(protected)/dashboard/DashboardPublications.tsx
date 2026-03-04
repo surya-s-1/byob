@@ -15,9 +15,9 @@ export default function DashboardPublications({
 	username,
 }: DashboardPublicationsProps) {
 	return (
-		<section className='space-y-4'>
-			<div className='flex items-center justify-between px-1'>
-				<h2 className='flex items-center gap-2 text-xl font-bold text-main'>
+		<section className='space-y-lg'>
+			<div className='flex items-center justify-between px-xs'>
+				<h2 className='flex items-center gap-sm text-xl font-bold text-main'>
 					<BookOpen size={22} className='text-main' />
 					Your Publications
 				</h2>
@@ -28,18 +28,18 @@ export default function DashboardPublications({
 					Manage All
 				</Link>
 			</div>
-			<div className='grid grid-cols-1 gap-4'>
+			<div className='grid grid-cols-1 gap-lg'>
 				{publications.length > 0 ? (
 					publications
 						.slice(0, 3)
 						.map((pub) => <PublicationCard key={pub.id} publication={pub} />)
 				) : (
-					<Card className='rounded-3xl border-2 border-dashed bg-primary/5 p-12 text-center text-muted'>
-						<div className='flex flex-col items-center gap-3'>
+					<Card className='rounded-3xl border-2 border-dashed bg-primary/5 p-5xl text-center text-muted'>
+						<div className='flex flex-col items-center gap-md'>
 							<BookOpen size={48} className='text-muted/30' />
 							<p>You haven't joined or created any publications yet.</p>
 							<Link href='/publications/new'>
-								<Button className='btn-brand btn-sm'>
+								<Button variant='brand' size='sm'>
 									Create First Publication
 								</Button>
 							</Link>

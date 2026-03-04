@@ -93,8 +93,8 @@ export default function Toolbar({ insert }: any) {
 	const getBtnClass = (cmd: string) => {
 		const isActive = active[cmd]
 		return `w-8 h-8 flex items-center justify-center text-sm rounded-sm transition-colors cursor-pointer border ${isActive
-				? 'bg-brand/5 border-brand text-brand'
-				: 'bg-transparent border-transparent text-subtle hover:bg-secondary hover:text-main'
+			? 'bg-brand/5 border-brand text-brand'
+			: 'bg-transparent border-transparent text-subtle hover:bg-secondary hover:text-main'
 			}`
 	}
 
@@ -171,8 +171,8 @@ export default function Toolbar({ insert }: any) {
 	}
 
 	return (
-		<div className='sticky top-0 z-20 mb-lg flex items-center justify-between border-b border-border bg-primary/95 py-3 backdrop-blur-sm px-1'>
-			<div className='flex items-center gap-1 overflow-x-auto no-scrollbar flex-nowrap pr-12 md:pr-0'>
+		<div className='sticky top-0 z-20 mb-lg flex items-center justify-between border-b border-border bg-primary/95 py-sm backdrop-blur-sm px-xs'>
+			<div className='flex items-center gap-xs overflow-x-auto no-scrollbar flex-nowrap pr-5xl md:pr-0'>
 				<button
 					onMouseDown={(e) => handleCommand(e, 'bold')}
 					className={getBtnClass('bold')}
@@ -218,7 +218,7 @@ export default function Toolbar({ insert }: any) {
 					</button>
 				)}
 
-				<div className='mx-1 h-5 w-px bg-border flex-shrink-0'></div>
+				<div className='mx-xs h-5 w-px bg-border flex-shrink-0'></div>
 
 				<button
 					onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H1')}
@@ -242,7 +242,7 @@ export default function Toolbar({ insert }: any) {
 					<Heading3 size={18} />
 				</button>
 
-				<div className='mx-1 h-5 w-px bg-border flex-shrink-0'></div>
+				<div className='mx-xs h-5 w-px bg-border flex-shrink-0'></div>
 
 				<button
 					onMouseDown={(e) => handleCommand(e, 'insertUnorderedList')}
@@ -267,7 +267,7 @@ export default function Toolbar({ insert }: any) {
 					<Quote size={16} />
 				</button>
 
-				<div className='mx-2 h-5 w-px bg-border flex-shrink-0'></div>
+				<div className='mx-sm h-5 w-px bg-border flex-shrink-0'></div>
 
 				<button
 					onClick={() => insert({ type: 'image', src: '', w: 700, align: 'center' })}
@@ -310,7 +310,7 @@ export default function Toolbar({ insert }: any) {
 			</div>
 
 			{linkPopup.show && (
-				<div className='absolute top-full left-0 z-50 mt-2 flex w-[300px] flex-col gap-2 rounded-md border border-border bg-elevated p-3 shadow-xl'>
+				<div className='absolute top-full left-0 z-50 mt-sm flex w-[300px] flex-col gap-sm rounded-md border border-border bg-elevated p-md shadow-xl'>
 					<h3 className='text-xs font-bold tracking-wider text-subtle uppercase'>
 						Insert Link
 					</h3>
@@ -318,29 +318,29 @@ export default function Toolbar({ insert }: any) {
 						value={linkPopup.text}
 						onChange={(e) => setLinkPopup({ ...linkPopup, text: e.target.value })}
 						placeholder='Display text (optional)'
-						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
+						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 					/>
 					<input
 						autoFocus
 						value={linkPopup.url}
 						onChange={(e) => setLinkPopup({ ...linkPopup, url: e.target.value })}
 						placeholder='https://...'
-						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-3 py-1.5 text-sm text-main transition-all outline-none focus:ring-1'
+						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 						onKeyDown={(e) => {
 							if (e.key === 'Enter') applyLink()
 							if (e.key === 'Escape') setLinkPopup({ ...linkPopup, show: false })
 						}}
 					/>
-					<div className='mt-1 flex justify-end gap-2'>
+					<div className='mt-xs flex justify-end gap-sm'>
 						<button
 							onClick={() => setLinkPopup({ ...linkPopup, show: false })}
-							className='px-2 text-sm text-subtle hover:text-main'
+							className='px-sm text-sm text-subtle hover:text-main'
 						>
 							Cancel
 						</button>
 						<button
 							onClick={applyLink}
-							className='rounded-sm bg-main px-3 py-1.5 text-sm text-inverse'
+							className='rounded-sm bg-main px-md py-sm text-sm text-inverse'
 						>
 							Save
 						</button>

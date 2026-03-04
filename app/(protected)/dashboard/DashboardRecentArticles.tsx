@@ -14,9 +14,9 @@ export default function DashboardRecentArticles({
 	username,
 }: DashboardRecentArticlesProps) {
 	return (
-		<section className='space-y-4'>
-			<div className='flex items-center justify-between px-1'>
-				<h2 className='flex items-center gap-2 text-xl font-bold text-main'>
+		<section className='space-y-lg'>
+			<div className='flex items-center justify-between px-xs'>
+				<h2 className='flex items-center gap-sm text-xl font-bold text-main'>
 					<FileText size={22} className='text-main' />
 					Your Recent Articles
 				</h2>
@@ -27,7 +27,7 @@ export default function DashboardRecentArticles({
 					View All
 				</Link>
 			</div>
-			<div className='grid grid-cols-1 gap-3'>
+			<div className='grid grid-cols-1 gap-md'>
 				{articles.length > 0 ? (
 					articles
 						.slice(0, 5)
@@ -35,8 +35,8 @@ export default function DashboardRecentArticles({
 							<ArticleCard key={article.id} article={article} variant='compact' />
 						))
 				) : (
-					<Card className='rounded-3xl border-2 border-dashed bg-primary/5 p-12 text-center text-muted'>
-						<div className='flex flex-col items-center gap-3'>
+					<Card className='rounded-3xl border-2 border-dashed bg-primary/5 p-5xl text-center text-muted'>
+						<div className='flex flex-col items-center gap-md'>
 							<FileText size={48} className='text-muted/30' />
 							<p>You haven't published any articles yet.</p>
 						</div>

@@ -19,7 +19,7 @@ export default function ClientLayout({ user, children }: ClientLayoutProps) {
 	if (pathname === '/login') {
 		return (
 			<div className='relative flex min-h-screen flex-col'>
-				<div className='absolute left-4 top-4 z-50 md:left-8 md:top-8'>
+				<div className='absolute left-lg top-lg z-50 md:left-3xl md:top-3xl'>
 					<Link href='/'>
 						<div className='relative h-16 w-16 lg:h-20 lg:w-20'>
 							<Image
@@ -39,7 +39,7 @@ export default function ClientLayout({ user, children }: ClientLayoutProps) {
 						</div>
 					</Link>
 				</div>
-				<div className='flex flex-1 items-center justify-center p-4'>
+				<div className='flex flex-1 items-center justify-center p-lg'>
 					{children}
 				</div>
 				<Footer />

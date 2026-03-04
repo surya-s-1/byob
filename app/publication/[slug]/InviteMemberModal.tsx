@@ -76,23 +76,23 @@ export default function InviteMemberModal({
 
     return (
         <Modal isOpen={isOpen} onClose={onClose} title='Invite Member'>
-            <div className='space-y-4'>
-                <div className='flex flex-col gap-4 sm:flex-row'>
+            <div className='space-y-lg'>
+                <div className='flex flex-col gap-lg sm:flex-row'>
                     <div className='relative flex-1'>
-                        <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-muted' size={18} />
+                        <Search className='absolute left-md top-1/2 -translate-y-1/2 text-muted' size={18} />
                         <input
                             type='text'
                             placeholder='Search username (min 6 chars)...'
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className='w-full rounded-xl border border-border bg-secondary/50 py-3 pl-10 pr-4 text-sm text-main placeholder-muted outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
+                            className='w-full rounded-xl border border-border bg-secondary/50 py-md pl-4xl pr-lg text-sm text-main placeholder-muted outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
                         />
                     </div>
                     <div className='w-full sm:w-32'>
                         <select
                             value={selectedRole}
                             onChange={(e) => setSelectedRole(e.target.value as any)}
-                            className='w-full rounded-xl border border-border bg-secondary/50 py-3 px-4 text-sm text-main outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
+                            className='w-full rounded-xl border border-border bg-secondary/50 py-md px-lg text-sm text-main outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
                         >
                             <option value='ADMIN'>Admin</option>
                             <option value='EDITOR'>Editor</option>
@@ -103,25 +103,25 @@ export default function InviteMemberModal({
 
                 <div className='min-h-[200px]'>
                     {searchQuery.length > 0 && searchQuery.length < 6 ? (
-                        <p className='text-center text-sm text-muted mt-8'>
+                        <p className='text-center text-sm text-muted mt-4xl'>
                             Type at least 6 characters to search
                         </p>
                     ) : isSearching ? (
-                        <div className='flex justify-center mt-8'>
-                            <div className='h-6 w-6 animate-spin rounded-full border-2 border-brand border-t-transparent' />
+                        <div className='flex justify-center mt-4xl'>
+                            <div className='h-2xl w-2xl animate-spin rounded-full border-2 border-brand border-t-transparent' />
                         </div>
                     ) : users.length > 0 ? (
-                        <div className='space-y-3 mt-4 max-h-[300px] overflow-y-auto thin-scrollbar pr-2'>
+                        <div className='space-y-md mt-lg max-h-[300px] overflow-y-auto thin-scrollbar pr-sm'>
                             {users.map((user) => {
                                 const existingInvite = localInvitations.find((inv) => inv.user.id === user.id)
                                 const isInvited = existingInvite && (existingInvite.status === 'pending' || existingInvite.status === 'invited')
                                 return (
                                     <div
                                         key={user.id}
-                                        className='flex items-center justify-between gap-3 rounded-xl border border-border/50 bg-secondary/20 p-3'
+                                        className='flex items-center justify-between gap-md rounded-xl border border-border/50 bg-secondary/20 p-md'
                                     >
-                                        <div className='flex items-center gap-3 overflow-hidden'>
-                                            <div className='relative h-10 w-10 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
+                                        <div className='flex items-center gap-md overflow-hidden'>
+                                            <div className='relative h-4xl w-4xl flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
                                                 {user.image ? (
                                                     <Image
                                                         src={user.image}
@@ -130,7 +130,7 @@ export default function InviteMemberModal({
                                                         className='object-cover'
                                                     />
                                                 ) : (
-                                                    <UserIcon size={20} className='m-auto h-full w-full p-2' />
+                                                    <UserIcon size={20} className='m-auto h-full w-full p-sm' />
                                                 )}
                                             </div>
                                             <div className='min-w-0'>
@@ -138,10 +138,10 @@ export default function InviteMemberModal({
                                                 <p className='truncate text-xs text-muted'>@{user.username}</p>
                                             </div>
                                         </div>
-                                        <div className='flex-shrink-0 flex items-center gap-2'>
+                                        <div className='flex-shrink-0 flex items-center gap-sm'>
                                             {isInvited ? (
                                                 <>
-                                                    <span className='text-xs font-medium text-brand bg-brand/10 px-2 py-1 rounded-lg'>
+                                                    <span className='text-xs font-medium text-brand bg-brand/10 px-sm py-2xs rounded-lg'>
                                                         Invited
                                                     </span>
                                                     <Button
@@ -149,7 +149,6 @@ export default function InviteMemberModal({
                                                         isLoading={actionLoadingIds.has(user.id)}
                                                         variant='secondary'
                                                         size='sm'
-                                                        className='px-3'
                                                     >
                                                         Cancel
                                                     </Button>
@@ -160,7 +159,6 @@ export default function InviteMemberModal({
                                                     isLoading={actionLoadingIds.has(user.id)}
                                                     variant='brand'
                                                     size='sm'
-                                                    className='px-4'
                                                 >
                                                     Invite
                                                 </Button>
@@ -171,9 +169,9 @@ export default function InviteMemberModal({
                             })}
                         </div>
                     ) : searchQuery.length >= 6 ? (
-                        <p className='text-center text-sm text-muted mt-8'>No users found.</p>
+                        <p className='text-center text-sm text-muted mt-4xl'>No users found.</p>
                     ) : (
-                        <p className='text-center text-sm text-muted mt-8'>
+                        <p className='text-center text-sm text-muted mt-4xl'>
                             Search for users to invite them to your publication.
                         </p>
                     )}

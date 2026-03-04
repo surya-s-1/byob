@@ -55,7 +55,7 @@ export default function Mermaid({ block, update, readOnly }: any) {
 
 	if (readOnly) {
 		return (
-			<div className='my-8 flex w-full items-center justify-center overflow-auto rounded-lg border border-border bg-primary p-6 shadow-sm'>
+			<div className='my-4xl flex w-full items-center justify-center overflow-auto rounded-lg border border-border bg-primary p-2xl shadow-sm'>
 				<div ref={ref} className='mermaid-preview text-main' />
 			</div>
 		)
@@ -64,17 +64,17 @@ export default function Mermaid({ block, update, readOnly }: any) {
 	return (
 		<div className='flex w-full flex-col overflow-hidden rounded-lg border border-border bg-elevated shadow-sm'>
 			<div className='flex items-center justify-between border-b border-border bg-secondary'>
-				<div className='px-4 py-2 text-xs font-bold text-subtle'>Mermaid Editor</div>
+				<div className='px-lg py-sm text-xs font-bold text-subtle'>Mermaid Editor</div>
 			</div>
 			<textarea
 				ref={textareaRef}
 				value={block.content}
 				onChange={(e) => update({ content: e.target.value })}
-				className='min-h-[120px] w-full resize-none bg-transparent p-4 font-mono text-sm text-main outline-none'
+				className='min-h-[120px] w-full resize-none bg-transparent p-lg font-mono text-sm text-main outline-none'
 				spellCheck={false}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>
-			<div className='flex min-h-[200px] flex-col items-center justify-center overflow-auto border-t border-border bg-primary p-6'>
+			<div className='flex min-h-[200px] flex-col items-center justify-center overflow-auto border-t border-border bg-primary p-2xl'>
 				{error && (
 					<div className='mb-4 font-mono text-sm whitespace-pre-wrap text-error'>
 						{error}

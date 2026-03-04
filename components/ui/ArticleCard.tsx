@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { MoreHorizontal, Edit, EyeOff, Trash2, Loader2 } from 'lucide-react'
 import Card from './Card'
 import Modal from './Modal'
+import Button from './Button'
 import { Article } from '@/types'
 
 interface ArticleCardProps {
@@ -97,9 +98,9 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 				onClick={() => router.push(`/article/${article.slug}`)}
 				className='group block cursor-pointer'
 			>
-				<Card className='flex items-center justify-between gap-4 p-3 transition-all duration-300 hover:bg-secondary/50 hover:shadow-md border-border/80'>
-					<div className='flex min-w-0 items-center gap-3'>
-						<div className='relative h-10 w-10 flex-shrink-0 overflow-hidden rounded bg-secondary sm:h-12 sm:w-12'>
+				<Card className='flex items-center justify-between gap-lg p-md transition-all duration-300 hover:bg-secondary/50 hover:shadow-md border-border/80'>
+					<div className='flex min-w-0 items-center gap-md'>
+						<div className='relative h-4xl w-4xl flex-shrink-0 overflow-hidden rounded bg-secondary sm:h-5xl sm:w-5xl'>
 							{article.cover ? (
 								<Image
 									src={article.cover}
@@ -117,7 +118,7 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 							<h4 className='truncate text-sm font-bold text-main transition-colors group-hover:text-main sm:text-base'>
 								{article.title}
 							</h4>
-							<div className='flex items-center gap-2 text-[10px] text-muted sm:text-xs'>
+							<div className='flex items-center gap-sm text-[10px] text-muted sm:text-xs'>
 								<span>{new Date(article.publishedAt).toLocaleDateString()}</span>
 								<span>·</span>
 								<span>{article.readTime} min read</span>
@@ -134,11 +135,11 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 			onClick={() => router.push(`/article/${article.slug}`)}
 			className='group block relative cursor-pointer'
 		>
-			<Card className='group p-4 transition-all duration-300 hover:border-primary/50 sm:p-5 relative hover:shadow-md bg-elevated/50 hover:bg-elevated border-border/80'>
-				<div className='flex flex-col-reverse gap-4 sm:flex-row sm:gap-6 relative'>
-					<div className='min-w-0 flex-1 space-y-2 relative z-10'>
-						<div className='flex justify-between items-start gap-4'>
-							<div className='flex flex-wrap items-center gap-2 text-xs text-muted'>
+			<Card className='group p-lg transition-all duration-300 hover:border-primary/50 sm:p-xl relative hover:shadow-md bg-elevated/50 hover:bg-elevated border-border/80'>
+				<div className='flex flex-col-reverse gap-lg sm:flex-row sm:gap-2xl relative'>
+					<div className='min-w-0 flex-1 space-y-sm relative z-10'>
+						<div className='flex justify-between items-start gap-lg'>
+							<div className='flex flex-wrap items-center gap-sm text-xs text-muted'>
 								{article.publication && (
 									<>
 										<Link
@@ -165,7 +166,7 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 											setIsMenuOpen(!isMenuOpen)
 										}}
 										disabled={isProcessing}
-										className='flex h-8 w-8 items-center justify-center rounded-lg text-subtle/50 transition-colors hover:bg-secondary hover:text-main'
+										className='flex h-3xl w-3xl items-center justify-center rounded-lg text-subtle/50 transition-colors hover:bg-secondary hover:text-main'
 									>
 										{isProcessing ? <Loader2 size={16} className='animate-spin text-brand' /> : <MoreHorizontal size={16} />}
 									</button>
@@ -179,29 +180,35 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 													setIsMenuOpen(false)
 												}}
 											/>
-											<div className='absolute right-0 top-full z-50 mt-1 w-40 rounded-xl border border-border bg-elevated p-1.5 shadow-md animate-in fade-in slide-in-from-top-2'>
-												<button
-													onClick={(e) => handleAction('edit', e)}
-													className='flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-main hover:bg-secondary'
+											<div className='absolute right-0 top-full z-50 mt-xs w-40 rounded-xl border border-border bg-elevated p-xs shadow-md animate-in fade-in slide-in-from-top-2'>
+												<Button
+													variant='ghost'
+													size='sm'
+													onClick={(e: React.MouseEvent) => handleAction('edit', e)}
+													className='w-full justify-start gap-sm px-md py-sm'
 												>
 													<Edit size={14} />
 													Edit
-												</button>
-												<button
-													onClick={(e) => handleAction('unpublish', e)}
-													className='flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-amber-500 hover:bg-amber-500/10'
+												</Button>
+												<Button
+													variant='ghost'
+													size='sm'
+													onClick={(e: React.MouseEvent) => handleAction('unpublish', e)}
+													className='w-full justify-start gap-sm px-md py-sm text-amber-500 hover:text-amber-600 hover:bg-amber-500/10'
 												>
 													<EyeOff size={14} />
 													Unpublish
-												</button>
-												<div className='my-1 h-px w-full bg-border/50' />
-												<button
-													onClick={(e) => handleAction('delete', e)}
-													className='flex w-full items-center gap-2 rounded-lg px-3 py-2 text-xs font-medium text-red-500 hover:bg-red-500/10'
+												</Button>
+												<div className='my-xs h-px w-full bg-border/50' />
+												<Button
+													variant='ghost'
+													size='sm'
+													onClick={(e: React.MouseEvent) => handleAction('delete', e)}
+													className='w-full justify-start gap-sm px-md py-sm text-red-500 hover:text-red-600 hover:bg-red-500/10'
 												>
 													<Trash2 size={14} />
 													Delete
-												</button>
+												</Button>
 											</div>
 										</>
 									)}
@@ -217,12 +224,12 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 							</p>
 						)}
 						{article.authors && (
-							<div className='flex items-center gap-2 pt-2'>
-								<div className='flex -space-x-2'>
+							<div className='flex items-center gap-sm pt-sm'>
+								<div className='flex -space-x-sm'>
 									{article.authors.slice(0, 3).map((author, i) => (
 										<div
 											key={i}
-											className='relative h-6 w-6 overflow-hidden rounded-full border-2 border-primary bg-secondary'
+											className='relative h-2xl w-2xl overflow-hidden rounded-full border-2 border-primary bg-secondary'
 										>
 											{author.image ? (
 												<Image
@@ -248,7 +255,7 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 						)}
 					</div>
 					{article.cover && (
-						<div className='relative h-40 w-full flex-shrink-0 overflow-hidden rounded-md bg-secondary sm:h-32 sm:w-32 lg:h-28 lg:w-40'>
+						<div className='relative h-[160px] w-full flex-shrink-0 overflow-hidden rounded-md bg-secondary sm:h-[128px] sm:w-[128px] lg:h-[112px] lg:w-[160px]'>
 							<Image
 								src={article.cover}
 								alt={article.title}
@@ -268,27 +275,28 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 						onClose={() => setActionModal(null)}
 						title={actionModal === 'delete' ? 'Delete Article' : 'Unpublish Article'}
 					>
-						<div className='space-y-6'>
+						<div className='space-y-2xl'>
 							<p className='text-subtle'>
 								{actionModal === 'delete'
 									? 'Are you sure you want to permanently delete this article? This action cannot be undone.'
 									: 'Are you sure you want to unpublish this article? It will be moved back to your drafts.'}
 							</p>
-							<div className='flex justify-end gap-3'>
-								<button
+							<div className='flex justify-end gap-md'>
+								<Button
+									variant='ghost'
 									onClick={() => setActionModal(null)}
-									className='rounded-lg px-4 py-2 text-sm font-medium text-subtle transition-colors hover:bg-secondary hover:text-main'
+									className='text-subtle hover:text-main'
 								>
 									Cancel
-								</button>
-								<button
+								</Button>
+								<Button
+									variant={actionModal === 'delete' ? 'danger' : 'brand'}
 									onClick={confirmAction}
-									disabled={isProcessing}
-									className={`flex items-center gap-2 rounded-lg px-4 py-2 text-sm font-medium text-white transition-all ${actionModal === 'delete' ? 'bg-red-500 hover:bg-red-600' : 'bg-amber-500 hover:bg-amber-600'}`}
+									isLoading={isProcessing}
+									className='gap-sm'
 								>
-									{isProcessing && <Loader2 size={14} className='animate-spin' />}
 									{actionModal === 'delete' ? 'Delete Permanently' : 'Unpublish Article'}
-								</button>
+								</Button>
 							</div>
 						</div>
 					</Modal>

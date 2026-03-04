@@ -23,8 +23,8 @@ export default async function FollowingPage({ params }: { params: Promise<{ user
 	const { following = [] } = await res.json()
 
 	return (
-		<div className='mx-auto max-w-3xl space-y-8 px-4 py-12'>
-			<div className='flex items-center gap-4'>
+		<div className='mx-auto max-w-3xl space-y-3xl px-lg py-5xl'>
+			<div className='flex items-center gap-lg'>
 				<Link
 					href={`/profile/${username}`}
 					className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main transition-colors hover:bg-secondary'
@@ -39,13 +39,13 @@ export default async function FollowingPage({ params }: { params: Promise<{ user
 				</div>
 			</div>
 
-			<div className='grid grid-cols-1 gap-4'>
+			<div className='grid grid-cols-1 gap-lg'>
 				{following.length > 0 ? (
 					following.map((user: any) => (
 						<UserCard key={user.id} user={user} currentUser={currentUser} />
 					))
 				) : (
-					<div className='space-y-4 rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-24 text-center'>
+					<div className='space-y-lg rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-8xl text-center'>
 						<div className='mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-secondary/50'>
 							<Users size={32} className='text-muted/30' />
 						</div>

@@ -144,10 +144,10 @@ export default function EditorSidebar({
     return (
         <div className='flex h-full flex-col overflow-y-auto bg-primary/50 backdrop-blur-sm thin-scrollbar'>
             {/* Header / Save Status */}
-            <div className='flex items-center justify-between px-6 py-4'>
+            <div className='flex items-center justify-between px-2xl py-lg'>
                 <h2 className='text-sm font-bold text-main uppercase tracking-wider'>Settings</h2>
                 <div className={cn(
-                    'flex items-center gap-1.5 text-[10px] font-bold uppercase transition-colors',
+                    'flex items-center gap-xs text-[10px] font-bold uppercase transition-colors',
                     sidebarStatus === 'error' ? 'text-red-500' : 'text-brand'
                 )}>
                     {(sidebarStatus === 'saving' || sidebarStatus === 'idle') && <Loader2 size={10} className='animate-spin' />}
@@ -156,15 +156,15 @@ export default function EditorSidebar({
                 </div>
             </div>
 
-            <div className='flex-1 space-y-8 p-6'>
+            <div className='flex-1 space-y-3xl p-2xl'>
 
                 {/* Visibility Section */}
-                <div className='space-y-4'>
-                    <h3 className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-subtle'>
+                <div className='space-y-lg'>
+                    <h3 className='flex items-center gap-sm text-xs font-bold uppercase tracking-wider text-subtle'>
                         <Eye size={14} />
                         Visibility
                     </h3>
-                    <div className='grid grid-cols-1 gap-2'>
+                    <div className='grid grid-cols-1 gap-sm'>
                         {[
                             { id: 'PUBLIC', icon: Globe, label: 'Public', desc: 'Anyone can read' },
                             { id: 'HIDDEN', icon: Eye, label: 'Hidden', desc: 'Only via link' },
@@ -177,7 +177,7 @@ export default function EditorSidebar({
                                     handleSaveSettings(opt.id as any, scheduledAt)
                                 }}
                                 className={cn(
-                                    'flex items-center gap-3 rounded-xl border p-3 text-left transition-all',
+                                    'flex items-center gap-md rounded-xl border p-md text-left transition-all',
                                     visibility === opt.id
                                         ? 'border-brand bg-brand/5 ring-1 ring-brand'
                                         : 'border-border bg-secondary/20 hover:border-muted'
@@ -206,12 +206,12 @@ export default function EditorSidebar({
                 </div>
 
                 {/* Scheduling Section */}
-                <div className='space-y-4'>
-                    <h3 className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-subtle'>
+                <div className='space-y-lg'>
+                    <h3 className='flex items-center gap-sm text-xs font-bold uppercase tracking-wider text-subtle'>
                         <Calendar size={14} />
                         Schedule Publish
                     </h3>
-                    <div className='space-y-2'>
+                    <div className='space-y-sm'>
                         <input
                             type='datetime-local'
                             value={scheduledAt}
@@ -219,7 +219,7 @@ export default function EditorSidebar({
                                 setScheduledAt(e.target.value)
                                 handleSaveSettings(visibility, e.target.value)
                             }}
-                            className='w-full rounded-xl border border-border bg-secondary/30 p-3 text-sm text-main outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
+                            className='w-full rounded-xl border border-border bg-secondary/30 p-md text-sm text-main outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
                         />
                         <p className='text-[10px] text-muted italic'>
                             Leave empty to publish immediately.
@@ -228,13 +228,13 @@ export default function EditorSidebar({
                 </div>
 
                 {/* Authors Section */}
-                <div className='space-y-4 pt-4 border-t border-border/50'>
+                <div className='space-y-lg pt-lg border-t border-border/50'>
                     {draft.createdBy && (
-                        <div className='flex items-center justify-between pb-2'>
-                            <h3 className='flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-subtle'>
+                        <div className='flex items-center justify-between pb-sm'>
+                            <h3 className='flex items-center gap-sm text-[10px] font-bold uppercase tracking-wider text-subtle'>
                                 Created by
                             </h3>
-                            <div className='flex items-center gap-2'>
+                            <div className='flex items-center gap-sm'>
                                 <div className='relative h-6 w-6 overflow-hidden rounded-full bg-secondary'>
                                     {draft.createdBy.image ? (
                                         <Image src={draft.createdBy.image} alt={draft.createdBy.name} fill className='object-cover' />
@@ -249,19 +249,19 @@ export default function EditorSidebar({
                         </div>
                     )}
 
-                    <h3 className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-subtle'>
+                    <h3 className='flex items-center gap-sm text-xs font-bold uppercase tracking-wider text-subtle'>
                         <Users size={14} />
                         Authors
                     </h3>
 
                     {/* Current Authors */}
-                    <div className='space-y-2'>
+                    <div className='space-y-sm'>
                         {authors.map((author) => (
                             <div
                                 key={author.id}
-                                className='group flex items-center justify-between gap-3 rounded-xl border border-border/50 bg-secondary/10 p-2 pr-3'
+                                className='group flex items-center justify-between gap-md rounded-xl border border-border/50 bg-secondary/10 p-sm pr-md'
                             >
-                                <div className='flex min-w-0 items-center gap-2'>
+                                <div className='flex min-w-0 items-center gap-sm'>
                                     <div className='relative h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
                                         {author.image ? (
                                             <Image src={author.image} alt={author.name} fill className='object-cover' />
@@ -274,13 +274,13 @@ export default function EditorSidebar({
                                     <div className='min-w-0'>
                                         <p className='truncate text-xs font-bold text-main'>{author.name}</p>
                                         {author.isPrimary && (
-                                            <span className='rounded bg-brand/10 px-1 py-0.5 text-[8px] font-bold text-brand'>
+                                            <span className='rounded bg-brand/10 px-xs py-2xs text-[8px] font-bold text-brand'>
                                                 PRIMARY
                                             </span>
                                         )}
                                     </div>
                                 </div>
-                                <div className='flex items-center gap-1 transition-opacity'>
+                                <div className='flex items-center gap-xs transition-opacity'>
                                     <button
                                         onClick={() => togglePrimaryAuthor(author.id)}
                                         title={!canManagePrimary ? 'Insufficient permissions' : author.isPrimary ? 'Primary Author' : 'Set as Primary'}
@@ -306,21 +306,21 @@ export default function EditorSidebar({
                     {/* Add Author Search */}
                     <div className='relative'>
                         <div className='relative'>
-                            <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-muted' size={14} />
+                            <Search className='absolute left-md top-1/2 -translate-y-1/2 text-muted' size={14} />
                             <input
                                 type='text'
                                 placeholder='Add author by username...'
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className='w-full rounded-xl border border-border bg-secondary/30 py-2.5 pl-9 pr-4 text-xs text-main outline-none focus:border-brand focus:ring-1 focus:ring-brand'
+                                className='w-full rounded-xl border border-border bg-secondary/30 py-sm pl-[36px] pr-lg text-xs text-main outline-none focus:border-brand focus:ring-1 focus:ring-brand'
                             />
                         </div>
 
                         {/* Search Results Dropdown */}
                         {(searchQuery.length >= 3 || isSearching) && (
-                            <div className='absolute bottom-full left-0 right-0 z-50 mb-2 max-h-[200px] overflow-y-auto rounded-xl border border-border bg-elevated p-2 shadow-2xl thin-scrollbar'>
+                            <div className='absolute bottom-full left-0 right-0 z-50 mb-sm max-h-[200px] overflow-y-auto rounded-xl border border-border bg-elevated p-sm shadow-2xl thin-scrollbar'>
                                 {isSearching ? (
-                                    <div className='flex justify-center p-4'>
+                                    <div className='flex justify-center p-lg'>
                                         <Loader2 size={16} className='animate-spin text-brand' />
                                     </div>
                                 ) : searchResults.filter(u => !authors.some(a => a.id === u.id)).length > 0 ? (
@@ -328,7 +328,7 @@ export default function EditorSidebar({
                                         <button
                                             key={user.id}
                                             onClick={() => addAuthor(user)}
-                                            className='flex w-full items-center gap-3 rounded-lg p-2 text-left hover:bg-secondary transition-colors'
+                                            className='flex w-full items-center gap-md rounded-lg p-sm text-left hover:bg-secondary transition-colors'
                                         >
                                             <div className='relative h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
                                                 {user.image ? (
@@ -347,7 +347,7 @@ export default function EditorSidebar({
                                         </button>
                                     ))
                                 ) : (
-                                    <p className='p-4 text-center text-xs text-muted'>No authors found in this publication.</p>
+                                    <p className='p-lg text-center text-xs text-muted'>No authors found in this publication.</p>
                                 )}
                             </div>
                         )}
@@ -356,7 +356,7 @@ export default function EditorSidebar({
             </div>
 
             {/* Bottom Action Section */}
-            <div className='mt-auto border-t border-border p-6 bg-secondary/5 space-y-3'>
+            <div className='mt-auto border-t border-border p-2xl bg-secondary/5 space-y-md'>
                 <Button
                     onClick={async () => {
                         setIsPublishing(true)

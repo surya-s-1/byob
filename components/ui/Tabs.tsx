@@ -28,7 +28,7 @@ export default function Tabs({ tabs, activeTab, onChange, className }: TabsProps
 					key={tab.id}
 					onClick={() => onChange(tab.id)}
 					className={cn(
-						'relative flex-1 px-4 py-3 text-center text-sm transition-all outline-none sm:flex-none sm:px-6 sm:text-base',
+						'relative flex-1 px-lg py-md text-center text-sm transition-all outline-none sm:flex-none sm:px-2xl sm:text-base',
 						activeTab === tab.id
 							? tab.variant === 'danger'
 								? 'font-bold text-red-500'

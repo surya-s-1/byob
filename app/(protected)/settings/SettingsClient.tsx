@@ -51,8 +51,8 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 	}
 
 	return (
-		<div className='mx-auto max-w-4xl space-y-8 px-4 py-12'>
-			<div className='flex items-center gap-4'>
+		<div className='mx-auto max-w-4xl space-y-3xl px-lg py-5xl'>
+			<div className='flex items-center gap-lg'>
 				<Link
 					href={`/profile/${user.username}`}
 					className='flex h-10 w-10 items-center justify-center rounded-full bg-secondary/50 text-main transition-colors hover:bg-secondary'
@@ -69,9 +69,9 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 				</div>
 			</div>
 
-			<form onSubmit={handleSubmit} className='grid grid-cols-1 gap-8 md:grid-cols-3'>
-				<div className='space-y-6 md:col-span-1'>
-					<Card className='space-y-6 p-6 text-center'>
+			<form onSubmit={handleSubmit} className='grid grid-cols-1 gap-3xl md:grid-cols-3'>
+				<div className='space-y-2xl md:col-span-1'>
+					<Card className='space-y-2xl p-2xl text-center'>
 						<div className='relative mx-auto h-32 w-32'>
 							<div className='group relative h-full w-full overflow-hidden rounded-full border-4 border-primary/20 bg-secondary'>
 								{formData.image ? (
@@ -91,15 +91,15 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 								</div>
 							</div>
 						</div>
-						<div className='space-y-1'>
+						<div className='space-y-xs'>
 							<h3 className='font-bold text-main'>{user.name}</h3>
 							<p className='text-sm text-subtle'>@{user.username}</p>
 						</div>
-						<div className='pt-2'>
+						<div className='pt-sm'>
 							<input
 								type='url'
 								placeholder='Profile Image URL'
-								className='w-full rounded-lg border border-border bg-secondary/50 px-3 py-2 text-xs text-main focus:ring-1 focus:ring-primary focus:outline-none'
+								className='w-full rounded-lg border border-border bg-secondary/50 px-md py-sm text-xs text-main focus:ring-1 focus:ring-primary focus:outline-none'
 								value={formData.image}
 								onChange={(e) =>
 									setFormData({ ...formData, image: e.target.value })
@@ -108,18 +108,18 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 						</div>
 					</Card>
 
-					<div className='space-y-4 rounded-2xl border border-border/50 bg-secondary/20 p-6'>
+					<div className='space-y-lg rounded-2xl border border-border/50 bg-secondary/20 p-2xl'>
 						<h4 className='text-xs font-bold tracking-widest text-muted uppercase'>
 							Privacy Note
 						</h4>
-						<div className='flex items-start gap-3'>
+						<div className='flex items-start gap-md'>
 							<Globe size={16} className='mt-0.5 flex-shrink-0 text-main' />
 							<p className='text-xs leading-relaxed text-subtle'>
 								Your <strong>Name</strong> and <strong>Bio</strong> are visible to
 								everyone on the platform.
 							</p>
 						</div>
-						<div className='flex items-start gap-3'>
+						<div className='flex items-start gap-md'>
 							<Lock size={16} className='mt-0.5 flex-shrink-0 text-main' />
 							<p className='text-xs leading-relaxed text-subtle'>
 								Your <strong>Date of Birth</strong> is only visible to you on your
@@ -129,15 +129,15 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 					</div>
 				</div>
 
-				<div className='space-y-6 md:col-span-2'>
-					<Card className='space-y-6 p-6 sm:p-8'>
-						<div className='space-y-4'>
-							<label className='block space-y-2'>
+				<div className='space-y-2xl md:col-span-2'>
+					<Card className='space-y-2xl p-2xl sm:p-3xl'>
+						<div className='space-y-lg'>
+							<label className='block space-y-sm'>
 								<span className='text-sm font-bold text-main'>Display Name</span>
 								<input
 									required
 									type='text'
-									className='w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
+									className='w-full rounded-xl border border-border bg-secondary/50 px-lg py-md text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 									value={formData.name}
 									onChange={(e) =>
 										setFormData({ ...formData, name: e.target.value })
@@ -145,12 +145,12 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 								/>
 							</label>
 
-							<label className='block space-y-2'>
+							<label className='block space-y-sm'>
 								<span className='text-sm font-bold text-main'>Bio</span>
 								<textarea
 									rows={5}
 									placeholder='Tell your story...'
-									className='w-full resize-none rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
+									className='w-full resize-none rounded-xl border border-border bg-secondary/50 px-lg py-md text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 									value={formData.bio || ''}
 									onChange={(e) =>
 										setFormData({ ...formData, bio: e.target.value })
@@ -161,11 +161,11 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 								</div>
 							</label>
 
-							<label className='block space-y-2'>
+							<label className='block space-y-sm'>
 								<span className='text-sm font-bold text-main'>Date of Birth</span>
 								<input
 									type='date'
-									className='w-full rounded-xl border border-border bg-secondary/50 px-4 py-3 text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
+									className='w-full rounded-xl border border-border bg-secondary/50 px-lg py-md text-main transition-all focus:border-primary focus:ring-2 focus:ring-primary/20 focus:outline-none'
 									value={formData.dob || ''}
 									onChange={(e) =>
 										setFormData({ ...formData, dob: e.target.value })
@@ -174,16 +174,17 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 							</label>
 						</div>
 
-						<div className='flex justify-end gap-3 pt-6'>
+						<div className='flex justify-end gap-md pt-2xl'>
 							<Link href={`/profile/${user.username}`}>
-								<Button className='border border-border bg-error px-6 text-main'>
+								<Button variant='secondary' className='px-lg'>
 									Cancel
 								</Button>
 							</Link>
 							<Button
 								type='submit'
 								isLoading={isLoading}
-								className='btn-brand px-10 shadow-lg'
+								variant='brand'
+								className='gap-sm shadow-lg'
 							>
 								<Save size={18} />
 								Save Changes

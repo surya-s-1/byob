@@ -51,10 +51,10 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 	}
 
 	return (
-		<header className='fixed top-0 right-0 left-0 z-[100] h-16 border-b border-border bg-primary/80 backdrop-blur-lg md:hidden'>
+		<header className='fixed top-0 right-0 left-0 z-[100] h-6xl border-b border-border bg-primary/80 backdrop-blur-lg md:hidden'>
 			<div className='mx-auto flex h-full max-w-7xl items-center justify-between'>
-				<Link href='/' className='flex items-center gap-2 px-4'>
-					<div className='relative h-24 w-24'>
+				<Link href='/' className='flex items-center gap-sm px-lg'>
+					<div className='relative h-8xl w-8xl'>
 						<Image
 							src={isDark ? '/logo-dark.png' : '/logo-light.png'}
 							alt='Logo'
@@ -64,12 +64,12 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 					</div>
 				</Link>
 
-				<div className='flex items-center gap-1 px-4'>
+				<div className='flex items-center gap-xs px-lg'>
 					{secondarySidebar && (
 						<button
 							onClick={() => setIsSecondaryOpen(!isSecondaryOpen)}
 							className={cn(
-								'rounded-lg p-2 transition-colors',
+								'rounded-lg p-sm transition-colors',
 								isSecondaryOpen ? 'bg-brand/10 text-brand' : 'text-main hover:bg-secondary'
 							)}
 						>
@@ -78,7 +78,7 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 					)}
 					<button
 						onClick={() => setIsOpen(!isOpen)}
-						className='rounded-lg p-2 text-main transition-colors hover:bg-secondary'
+						className='rounded-lg p-sm text-main transition-colors hover:bg-secondary'
 					>
 						{isOpen ? <X size={24} /> : <Menu size={24} />}
 					</button>
@@ -87,17 +87,17 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 
 			{isOpen && (
 				<div className='animate-in slide-in-from-top absolute top-full right-0 left-0 max-h-[calc(100vh-64px)] overflow-y-auto border-b border-border bg-primary shadow-2xl duration-300'>
-					<nav className='space-y-2 p-4'>
+					<nav className='space-y-sm p-lg'>
 						{navItems.map((item) => (
 							<Link
 								key={item.href}
 								href={item.href}
 								onClick={() => setIsOpen(false)}
 								className={cn(
-									'flex items-center gap-4 rounded-xl px-4 py-3.5 text-base font-bold transition-all',
+									'flex items-center gap-lg rounded-xl px-lg py-md text-base font-bold transition-all',
 									pathname === item.href
 										? item.brand
-											? 'btn-brand text-white shadow-md'
+											? 'relative overflow-hidden bg-brand text-inverse shadow-md after:absolute after:top-0 after:-left-[75%] after:block after:h-full after:w-1/2 after:bg-gradient-to-r after:from-transparent after:via-white/30 after:to-transparent after:skew-x-[-25deg] hover:after:animate-shine'
 											: 'bg-secondary text-main'
 										: 'text-subtle hover:bg-secondary hover:text-main'
 								)}
@@ -107,14 +107,14 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 							</Link>
 						))}
 
-						<div className='my-2 border-t border-border/50' />
+						<div className='my-sm border-t border-border/50' />
 
-						<div className='space-y-1'>
+						<div className='space-y-xs'>
 							<button
 								onClick={() => setUserMenuOpen(!userMenuOpen)}
-								className='flex w-full items-center gap-4 rounded-xl px-4 py-3.5 text-base font-bold text-subtle transition-all hover:bg-secondary hover:text-main'
+								className='flex w-full items-center gap-lg rounded-xl px-lg py-md text-base font-bold text-subtle transition-all hover:bg-secondary hover:text-main'
 							>
-								<div className='h-8 w-8 overflow-hidden rounded-full bg-secondary'>
+								<div className='h-3xl w-3xl overflow-hidden rounded-full bg-secondary'>
 									{user?.image ? (
 										<img
 											src={user.image}
@@ -136,11 +136,11 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 							</button>
 
 							{userMenuOpen && (
-								<div className='animate-in slide-in-from-top-1 ml-8 space-y-1 border-l border-border/50 pl-8 duration-200'>
+								<div className='animate-in slide-in-from-top-1 ml-3xl space-y-xs border-l border-border/50 pl-3xl duration-200'>
 									<Link
 										href={`/profile/${user?.username}`}
 										onClick={() => setIsOpen(false)}
-										className='flex items-center gap-4 rounded-lg px-4 py-3 text-sm font-semibold text-subtle transition-all hover:text-main'
+										className='flex items-center gap-lg rounded-lg px-lg py-sm text-sm font-semibold text-subtle transition-all hover:text-main'
 									>
 										<UserIcon size={16} />
 										Profile
@@ -148,7 +148,7 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 									<Link
 										href='/settings'
 										onClick={() => setIsOpen(false)}
-										className='flex items-center gap-4 rounded-lg px-4 py-3 text-sm font-semibold text-subtle transition-all hover:text-main'
+										className='flex items-center gap-lg rounded-lg px-lg py-sm text-sm font-semibold text-subtle transition-all hover:text-main'
 									>
 										<SettingsIcon size={16} />
 										Settings
@@ -157,19 +157,19 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 							)}
 						</div>
 
-						<div className='my-2 border-t border-border/50' />
+						<div className='my-sm border-t border-border/50' />
 
-						<div className='flex gap-2 p-1'>
+						<div className='flex gap-sm p-xs'>
 							<button
 								onClick={toggleTheme}
-								className='flex flex-1 items-center justify-center gap-3 rounded-xl border border-border/50 py-3.5 text-base font-bold text-subtle transition-all hover:bg-secondary hover:text-main'
+								className='flex flex-1 items-center justify-center gap-md rounded-xl border border-border/50 py-md text-base font-bold text-subtle transition-all hover:bg-secondary hover:text-main'
 							>
 								{isDark ? <Sun size={20} /> : <Moon size={20} />}
 								<span>{isDark ? 'Light' : 'Dark'}</span>
 							</button>
 							<button
 								onClick={logout}
-								className='flex flex-1 items-center justify-center gap-3 rounded-xl border border-error/20 py-3.5 text-base font-bold text-error/80 transition-all hover:bg-error/10 hover:text-error'
+								className='flex flex-1 items-center justify-center gap-md rounded-xl border border-error/20 py-md text-base font-bold text-error/80 transition-all hover:bg-error/10 hover:text-error'
 							>
 								<LogOut size={20} />
 								<span>Logout</span>

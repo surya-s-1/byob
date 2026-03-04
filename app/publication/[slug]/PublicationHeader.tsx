@@ -37,8 +37,8 @@ export default function PublicationHeader({
 	}
 
 	return (
-		<div className='flex flex-col items-start gap-8 md:flex-row md:items-center'>
-			<div className='relative mx-auto h-32 w-32 flex-shrink-0 overflow-hidden rounded-3xl border-2 border-border bg-secondary shadow-xl md:mx-0 md:h-40 md:w-40'>
+		<div className='flex flex-col items-start gap-3xl md:flex-row md:items-center'>
+			<div className='relative mx-auto h-[128px] w-[128px] flex-shrink-0 overflow-hidden rounded-3xl border-2 border-border bg-secondary shadow-xl md:mx-0 md:h-[160px] md:w-[160px]'>
 				{publication.cover ? (
 					<Image
 						src={publication.cover}
@@ -53,8 +53,8 @@ export default function PublicationHeader({
 				)}
 			</div>
 
-			<div className='flex-1 space-y-4 text-center md:text-left'>
-				<div className='space-y-1'>
+			<div className='flex-1 space-y-lg text-center md:text-left'>
+				<div className='space-y-xs'>
 					<h1 className='text-3xl font-bold tracking-tight text-main md:text-5xl'>
 						{publication.displayName}
 					</h1>
@@ -65,15 +65,13 @@ export default function PublicationHeader({
 					)}
 				</div>
 
-				<div className='flex flex-wrap items-center justify-center gap-2 pt-2 md:justify-start'>
+				<div className='flex flex-wrap items-center justify-center gap-sm pt-sm md:justify-start'>
 					{!publication.isMember && (
 						<Button
 							onClick={onFollow}
 							isLoading={isLoadingFollow}
-							className={cn(
-								'rounded-full px-6',
-								isFollowing ? 'btn-secondary' : 'btn-brand'
-							)}
+							variant={isFollowing ? 'secondary' : 'brand'}
+							className='rounded-full'
 						>
 							{isFollowing ? 'Unsubscribe' : 'Subscribe'}
 						</Button>
@@ -81,13 +79,18 @@ export default function PublicationHeader({
 					{canManage && (
 						<Button
 							onClick={onWriteArticle}
-							className='btn-brand hidden items-center gap-2 rounded-full px-6 md:flex'
+							variant='brand'
+							className='hidden items-center gap-sm rounded-full md:flex'
 						>
 							<PlusCircle size={18} />
 							Write Article
 						</Button>
 					)}
-					<Button onClick={handleShare} className='btn-secondary rounded-full p-2.5 transition-all w-fit h-fit'>
+					<Button
+						onClick={handleShare}
+						variant='secondary'
+						className='rounded-full p-md transition-all w-fit h-fit'
+					>
 						{isCopied ? <Check size={18} className='text-brand' /> : <Share2 size={18} />}
 					</Button>
 				</div>

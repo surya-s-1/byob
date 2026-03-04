@@ -109,7 +109,7 @@ export default function Content({ initialMarkdown, onSave }: any) {
 					})
 				}
 			}}
-			className='relative min-h-[60vh] cursor-text pb-32'
+			className='relative min-h-[60vh] cursor-text pb-[128px]'
 			id='editor-content'
 			onClick={handleContainerClick}
 		>
@@ -121,7 +121,7 @@ export default function Content({ initialMarkdown, onSave }: any) {
 					)
 				}
 			/>
-			<div className='space-y-4'>
+			<div className='space-y-lg'>
 				{blocks.map((block, index) => (
 					<Block
 						key={block.id}

@@ -28,11 +28,11 @@ export default function Code({ block, update, readOnly }: any) {
 
 	if (readOnly) {
 		return (
-			<div className='my-8 w-full overflow-hidden rounded-lg border border-border bg-elevated shadow-sm'>
-				<div className='border-b border-border bg-secondary px-4 py-2 font-mono text-xs tracking-wider text-subtle uppercase'>
+			<div className='my-4xl w-full overflow-hidden rounded-lg border border-border bg-elevated shadow-sm'>
+				<div className='border-b border-border bg-secondary px-lg py-sm font-mono text-xs tracking-wider text-subtle uppercase'>
 					{block.lang || 'text'}
 				</div>
-				<div className='overflow-x-auto p-4'>
+				<div className='overflow-x-auto p-lg'>
 					<pre className='font-mono text-sm leading-relaxed text-main'>
 						<code>{block.content}</code>
 					</pre>
@@ -43,11 +43,11 @@ export default function Code({ block, update, readOnly }: any) {
 
 	return (
 		<div className='w-full overflow-hidden rounded-lg border border-border bg-elevated'>
-			<div className='flex items-center justify-between border-b border-border bg-secondary px-4 py-2'>
+			<div className='flex items-center justify-between border-b border-border bg-secondary px-lg py-sm'>
 				<select
 					value={LANGUAGES.find((l) => l.value === block.lang) ? block.lang : 'text'}
 					onChange={(e) => update({ lang: e.target.value })}
-					className='min-w-[140px] cursor-pointer rounded-sm border border-border bg-elevated px-2 py-1 text-sm text-main shadow-sm outline-none focus:border-main'
+					className='min-w-[140px] cursor-pointer rounded-sm border border-border bg-elevated px-sm py-xs text-sm text-main shadow-sm outline-none focus:border-main'
 				>
 					{LANGUAGES.map((l) => (
 						<option key={l.value} value={l.value}>
@@ -60,7 +60,7 @@ export default function Code({ block, update, readOnly }: any) {
 				ref={textareaRef}
 				value={block.content}
 				onChange={(e) => update({ content: e.target.value })}
-				className='block w-full resize-none bg-transparent p-4 font-mono text-sm leading-relaxed text-main outline-none'
+				className='block w-full resize-none bg-transparent p-lg font-mono text-sm leading-relaxed text-main outline-none'
 				spellCheck={false}
 				onKeyDown={(e) => e.stopPropagation()}
 			/>

@@ -72,14 +72,14 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 		>
 			<div
 				className={cn(
-					'sticky top-2 z-10 flex h-16 items-center bg-primary/50 px-4 backdrop-blur-sm',
-					isExpanded ? 'justify-between' : 'h-auto flex-col justify-center gap-2 py-4'
+					'sticky top-xs z-10 flex h-6xl items-center bg-primary/50 px-lg backdrop-blur-sm',
+					isExpanded ? 'justify-between' : 'h-auto flex-col justify-center gap-sm py-lg'
 				)}
 			>
-				<Link href='/' className='flex items-center gap-3 px-2'>
-				{isExpanded ? (
-					
-						<div className='relative h-16 w-16 flex-shrink-0'>
+				<Link href='/' className='flex items-center gap-md px-sm'>
+					{isExpanded ? (
+
+						<div className='relative h-6xl w-6xl flex-shrink-0'>
 							<Image
 								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
 								alt='Logo'
@@ -89,7 +89,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 							/>
 						</div>
 					) : (
-						<div className='hidden md:block lg:hidden relative h-8 w-8 flex-shrink-0'>
+						<div className='hidden md:block lg:hidden relative h-3xl w-3xl flex-shrink-0'>
 							<Image
 								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
 								alt='Logo'
@@ -104,8 +104,8 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				<button
 					onClick={toggleSidebar}
 					className={cn(
-						'rounded-lg p-1.5 text-subtle transition-colors hover:bg-secondary',
-						!isExpanded && 'mt-2'
+						'rounded-lg p-sm text-subtle transition-colors hover:bg-secondary',
+						!isExpanded && 'mt-sm'
 					)}
 				>
 					{side === 'left' ? (
@@ -122,19 +122,19 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				</button>
 			</div>
 
-			<nav className='flex-1 space-y-2 overflow-y-auto px-3 py-6'>
+			<nav className='flex-1 space-y-sm overflow-y-auto px-md py-2xl'>
 				{navItems.map((item) => (
 					<Link
 						key={item.href}
 						href={item.href}
 						className={cn(
-							'flex items-center gap-4 rounded-xl px-3 py-3 text-base font-semibold transition-all',
+							'flex items-center gap-lg rounded-xl px-md py-md text-base font-semibold transition-all',
 							item.brand
-								? 'btn-brand text-white shadow-md hover:opacity-90'
+								? 'btn-brand'
 								: pathname === item.href
 									? 'bg-secondary text-main'
 									: 'text-subtle hover:bg-secondary hover:text-main',
-							!isExpanded && 'justify-center px-2'
+							!isExpanded && 'justify-center px-sm'
 						)}
 						title={!isExpanded ? item.label : ''}
 					>
@@ -144,18 +144,18 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				))}
 			</nav>
 
-			<div className='space-y-3 border-t border-border p-3'>
-				<div className={cn('flex gap-1', !isExpanded && 'flex-col')}>
+			<div className='space-y-md border-t border-border p-md'>
+				<div className={cn('flex gap-xs', !isExpanded && 'flex-col')}>
 					<button
 						onClick={toggleSide}
-						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
+						className='flex flex-1 items-center justify-center rounded-xl p-sm text-subtle transition-all hover:bg-secondary hover:text-main'
 						title='Move Sidebar'
 					>
 						<ArrowLeftRight size={20} />
 					</button>
 					<button
 						onClick={toggleTheme}
-						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
+						className='flex flex-1 items-center justify-center rounded-xl p-sm text-subtle transition-all hover:bg-secondary hover:text-main'
 						title='Toggle Theme'
 					>
 						{isDark ? <Sun size={20} /> : <Moon size={20} />}
@@ -170,7 +170,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 								: router.push(`/profile/${user?.username}`)
 						}
 						className={cn(
-							'flex w-full items-center gap-4 rounded-xl p-2.5 text-base font-semibold transition-all',
+							'flex w-full items-center gap-lg rounded-xl p-sm text-base font-semibold transition-all',
 							userMenuOpen
 								? 'bg-secondary text-main'
 								: 'text-subtle hover:bg-secondary hover:text-main',
@@ -178,7 +178,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 						)}
 						title={!isExpanded ? 'Profile' : ''}
 					>
-						<div className='h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
+						<div className='h-3xl w-3xl flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
 							{user?.image ? (
 								<img
 									src={user.image}
@@ -208,17 +208,17 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 					</button>
 
 					{isExpanded && userMenuOpen && (
-						<div className='animate-in slide-in-from-bottom-1 mt-1 space-y-1 duration-200'>
+						<div className='animate-in slide-in-from-bottom-1 mt-xs space-y-xs duration-200'>
 							<Link
 								href={`/profile/${user?.username}`}
-								className='flex items-center gap-4 rounded-lg px-4 py-2.5 text-sm text-subtle transition-all hover:bg-secondary hover:text-main'
+								className='flex items-center gap-lg rounded-lg px-lg py-sm text-sm text-subtle transition-all hover:bg-secondary hover:text-main'
 							>
 								<UserIcon size={16} />
 								Profile
 							</Link>
 							<Link
 								href='/settings'
-								className='flex items-center gap-4 rounded-lg px-4 py-2.5 text-sm text-subtle transition-all hover:bg-secondary hover:text-main'
+								className='flex items-center gap-lg rounded-lg px-lg py-sm text-sm text-subtle transition-all hover:bg-secondary hover:text-main'
 							>
 								<SettingsIcon size={16} />
 								Settings
@@ -230,7 +230,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				<button
 					onClick={logout}
 					className={cn(
-						'flex w-full items-center gap-4 rounded-xl p-2.5 text-base font-semibold text-error/80 transition-all hover:bg-error/10 hover:text-error',
+						'flex w-full items-center gap-lg rounded-xl p-sm text-base font-semibold text-error/80 transition-all hover:bg-error/10 hover:text-error',
 						!isExpanded && 'justify-center'
 					)}
 					title={!isExpanded ? 'Logout' : ''}

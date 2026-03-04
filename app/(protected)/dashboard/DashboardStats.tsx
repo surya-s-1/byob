@@ -8,7 +8,7 @@ interface DashboardStatsProps {
 
 export default function DashboardStats({ articlesCount, publicationsCount }: DashboardStatsProps) {
 	return (
-		<div className='grid grid-cols-2 gap-4 lg:grid-cols-3'>
+		<div className='grid grid-cols-2 gap-lg lg:grid-cols-3'>
 			<StatCard
 				title='Published Articles'
 				value={articlesCount.toString()}

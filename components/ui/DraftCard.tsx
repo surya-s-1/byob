@@ -15,8 +15,8 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 	if (variant === 'compact') {
 		return (
 			<Link href={`/draft/${draft.id}`} className='group relative block'>
-				<Card className='flex items-center justify-between gap-4 p-3 transition-all hover:bg-secondary'>
-					<div className='flex min-w-0 items-center gap-3'>
+				<Card className='flex items-center justify-between gap-lg p-md transition-all hover:bg-secondary'>
+					<div className='flex min-w-0 items-center gap-md'>
 						<div className='relative h-10 w-10 flex-shrink-0 overflow-hidden rounded bg-secondary sm:h-12 sm:w-12'>
 							{draft.cover ? (
 								<Image
@@ -35,7 +35,7 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 							<h4 className='truncate text-sm font-bold text-main transition-colors group-hover:text-main sm:text-base'>
 								{draft.title}
 							</h4>
-							<div className='flex items-center gap-2 text-[10px] text-muted sm:text-xs'>
+							<div className='flex items-center gap-sm text-[10px] text-muted sm:text-xs'>
 								<span>{new Date(draft.updatedAt).toLocaleDateString()}</span>
 							</div>
 						</div>
@@ -61,12 +61,12 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 
 	return (
 		<Link href={`/draft/${draft.id}`} className='group relative block'>
-			<Card className='group overflow-hidden p-4 transition-all hover:border-main sm:p-5'>
+			<Card className='group overflow-hidden p-lg transition-all hover:border-main sm:p-xl'>
 				{onDelete && (
 					<Button
 						variant='ghost'
 						size='sm'
-						className='absolute top-4 right-4 z-10 h-10 w-10 p-0 text-muted opacity-0 transition-all hover:bg-red-500/10 hover:text-red-500 group-hover:opacity-100'
+						className='absolute top-lg right-lg z-10 h-10 w-10 p-0 text-muted opacity-0 transition-all hover:bg-red-500/10 hover:text-red-500 group-hover:opacity-100'
 						onClick={(e: React.MouseEvent) => {
 							e.preventDefault()
 							e.stopPropagation()
@@ -76,11 +76,11 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 						<Trash2 size={18} />
 					</Button>
 				)}
-				<div className='flex flex-col-reverse gap-4 sm:flex-row sm:gap-6'>
-					<div className='min-w-0 flex-1 space-y-2'>
+				<div className='flex flex-col-reverse gap-lg sm:flex-row sm:gap-2xl'>
+					<div className='min-w-0 flex-1 space-y-sm'>
 						<div className='line-clamp-2 flex items-center justify-between text-lg font-bold text-main transition-colors sm:text-xl'>
 							<span>{draft.title}</span>
-							<span className='mr-12 text-xs text-muted sm:mr-0'>
+							<span className='mr-5xl text-xs text-muted sm:mr-0'>
 								{new Date(draft.updatedAt).toLocaleDateString()}
 							</span>
 						</div>
@@ -93,14 +93,14 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 							</p>
 						)}
 						{draft.lockedBy && (
-							<div className='flex items-center gap-2 text-xs font-semibold text-amber-500'>
+							<div className='flex items-center gap-sm text-xs font-semibold text-amber-500'>
 								<span className='flex h-2 w-2 rounded-full bg-amber-500'></span>
 								{draft.lockedBy.name} is editing right now
 							</div>
 						)}
 						{draft.authors && draft.authors.length > 0 && (
-							<div className='flex items-center gap-2 pt-2'>
-								<div className='flex -space-x-2'>
+							<div className='flex items-center gap-sm pt-sm'>
+								<div className='flex -space-x-sm'>
 									{draft.authors.slice(0, 5).map((author, i) => (
 										<div
 											key={i}

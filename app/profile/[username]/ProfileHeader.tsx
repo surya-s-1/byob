@@ -20,8 +20,8 @@ export default function ProfileHeader({
 	onFollow,
 }: ProfileHeaderProps) {
 	return (
-		<div className='relative pt-4 sm:pt-8'>
-			<div className='flex flex-col items-center gap-4 px-4 text-center sm:flex-row sm:items-end sm:gap-6 sm:px-8 sm:text-left'>
+		<div className='relative pt-lg sm:pt-3xl'>
+			<div className='flex flex-col items-center gap-lg px-lg text-center sm:flex-row sm:items-end sm:gap-2xl sm:px-3xl sm:text-left'>
 				<div className='relative z-10 mx-auto h-24 w-24 overflow-hidden rounded-3xl border-4 border-primary bg-elevated shadow-xl sm:mx-0 sm:h-32 sm:w-32'>
 					{user.image ? (
 						<Image src={user.image} alt={user.name} fill className='object-cover' />
@@ -32,17 +32,17 @@ export default function ProfileHeader({
 					)}
 				</div>
 
-				<div className='flex-1 pb-2'>
+				<div className='flex-1 pb-sm'>
 					<h1 className='text-2xl font-extrabold tracking-tight text-main sm:text-3xl'>
 						{user.name}
 					</h1>
 					<p className='text-sm font-medium text-subtle sm:text-base'>@{user.username}</p>
 				</div>
 
-				<div className='flex w-full justify-center gap-3 pb-2 sm:w-auto'>
+				<div className='flex w-full justify-center gap-md pb-sm sm:w-auto'>
 					{isOwnProfile ? (
 						<Link href='/settings' className='w-full'>
-							<Button className='btn-brand flex w-full items-center justify-center gap-2'>
+							<Button variant='brand' className='w-full gap-sm'>
 								<Settings size={18} />
 								Edit Profile
 							</Button>
@@ -51,7 +51,8 @@ export default function ProfileHeader({
 						<Button
 							onClick={onFollow}
 							isLoading={isLoadingFollow}
-							className='btn-brand w-fit shadow-lg sm:px-8'
+							variant='brand'
+							className='w-fit shadow-lg sm:px-3xl'
 						>
 							{isFollowing ? 'Unfollow' : 'Follow'}
 						</Button>
