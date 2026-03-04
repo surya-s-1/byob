@@ -48,6 +48,7 @@ export default function PublicationClient({
 	const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 	const [isDeleting, setIsDeleting] = useState(false)
+	const [cancellingIds, setCancellingIds] = useState<Set<string>>(new Set())
 
 	const handleFollow = async () => {
 		if (!currentUser) {
@@ -145,15 +146,26 @@ export default function PublicationClient({
 		}
 	}
 
-	const handleInviteMember = async (userId: string) => {
+	const handleInviteMember = async (user: any, role: string) => {
 		try {
 			const res = await fetch(`/api/publications/id/${publication.id}/members/invite`, {
 				method: 'POST',
 				headers: { 'Content-Type': 'application/json' },
-				body: JSON.stringify({ userId, role: 'EDITOR' }),
+				body: JSON.stringify({ userId: user.id, role }),
 			});
 			if (res.ok) {
-				router.refresh()
+				const newInvite = {
+					user: {
+						id: user.id,
+						name: user.name,
+						username: user.username,
+						image: user.image
+					},
+					role,
+					status: 'pending',
+					invitedAt: new Date().toISOString()
+				}
+				setLocalInvitations(prev => [newInvite, ...prev.filter(inv => inv.user.id !== user.id)])
 			}
 		} catch (error) {
 			console.error('Error inviting member:', error)
@@ -161,6 +173,8 @@ export default function PublicationClient({
 	}
 
 	const handleCancelInvite = async (userId: string) => {
+		if (cancellingIds.has(userId)) return
+		setCancellingIds((prev) => new Set(prev).add(userId))
 		try {
 			const res = await fetch(`/api/publications/id/${publication.id}/members/cancel-invite`, {
 				method: 'POST',
@@ -168,10 +182,16 @@ export default function PublicationClient({
 				body: JSON.stringify({ userId }),
 			});
 			if (res.ok) {
-				router.refresh()
+				setLocalInvitations(prev => prev.filter(inv => inv.user.id !== userId))
 			}
 		} catch (error) {
 			console.error('Error canceling invite:', error)
+		} finally {
+			setCancellingIds((prev) => {
+				const next = new Set(prev)
+				next.delete(userId)
+				return next
+			})
 		}
 	}
 
@@ -280,7 +300,9 @@ export default function PublicationClient({
 							<PublicationInvitations
 								invitations={localInvitations}
 								reinvitingIds={reinvitingIds}
+								cancellingIds={cancellingIds}
 								onReinvite={handleReinvite}
+								onCancelInvite={handleCancelInvite}
 							/>
 						)}
 

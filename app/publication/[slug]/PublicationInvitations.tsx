@@ -5,13 +5,17 @@ import { Users, CheckCircle2, XCircle, Clock } from 'lucide-react'
 interface PublicationInvitationsProps {
 	invitations: any[]
 	reinvitingIds: Set<string>
+	cancellingIds?: Set<string>
 	onReinvite: (userId: string) => void
+	onCancelInvite: (userId: string) => void
 }
 
 export default function PublicationInvitations({
 	invitations,
 	reinvitingIds,
+	cancellingIds = new Set(),
 	onReinvite,
+	onCancelInvite,
 }: PublicationInvitationsProps) {
 	return (
 		<Card className='overflow-hidden border-border'>
@@ -103,27 +107,37 @@ export default function PublicationInvitations({
 										</div>
 									</td>
 									<td className='px-6 py-4 text-right'>
-										{inv.status === 'rejected' ? (
-											<Button
-												onClick={() => onReinvite(inv.user.id)}
-												isLoading={reinvitingIds.has(inv.user.id)}
-												className='btn-brand btn-xs px-3 py-1 text-[10px]'
-											>
-												Reinvite
-											</Button>
-										) : (
-											<div className='text-xs font-medium text-subtle'>
-												{new Date(
-													inv.acceptedAt ||
+										<div className='flex items-center justify-end gap-3'>
+											{inv.status === 'rejected' ? (
+												<Button
+													onClick={() => onReinvite(inv.user.id)}
+													isLoading={reinvitingIds.has(inv.user.id)}
+													className='btn-brand btn-xs px-3 py-1 text-[10px]'
+												>
+													Reinvite
+												</Button>
+											) : inv.status === 'pending' ? (
+												<Button
+													onClick={() => onCancelInvite(inv.user.id)}
+													isLoading={cancellingIds.has(inv.user.id)}
+													className='btn-secondary btn-xs px-3 py-1 text-[10px]'
+												>
+													Cancel
+												</Button>
+											) : (
+												<div className='text-xs font-medium text-subtle'>
+													{new Date(
+														inv.acceptedAt ||
 														inv.rejectedAt ||
 														inv.invitedAt
-												).toLocaleDateString(undefined, {
-													month: 'short',
-													day: 'numeric',
-													year: 'numeric',
-												})}
-											</div>
-										)}
+													).toLocaleDateString(undefined, {
+														month: 'short',
+														day: 'numeric',
+														year: 'numeric',
+													})}
+												</div>
+											)}
+										</div>
 									</td>
 								</tr>
 							))
