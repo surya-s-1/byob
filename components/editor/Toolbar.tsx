@@ -93,7 +93,7 @@ export default function Toolbar({ insert }: any) {
 	const getBtnClass = (cmd: string) => {
 		const isActive = active[cmd]
 		return `w-8 h-8 flex items-center justify-center text-sm rounded-sm transition-colors cursor-pointer border ${isActive
-			? 'bg-brand/5 border-brand text-brand'
+			? 'border-border'
 			: 'bg-transparent border-transparent text-subtle hover:bg-secondary hover:text-main'
 			}`
 	}

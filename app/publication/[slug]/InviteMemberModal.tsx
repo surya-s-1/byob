@@ -141,7 +141,7 @@ export default function InviteMemberModal({
                                         <div className='shrink-0 flex items-center gap-sm'>
                                             {isInvited ? (
                                                 <>
-                                                    <span className='text-xs font-medium text-brand bg-brand/10 px-sm py-2xs rounded-lg'>
+                                                    <span className='text-xs font-medium text-brand-primary px-sm py-2xs rounded-lg'>
                                                         Invited
                                                     </span>
                                                     <Button

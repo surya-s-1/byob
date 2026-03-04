@@ -3,16 +3,16 @@ import React from 'react'
 
 export default function Footer() {
 	return (
-		<footer className='w-full mt-auto border-t border-border bg-secondary px-xl py-xl'>
-			<div className='flex flex-col items-center justify-between gap-md md:flex-row'>
+		<footer className='flex justify-center w-full mt-auto border-t border-border bg-secondary px-xl py-xl'>
+			<div className='md:w-[70%] flex flex-col items-center justify-between gap-md md:flex-row'>
 				<div className='flex items-center gap-xs text-sm text-subtle italic'>
 					<span>Running Head | Made by </span>
 					<a
 						href='https://github.com/surya-s-1'
 						target='_blank'
-						className='flex items-center gap-xs bg-brand bg-clip-text font-bold text-transparent underline'
+						className='w-fit flex items-center gap-xs'
 					>
-						Surya S
+						<span className='text-brand-primary font-bold underline'>Surya S</span>
 						<SquareArrowOutUpRight color='indigo' size={16} />
 					</a>
 				</div>

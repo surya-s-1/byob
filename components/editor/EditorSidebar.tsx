@@ -179,7 +179,7 @@ export default function EditorSidebar({
                                 className={cn(
                                     'flex items-center gap-md rounded-xl border p-md text-left transition-all',
                                     visibility === opt.id
-                                        ? 'border-brand bg-brand/5 ring-1 ring-brand'
+                                        ? 'border-brand ring-1'
                                         : 'border-border bg-secondary/20 hover:border-muted'
                                 )}
                             >
@@ -274,24 +274,22 @@ export default function EditorSidebar({
                                     <div className='min-w-0'>
                                         <p className='truncate text-xs font-bold text-main'>{author.name}</p>
                                         {author.isPrimary && (
-                                            <span className='rounded bg-brand/10 px-xs py-2xs text-[8px] font-bold text-brand'>
+                                            <span className='p-2xs text-[8px] font-bold text-brand-primary'>
                                                 PRIMARY
                                             </span>
                                         )}
                                     </div>
                                 </div>
                                 <div className='flex items-center gap-xs transition-opacity'>
-                                    <button
+                                    <Button
                                         onClick={() => togglePrimaryAuthor(author.id)}
                                         title={!canManagePrimary ? 'Insufficient permissions' : author.isPrimary ? 'Primary Author' : 'Set as Primary'}
-                                        className={cn(
-                                            'h-7 w-7 flex items-center justify-center rounded-lg transition-colors font-bold text-[10px]',
-                                            author.isPrimary ? 'bg-brand text-white border-brand' : 'text-subtle hover:bg-secondary border border-border/50',
-                                            !canManagePrimary && 'opacity-50 cursor-not-allowed'
-                                        )}
+                                        size='sm'
+                                        variant={author.isPrimary ? 'brand' : 'secondary'}
+                                        disabled={!canManagePrimary}
                                     >
                                         P
-                                    </button>
+                                    </Button>
                                     <button
                                         onClick={() => removeAuthor(author.id)}
                                         className='h-7 w-7 flex items-center justify-center rounded-lg text-subtle hover:bg-red-500/10 hover:text-red-500 border border-border/50'
