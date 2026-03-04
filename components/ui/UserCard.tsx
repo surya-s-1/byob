@@ -82,7 +82,7 @@ export default function UserCard({ user, currentUser, metadata, hideFollowButton
 					<Button
 						onClick={handleFollow}
 						isLoading={isLoading}
-						variant='brand'
+						variant={isFollowing ? 'secondary' : 'brand'}
 						size='md'
 						className='h-auto px-lg py-sm font-bold shadow-sm'
 					>
