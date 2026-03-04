@@ -1,14 +1,15 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Head from '@/components/editor/Head'
 import Content from '@/components/editor/Content'
 import EditorSidebar from '@/components/editor/EditorSidebar'
 import Button from '@/components/ui/Button'
 import { Draft, User } from '@/types'
-import { Settings, ChevronRight, Check, AlertCircle } from 'lucide-react'
+import { ArrowLeft, Check, Loader2, Settings } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { cn } from '@/lib/utils'
+import { useSidebar } from '@/context/SidebarContext'
 
 import Modal from '@/components/ui/Modal'
 
@@ -21,12 +22,84 @@ interface EditorClientProps {
 export default function EditorClient({ draft: initialDraft, currentUser, userRole }: EditorClientProps) {
     const router = useRouter()
     const [draft, setDraft] = useState(initialDraft)
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true)
     const [saveState, setSaveState] = useState<'idle' | 'saving' | 'saved' | 'error'>('saved')
     const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false)
+    const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false)
+
+    const { setSecondarySidebar, setSecondaryIcon } = useSidebar()
 
     const isPrimaryAuthor = draft.authors.find((a) => a.id === currentUser?.id)?.isPrimary || false
-    const canManagePrimary = userRole === 'OWNER' || userRole === 'ADMIN' || isPrimaryAuthor
+
+    // Confirmation on leave
+    useEffect(() => {
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (hasUnsavedChanges || saveState === 'saving') {
+                e.preventDefault()
+                e.returnValue = ''
+            }
+        }
+        window.addEventListener('beforeunload', handleBeforeUnload)
+        return () => window.removeEventListener('beforeunload', handleBeforeUnload)
+    }, [hasUnsavedChanges, saveState])
+
+    // Autosave logic (15s inactivity)
+    useEffect(() => {
+        if (!hasUnsavedChanges) return
+
+        const timeoutId = setTimeout(() => {
+            handleActualSave()
+        }, 15000)
+
+        return () => clearTimeout(timeoutId)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [hasUnsavedChanges, draft])
+
+    const handleActualSave = async () => {
+        if (!hasUnsavedChanges) return
+        setSaveState('saving')
+        setHasUnsavedChanges(false)
+
+        try {
+            const res = await fetch(`/api/drafts/${draft.id}/save`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    title: draft.title,
+                    subtitle: draft.subtitle,
+                    content: draft.content,
+                    cover: draft.cover,
+                }),
+            })
+            if (res.ok) {
+                setSaveState('saved')
+            } else {
+                setSaveState('error')
+                setHasUnsavedChanges(true) // Retry later
+            }
+        } catch (error) {
+            console.error('Error saving draft settings:', error)
+            setSaveState('error')
+            setHasUnsavedChanges(true)
+        }
+    }
+
+    // Update the sidebar whenever draft or saveState changes
+    useEffect(() => {
+        setSecondarySidebar(
+            <EditorSidebar
+                draft={draft}
+                onSaveSettings={handleSaveSettings}
+                onSaveAuthors={handleSaveAuthors}
+                onPublish={handlePublish}
+                onDelete={() => setIsDeleteDialogOpen(true)}
+                userRole={userRole}
+                isPrimaryAuthor={isPrimaryAuthor}
+                saveState={saveState}
+            />
+        )
+        setSecondaryIcon(<Settings size={20} />)
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [draft, saveState, userRole, isPrimaryAuthor])
 
     const handleSaveAuthors = async (authorsData: { userId: string; isPrimary: boolean }[]) => {
         setSaveState('saving')
@@ -48,59 +121,10 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
     }
 
     const handleSaveSettings = async (settings: Partial<Draft>) => {
-        // Prevent empty saves if values didn't actually change
-        let hasChanges = false
-        for (const key in settings) {
-            if ((settings as any)[key] !== (draft as any)[key]) {
-                hasChanges = true
-                break
-            }
-        }
-        if (!hasChanges) return
-
-        setSaveState('saving')
-
-        let authorsToUpdate = null
-        // If current user is making an edit and isn't an author, add them
-        if (currentUser && !draft.authors.some((a) => a.id === currentUser.id)) {
-            const newAuthors = [
-                ...draft.authors,
-                {
-                    id: currentUser.id,
-                    name: currentUser.name,
-                    image: currentUser.image,
-                    isPrimary: draft.authors.length === 0, // If first author, make primary
-                },
-            ]
-            authorsToUpdate = newAuthors
-
-            // Save authors via the dedicated endpoint
-            await handleSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })))
-        }
-
-        try {
-            const res = await fetch(`/api/drafts/${draft.id}/save`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(settings),
-            })
-            if (res.ok) {
-                setDraft(
-                    (prev) =>
-                    ({
-                        ...prev,
-                        ...settings,
-                        ...(authorsToUpdate ? { authors: authorsToUpdate } : {}),
-                    } as Draft)
-                )
-                setSaveState('saved')
-            } else {
-                setSaveState('error')
-            }
-        } catch (error) {
-            console.error('Error saving draft settings:', error)
-            setSaveState('error')
-        }
+        // Update local state immediately
+        setDraft((prev) => ({ ...prev, ...settings } as Draft))
+        setHasUnsavedChanges(true)
+        setSaveState('idle')
     }
 
     const handleDelete = async () => {
@@ -121,6 +145,11 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
     }
 
     const handlePublish = async () => {
+        // If there are unsaved changes, save them first
+        if (hasUnsavedChanges) {
+            await handleActualSave()
+        }
+
         // Validation: check for at least one primary author
         const hasPrimary = draft.authors.some((a) => a.isPrimary)
         if (!hasPrimary) {
@@ -151,7 +180,7 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
     }
 
     return (
-        <div className='flex h-screen overflow-hidden bg-primary text-main'>
+        <div className='flex h-full flex-col bg-primary text-main'>
             {/* Delete Confirmation Modal */}
             <Modal isOpen={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)} title='Delete Draft'>
                 <div className='space-y-6'>
@@ -172,83 +201,53 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
 
             {/* Main Editor Area */}
             <div className='flex flex-1 flex-col overflow-y-auto no-scrollbar'>
-                {/* Top Bar / Header */}
-                <header className='sticky top-0 z-30 flex h-14 items-center justify-between border-b border-border bg-primary/80 px-4 backdrop-blur-md'>
-                    <div className='flex items-center gap-2'>
-                        <Button
-                            variant='ghost'
-                            size='sm'
-                            onClick={() => router.push(`/publication/${draft.publication?.slug}`)}
-                            className='text-xs font-bold text-subtle hover:text-main'
-                        >
-                            Back to {draft.publication?.displayName}
-                        </Button>
-                        <span className='h-4 w-px bg-border'></span>
-                        <p
-                            className={cn(
-                                'text-[10px] font-medium uppercase tracking-widest transition-colors',
-                                saveState === 'error' ? 'text-red-500' : 'text-muted'
-                            )}
-                        >
-                            {saveState === 'saving'
-                                ? 'Saving...'
-                                : saveState === 'saved'
-                                    ? 'All changes saved'
-                                    : saveState === 'error'
-                                        ? 'Error saving'
-                                        : 'Unsaved changes'}
-                        </p>
-                    </div>
+                <header className='sticky top-0 z-30 border-b border-border bg-primary/80 backdrop-blur-md'>
+                    <div className='mx-auto flex h-14 w-full max-w-4xl items-center justify-between px-6 lg:px-12'>
+                        <div className='flex items-center justify-start'>
+                            <Button
+                                variant='ghost'
+                                size='sm'
+                                onClick={() => router.push(`/publication/${draft.publication?.slug}`)}
+                                className='-ml-3 flex items-center gap-2 text-sm font-bold text-subtle hover:text-main'
+                            >
+                                <ArrowLeft size={16} />
+                                <span className='hidden sm:inline'>Back to </span>
+                                <span className='truncate max-w-[120px] md:max-w-none'>
+                                    {draft.publication?.displayName}
+                                </span>
+                            </Button>
+                        </div>
 
-                    <div className='flex items-center gap-2'>
-                        <Button
-                            variant={isSidebarOpen ? 'secondary' : 'ghost'}
-                            size='sm'
-                            onClick={() => setIsSidebarOpen(!isSidebarOpen)}
-                            className={cn(
-                                'h-8 w-8 p-0 transition-all duration-200',
-                                isSidebarOpen && 'bg-brand/10 text-brand hover:bg-brand/20'
-                            )}
-                        >
-                            <Settings size={18} />
-                        </Button>
+                        <div className='flex items-center justify-end gap-4'>
+                            <div
+                                className={cn(
+                                    'flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest transition-colors',
+                                    saveState === 'error' ? 'text-red-500' : 'text-muted'
+                                )}
+                            >
+                                {saveState === 'saving' && <Loader2 size={12} className='animate-spin' />}
+                                {saveState === 'saved' && <Check size={12} className='text-brand' />}
+                                {saveState === 'saving'
+                                    ? 'Saving...'
+                                    : saveState === 'saved'
+                                        ? 'Changes saved'
+                                        : saveState === 'error'
+                                            ? 'Error saving'
+                                            : 'Unsaved changes'}
+                            </div>
+                        </div>
                     </div>
                 </header>
 
                 <div className='mx-auto w-full max-w-4xl flex-1 px-6 py-12 lg:px-12'>
                     <Head draft={draft} onSave={(data: any) => handleSaveSettings(data)} />
-                    <Content initialMarkdown={draft.content || ''} onSave={(data: any) => handleSaveSettings(data)} />
+                    <Content
+                        initialMarkdown={draft.content || ''}
+                        onSave={(data: any) => handleSaveSettings(data)}
+                        saveStatus={saveState}
+                    />
                 </div>
-            </div>
-
-            {/* Sidebar Area */}
-            <aside
-                className={cn(
-                    'fixed right-0 top-0 bottom-0 z-40 w-full max-w-[320px] transition-transform duration-300 lg:relative lg:translate-x-0',
-                    !isSidebarOpen && 'translate-x-full lg:hidden'
-                )}
-            >
-                <EditorSidebar
-                    draft={draft}
-                    onSaveSettings={handleSaveSettings}
-                    onSaveAuthors={handleSaveAuthors}
-                    onPublish={handlePublish}
-                    onDelete={() => setIsDeleteDialogOpen(true)}
-                    userRole={userRole}
-                    isPrimaryAuthor={isPrimaryAuthor}
-                />
-
-                {/* Mobile Close Handle */}
-                {!isSidebarOpen && (
-                    <button
-                        onClick={() => setIsSidebarOpen(true)}
-                        className='absolute -left-10 top-20 flex h-10 w-10 items-center justify-center rounded-l-xl bg-brand text-white shadow-xl lg:hidden'
-                    >
-                        <Settings size={20} />
-                    </button>
-                )}
-            </aside>
-        </div>
+            </div >
+        </div >
     )
 }
-

@@ -15,6 +15,7 @@ interface EditorSidebarProps {
     onDelete: () => void
     userRole?: string
     isPrimaryAuthor?: boolean
+    saveState?: 'idle' | 'saving' | 'saved' | 'error'
 }
 
 export default function EditorSidebar({
@@ -25,6 +26,7 @@ export default function EditorSidebar({
     onDelete,
     userRole,
     isPrimaryAuthor,
+    saveState,
 }: EditorSidebarProps) {
     const [visibility, setVisibility] = useState(draft.articleVisibility)
     const [scheduledAt, setScheduledAt] = useState(
@@ -122,8 +124,25 @@ export default function EditorSidebar({
     }
 
     return (
-        <div className='flex h-full flex-col overflow-y-auto border-l border-border bg-primary/50 backdrop-blur-sm thin-scrollbar'>
+        <div className='flex h-full flex-col overflow-y-auto bg-primary/50 backdrop-blur-sm thin-scrollbar'>
+            {/* Header / Save Status */}
+            <div className='flex items-center justify-between px-6 py-4'>
+                <h2 className='text-sm font-bold text-main uppercase tracking-wider'>Settings</h2>
+                {saveState && (
+                    <div className={cn(
+                        'flex items-center gap-1.5 text-[10px] font-bold uppercase transition-colors',
+                        saveState === 'error' ? 'text-red-500' : 'text-brand'
+                    )}>
+                        {saveState === 'saving' && <Loader2 size={10} className='animate-spin' />}
+                        {saveState === 'saved' && <Check size={10} />}
+                        {saveState === 'idle' && <div className='h-1 w-1 rounded-full bg-subtle' />}
+                        {saveState === 'saving' ? 'Saving' : saveState === 'saved' ? 'Saved' : saveState === 'error' ? 'Error' : 'Changes'}
+                    </div>
+                )}
+            </div>
+
             <div className='flex-1 space-y-8 p-6'>
+
                 {/* Visibility Section */}
                 <div className='space-y-4'>
                     <h3 className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-subtle'>
@@ -197,7 +216,7 @@ export default function EditorSidebar({
                 <div className='space-y-4'>
                     <h3 className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-subtle'>
                         <Users size={14} />
-                        Co-Authors
+                        Authors
                     </h3>
 
                     {/* Current Authors */}

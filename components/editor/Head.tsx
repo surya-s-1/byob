@@ -11,23 +11,12 @@ export default function Head({ draft, readOnly, onSave }: any) {
 	const titleRef = useRef<HTMLTextAreaElement>(null)
 	const subtitleRef = useRef<HTMLTextAreaElement>(null)
 
-	const isInitialRender = useRef(true)
-
-	// Debounced autosave for Head metadata
+	// Sync initial changes if draft updates from outside (rare but good for safety)
 	useEffect(() => {
-		if (readOnly || !onSave) return
-
-		if (isInitialRender.current) {
-			isInitialRender.current = false
-			return
-		}
-
-		const timeoutId = setTimeout(() => {
-			onSave({ title, subtitle, cover })
-		}, 2000)
-
-		return () => clearTimeout(timeoutId)
-	}, [title, subtitle, cover, onSave, readOnly])
+		if (draft.cover !== undefined) setCover(draft.cover || '')
+		if (draft.title !== undefined) setTitle(draft.title || '')
+		if (draft.subtitle !== undefined) setSubtitle(draft.subtitle || '')
+	}, [draft.cover, draft.title, draft.subtitle])
 
 	const autoResize = (el: HTMLTextAreaElement | null) => {
 		if (!el) return
@@ -54,13 +43,22 @@ export default function Head({ draft, readOnly, onSave }: any) {
 
 	return (
 		<div className='mb-lg'>
-			<Cover cover={cover} setCover={setCover} />
+			<Cover
+				cover={cover}
+				setCover={(url: string) => {
+					setCover(url)
+					onSave({ cover: url })
+				}}
+			/>
 			<textarea
 				ref={titleRef}
 				placeholder='Article Title'
 				maxLength={180}
 				value={title}
-				onChange={(e) => setTitle(e.target.value)}
+				onChange={(e) => {
+					setTitle(e.target.value)
+					onSave({ title: e.target.value })
+				}}
 				className='mt-md w-full resize-none overflow-hidden bg-transparent text-[48px] leading-tight font-bold text-main outline-none'
 				rows={1}
 			/>
@@ -69,7 +67,10 @@ export default function Head({ draft, readOnly, onSave }: any) {
 				placeholder='Add a subtitle...'
 				maxLength={300}
 				value={subtitle}
-				onChange={(e) => setSubtitle(e.target.value)}
+				onChange={(e) => {
+					setSubtitle(e.target.value)
+					onSave({ subtitle: e.target.value })
+				}}
 				className='mt-sm w-full resize-none overflow-hidden bg-transparent text-xl text-subtle outline-none'
 				rows={1}
 			/>

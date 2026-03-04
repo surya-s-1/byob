@@ -9,46 +9,14 @@ export default function Content({ initialMarkdown, onSave }: any) {
 	const [blocks, setBlocks] = useState<any[]>(() => parseToBlocks(initialMarkdown))
 	const [focusId, setFocusId] = useState<string | null>(null)
 
-	const [savedMarkdown, setSavedMarkdown] = useState<string>(initialMarkdown)
-	const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved'>('saved')
-
 	const blocksRef = useRef(blocks)
 	useEffect(() => {
 		blocksRef.current = blocks
-	}, [blocks])
-
-	const isInitialRender = useRef(true)
-
-	useEffect(() => {
-		const intervalId = setInterval(() => {
-			if (!onSave) return
-			const currentMarkdown = blocksToMarkdown(blocksRef.current)
-
-			if (isInitialRender.current) {
-				isInitialRender.current = false
-				setSavedMarkdown(currentMarkdown)
-				return
-			}
-
-			if (savedMarkdown !== currentMarkdown) {
-				setSaveStatus('saving')
-				onSave({ content: currentMarkdown }).then(() => {
-					setSaveStatus('saved')
-					setSavedMarkdown(currentMarkdown)
-				}).catch(() => {
-					setSaveStatus('idle')
-				})
-			}
-		}, 10000)
-		return () => clearInterval(intervalId)
-	}, [onSave, savedMarkdown])
-
-	useEffect(() => {
 		const currentMarkdown = blocksToMarkdown(blocks)
-		if (saveStatus === 'saved' && currentMarkdown !== savedMarkdown) {
-			setSaveStatus('idle')
+		if (currentMarkdown !== initialMarkdown && onSave) {
+			onSave({ content: currentMarkdown })
 		}
-	}, [blocks, savedMarkdown, saveStatus])
+	}, [blocks, onSave, initialMarkdown])
 
 	const updateBlock = (index: number, data: any) => {
 		setBlocks((prev) => {
@@ -152,7 +120,6 @@ export default function Content({ initialMarkdown, onSave }: any) {
 						data
 					)
 				}
-				saveStatus={saveStatus}
 			/>
 			<div className='space-y-4'>
 				{blocks.map((block, index) => (

@@ -17,12 +17,10 @@ import {
 	Network,
 	Code,
 	AppWindow,
-	Loader2,
 	Link2Off,
-	Check,
 } from 'lucide-react'
 
-export default function Toolbar({ insert, saveStatus }: any) {
+export default function Toolbar({ insert }: any) {
 	const [active, setActive] = useState<Record<string, boolean>>({})
 	const [linkPopup, setLinkPopup] = useState<{
 		show: boolean
@@ -94,11 +92,10 @@ export default function Toolbar({ insert, saveStatus }: any) {
 
 	const getBtnClass = (cmd: string) => {
 		const isActive = active[cmd]
-		return `w-8 h-8 flex items-center justify-center text-sm rounded-sm transition-colors cursor-pointer border ${
-			isActive
+		return `w-8 h-8 flex items-center justify-center text-sm rounded-sm transition-colors cursor-pointer border ${isActive
 				? 'bg-brand/5 border-brand text-brand'
 				: 'bg-transparent border-transparent text-subtle hover:bg-secondary hover:text-main'
-		}`
+			}`
 	}
 
 	const actionBtnClass =
@@ -174,147 +171,142 @@ export default function Toolbar({ insert, saveStatus }: any) {
 	}
 
 	return (
-		<div className='sticky top-0 z-20 mb-lg flex flex-wrap items-center gap-1 border-b border-border bg-primary/90 py-3 backdrop-blur-sm'>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'bold')}
-				className={getBtnClass('bold')}
-				title='Bold (Ctrl+B)'
-			>
-				<Bold size={16} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'italic')}
-				className={getBtnClass('italic')}
-				title='Italic (Ctrl+I)'
-			>
-				<Italic size={16} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'underline')}
-				className={getBtnClass('underline')}
-				title='Underline (Ctrl+U)'
-			>
-				<Underline size={16} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'strikeThrough')}
-				className={getBtnClass('strikeThrough')}
-				title='Strikethrough'
-			>
-				<Strikethrough size={16} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'createLink')}
-				className={getBtnClass('link')}
-				title='Link (Ctrl+K)'
-			>
-				<LinkIcon size={16} />
-			</button>
-			{active.link && (
+		<div className='sticky top-0 z-20 mb-lg flex items-center justify-between border-b border-border bg-primary/95 py-3 backdrop-blur-sm px-1'>
+			<div className='flex items-center gap-1 overflow-x-auto no-scrollbar flex-nowrap pr-12 md:pr-0'>
 				<button
-					onMouseDown={(e) => handleCommand(e, 'unlink')}
-					className={actionBtnClass}
-					title='Unlink'
+					onMouseDown={(e) => handleCommand(e, 'bold')}
+					className={getBtnClass('bold')}
+					title='Bold (Ctrl+B)'
 				>
-					<Link2Off size={16} />
+					<Bold size={16} />
 				</button>
-			)}
-
-			<div className='mx-1 h-5 w-px bg-border'></div>
-
-			<button
-				onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H1')}
-				className={getBtnClass('h1')}
-				title='Heading 1'
-			>
-				<Heading1 size={18} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H2')}
-				className={getBtnClass('h2')}
-				title='Heading 2'
-			>
-				<Heading2 size={18} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H3')}
-				className={getBtnClass('h3')}
-				title='Heading 3'
-			>
-				<Heading3 size={18} />
-			</button>
-
-			<div className='mx-1 h-5 w-px bg-border'></div>
-
-			<button
-				onMouseDown={(e) => handleCommand(e, 'insertUnorderedList')}
-				className={getBtnClass('ul')}
-				title='Bullet List'
-			>
-				<List size={18} />
-			</button>
-			<button
-				onMouseDown={(e) => handleCommand(e, 'insertOrderedList')}
-				className={getBtnClass('ol')}
-				title='Numbered List'
-			>
-				<ListOrdered size={18} />
-			</button>
-
-			<button
-				onMouseDown={(e) => handleCommand(e, 'formatBlock', 'BLOCKQUOTE')}
-				className={getBtnClass('quote')}
-				title='Quote'
-			>
-				<Quote size={16} />
-			</button>
-
-			<div className='mx-2 h-5 w-px bg-border'></div>
-
-			<button
-				onClick={() => insert({ type: 'image', src: '', w: 700, align: 'center' })}
-				className={actionBtnClass}
-				title='Insert Image'
-			>
-				<ImageIcon size={16} />
-			</button>
-			<button
-				onClick={() => insert({ type: 'mermaid', content: 'graph TD\nA-->B' })}
-				className={actionBtnClass}
-				title='Insert Mermaid Diagram'
-			>
-				<Network size={16} />
-			</button>
-			<button
-				onClick={() =>
-					insert({ type: 'code', lang: 'python', content: '# write code here' })
-				}
-				className={actionBtnClass}
-				title='Insert Code Block'
-			>
-				<Code size={16} />
-			</button>
-			<button
-				onClick={() =>
-					insert({
-						type: 'iframe',
-						src: 'https://example.com',
-						w: 600,
-						h: 400,
-						align: 'center',
-					})
-				}
-				className={actionBtnClass}
-				title='Insert Iframe'
-			>
-				<AppWindow size={16} />
-			</button>
-
-			<div className='ml-auto flex items-center pr-2' title='Saving...'>
-				{(saveStatus === 'idle' || saveStatus === 'saving') && (
-					<Loader2 size={14} className='text-brand animate-spin' />
+				<button
+					onMouseDown={(e) => handleCommand(e, 'italic')}
+					className={getBtnClass('italic')}
+					title='Italic (Ctrl+I)'
+				>
+					<Italic size={16} />
+				</button>
+				<button
+					onMouseDown={(e) => handleCommand(e, 'underline')}
+					className={getBtnClass('underline')}
+					title='Underline (Ctrl+U)'
+				>
+					<Underline size={16} />
+				</button>
+				<button
+					onMouseDown={(e) => handleCommand(e, 'strikeThrough')}
+					className={getBtnClass('strikeThrough')}
+					title='Strikethrough'
+				>
+					<Strikethrough size={16} />
+				</button>
+				<button
+					onMouseDown={(e) => handleCommand(e, 'createLink')}
+					className={getBtnClass('link')}
+					title='Link (Ctrl+K)'
+				>
+					<LinkIcon size={16} />
+				</button>
+				{active.link && (
+					<button
+						onMouseDown={(e) => handleCommand(e, 'unlink')}
+						className={actionBtnClass}
+						title='Unlink'
+					>
+						<Link2Off size={16} />
+					</button>
 				)}
-				{saveStatus === 'saved' && <Check size={14} className='text-brand' />}
+
+				<div className='mx-1 h-5 w-px bg-border flex-shrink-0'></div>
+
+				<button
+					onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H1')}
+					className={getBtnClass('h1')}
+					title='Heading 1'
+				>
+					<Heading1 size={18} />
+				</button>
+				<button
+					onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H2')}
+					className={getBtnClass('h2')}
+					title='Heading 2'
+				>
+					<Heading2 size={18} />
+				</button>
+				<button
+					onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H3')}
+					className={getBtnClass('h3')}
+					title='Heading 3'
+				>
+					<Heading3 size={18} />
+				</button>
+
+				<div className='mx-1 h-5 w-px bg-border flex-shrink-0'></div>
+
+				<button
+					onMouseDown={(e) => handleCommand(e, 'insertUnorderedList')}
+					className={getBtnClass('ul')}
+					title='Bullet List'
+				>
+					<List size={18} />
+				</button>
+				<button
+					onMouseDown={(e) => handleCommand(e, 'insertOrderedList')}
+					className={getBtnClass('ol')}
+					title='Numbered List'
+				>
+					<ListOrdered size={18} />
+				</button>
+
+				<button
+					onMouseDown={(e) => handleCommand(e, 'formatBlock', 'BLOCKQUOTE')}
+					className={getBtnClass('quote')}
+					title='Quote'
+				>
+					<Quote size={16} />
+				</button>
+
+				<div className='mx-2 h-5 w-px bg-border flex-shrink-0'></div>
+
+				<button
+					onClick={() => insert({ type: 'image', src: '', w: 700, align: 'center' })}
+					className={actionBtnClass}
+					title='Insert Image'
+				>
+					<ImageIcon size={16} />
+				</button>
+				<button
+					onClick={() => insert({ type: 'mermaid', content: 'graph TD\nA-->B' })}
+					className={actionBtnClass}
+					title='Insert Mermaid Diagram'
+				>
+					<Network size={16} />
+				</button>
+				<button
+					onClick={() =>
+						insert({ type: 'code', lang: 'python', content: '# write code here' })
+					}
+					className={actionBtnClass}
+					title='Insert Code Block'
+				>
+					<Code size={16} />
+				</button>
+				<button
+					onClick={() =>
+						insert({
+							type: 'iframe',
+							src: 'https://example.com',
+							w: 600,
+							h: 400,
+							align: 'center',
+						})
+					}
+					className={actionBtnClass}
+					title='Insert Iframe'
+				>
+					<AppWindow size={16} />
+				</button>
 			</div>
 
 			{linkPopup.show && (

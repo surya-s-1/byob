@@ -15,6 +15,12 @@ interface SidebarContextType {
 	toggleSidebar: () => void
 	navItems: NavItem[]
 	setNavItems: (items: NavItem[]) => void
+	secondarySidebar: React.ReactNode | null
+	setSecondarySidebar: (sidebar: React.ReactNode | null) => void
+	secondaryIcon: React.ReactNode | null
+	setSecondaryIcon: (icon: React.ReactNode | null) => void
+	isSecondaryOpen: boolean
+	setIsSecondaryOpen: (open: boolean) => void
 }
 
 const SidebarContext = createContext<SidebarContextType | undefined>(undefined)
@@ -53,17 +59,19 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 		localStorage.setItem('sidebar-side', side)
 	}, [side])
 
+	const [secondarySidebar, setSecondarySidebar] = useState<React.ReactNode | null>(null)
+	const [secondaryIcon, setSecondaryIcon] = useState<React.ReactNode | null>(null)
+	const [isSecondaryOpen, setIsSecondaryOpen] = useState(true)
+
 	useEffect(() => {
 		const isArticleOrDraft =
-			pathname.startsWith('/article/') ||
-			pathname.includes('/editor/') ||
-			pathname.includes('/draft/')
+			pathname.startsWith('/article/') || pathname.includes('/editor/') || pathname.includes('/draft/')
 		setIsExpanded(!isArticleOrDraft)
+		setIsSecondaryOpen(isArticleOrDraft) // Open search sidebar by default on editor
 
-		// Reset to default items on navigation if desired,
-		// but usually we want the page to control this via a hook.
-		// For now, let's keep it simple.
 		setNavItems(DEFAULT_NAV_ITEMS)
+		setSecondarySidebar(null) // Reset on navigation
+		setSecondaryIcon(null)
 	}, [pathname])
 
 	const toggleSidebar = () => setIsExpanded(!isExpanded)
@@ -78,6 +86,12 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 				toggleSidebar,
 				navItems,
 				setNavItems,
+				secondarySidebar,
+				setSecondarySidebar,
+				secondaryIcon,
+				setSecondaryIcon,
+				isSecondaryOpen,
+				setIsSecondaryOpen,
 			}}
 		>
 			{children}

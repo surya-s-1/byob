@@ -17,6 +17,8 @@ import {
 import { cn } from '@/lib/utils'
 import { NavItem } from '@/types'
 
+import { useSidebar } from '@/context/SidebarContext'
+
 interface MobileHeaderProps {
 	user: any
 	navItems: NavItem[]
@@ -27,6 +29,7 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 	const [isOpen, setIsOpen] = useState(false)
 	const [isDark, setIsDark] = useState(false)
 	const [userMenuOpen, setUserMenuOpen] = useState(false)
+	const { secondarySidebar, secondaryIcon, isSecondaryOpen, setIsSecondaryOpen } = useSidebar()
 
 	useEffect(() => {
 		const savedTheme = localStorage.getItem('theme')
@@ -61,12 +64,25 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 					</div>
 				</Link>
 
-				<button
-					onClick={() => setIsOpen(!isOpen)}
-					className='rounded-lg p-2 text-main transition-colors hover:bg-secondary'
-				>
-					{isOpen ? <X size={24} /> : <Menu size={24} />}
-				</button>
+				<div className='flex items-center gap-1 px-4'>
+					{secondarySidebar && (
+						<button
+							onClick={() => setIsSecondaryOpen(!isSecondaryOpen)}
+							className={cn(
+								'rounded-lg p-2 transition-colors',
+								isSecondaryOpen ? 'bg-brand/10 text-brand' : 'text-main hover:bg-secondary'
+							)}
+						>
+							{secondaryIcon || <SettingsIcon size={22} />}
+						</button>
+					)}
+					<button
+						onClick={() => setIsOpen(!isOpen)}
+						className='rounded-lg p-2 text-main transition-colors hover:bg-secondary'
+					>
+						{isOpen ? <X size={24} /> : <Menu size={24} />}
+					</button>
+				</div>
 			</div>
 
 			{isOpen && (

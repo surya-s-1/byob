@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { usePathname } from 'next/navigation'
-import { SidebarProvider } from '@/context/SidebarContext'
+import { SidebarProvider, useSidebar } from '@/context/SidebarContext'
 import SidebarLayout from '@/components/layout/SidebarLayout'
 import Footer from '@/components/Footer'
 import Link from 'next/link'
@@ -49,12 +49,25 @@ export default function ClientLayout({ user, children }: ClientLayoutProps) {
 
 	return (
 		<SidebarProvider>
-			<SidebarLayout user={user}>
-				<div className='flex min-h-screen flex-col'>
-					<div className='flex-1'>{children}</div>
-					<Footer />
-				</div>
-			</SidebarLayout>
+			<ClientLayoutWithSidebar user={user}>{children}</ClientLayoutWithSidebar>
 		</SidebarProvider>
+	)
+}
+
+function ClientLayoutWithSidebar({ user, children }: { user: any; children: React.ReactNode }) {
+	const { secondarySidebar, secondaryIcon, isSecondaryOpen } = useSidebar()
+
+	return (
+		<SidebarLayout
+			user={user}
+			secondarySidebar={secondarySidebar}
+			secondarySidebarOpen={isSecondaryOpen}
+			secondaryIcon={secondaryIcon}
+		>
+			<div className='flex min-h-screen flex-col'>
+				<div className='flex-1'>{children}</div>
+				<Footer />
+			</div>
+		</SidebarLayout>
 	)
 }
