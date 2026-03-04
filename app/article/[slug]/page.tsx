@@ -22,8 +22,8 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 	if (!article) notFound()
 
 	return (
-		<article className='bg-primary pb-[128px] text-main'>
-			<div className='px-2xl py-6xl'>
+		<article className='w-full lg:max-w-[70%] bg-primary pb-[128px] text-main flex flex-col items-center'>
+			<div className='w-full px-lg md:px-2xl py-6xl'>
 				{article.cover && (
 					<div className='mb-5xl aspect-2/1 w-full overflow-hidden rounded-lg border border-border bg-secondary'>
 						<img
@@ -77,7 +77,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 					</p>
 				)}
 
-				<h1 className='mb-lg text-[48px] leading-tight font-bold'>{article.title}</h1>
+				<h1 className='mb-lg text-4xl md:text-5xl lg:text-[56px] leading-tight font-bold break-words'>{article.title}</h1>
 				{article.subtitle && (
 					<h2 className='mb-5xl text-xl text-subtle'>{article.subtitle}</h2>
 				)}
