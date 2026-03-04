@@ -36,7 +36,7 @@ export interface Article {
 	readTime: number
 	publishedAt: string
 	visibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
-	authors: { id: string; name: string; image: string | null; isPrimary: boolean }[]
+	authors: { id: string; username: string; name: string; image: string | null; isPrimary: boolean }[]
 	publication: { id: string; slug: string; displayName: string } | null
 	series: { id: string; slug: string; displayName: string; sortOrder: number } | null
 }
