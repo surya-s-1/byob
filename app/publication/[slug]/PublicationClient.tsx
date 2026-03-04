@@ -216,7 +216,7 @@ export default function PublicationClient({
 	const canManage = publication.myRole === 'OWNER' || publication.myRole === 'ADMIN'
 
 	return (
-		<div className='mx-auto max-w-6xl space-y-5xl px-lg py-3xl lg:py-5xl'>
+		<div className='space-y-5xl px-lg py-3xl lg:py-5xl'>
 			{canManage && (
 				<FloatingActions
 					actions={[

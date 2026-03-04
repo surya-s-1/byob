@@ -23,7 +23,7 @@ export default async function FollowingPage({ params }: { params: Promise<{ user
 	const { following = [] } = await res.json()
 
 	return (
-		<div className='mx-auto max-w-3xl space-y-3xl px-lg py-5xl'>
+		<div className='space-y-3xl px-lg py-5xl'>
 			<div className='flex items-center gap-lg'>
 				<Link
 					href={`/profile/${username}`}

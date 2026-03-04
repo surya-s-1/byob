@@ -206,6 +206,10 @@
 		}
 	}
 
+	.bg-brand {
+		background: var(--brand-primary);
+	}
+
 	.btn-brand {
 		@apply relative inline-flex items-center justify-center overflow-hidden;
 		background: var(--brand-primary);

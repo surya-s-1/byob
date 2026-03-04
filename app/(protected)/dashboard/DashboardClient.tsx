@@ -76,7 +76,7 @@ export default function DashboardClient({
 	}
 
 	return (
-		<div className='mx-auto max-w-6xl space-y-3xl px-lg py-3xl'>
+		<div className='space-y-3xl px-lg py-3xl'>
 			<FloatingActions
 				actions={[
 					{

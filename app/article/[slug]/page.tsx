@@ -15,7 +15,7 @@ export default async function ArticlePage({ params }: { params: Promise<{ slug: 
 
 	return (
 		<article className='bg-primary pb-[128px] text-main'>
-			<div className='mx-auto max-w-4xl px-2xl py-6xl'>
+			<div className='px-2xl py-6xl'>
 				{article.cover && (
 					<div className='mb-5xl aspect-2/1 w-full overflow-hidden rounded-lg border border-border bg-secondary'>
 						<img

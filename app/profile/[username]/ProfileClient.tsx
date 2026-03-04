@@ -63,7 +63,7 @@ export default function ProfileClient({
 	}
 
 	return (
-		<div className='mx-auto max-w-5xl space-y-3xl px-lg py-3xl'>
+		<div className='space-y-3xl px-lg py-3xl'>
 			{isOwnProfile && (
 				<FloatingActions
 					actions={[

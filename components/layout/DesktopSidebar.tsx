@@ -130,7 +130,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 						className={cn(
 							'flex items-center gap-lg rounded-xl px-md py-md text-base font-semibold transition-all',
 							item.brand
-								? 'btn-brand'
+								? 'btn-brand w-full'
 								: pathname === item.href
 									? 'bg-secondary text-main'
 									: 'text-subtle hover:bg-secondary hover:text-main',

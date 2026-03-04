@@ -51,7 +51,7 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 	}
 
 	return (
-		<div className='mx-auto max-w-4xl space-y-3xl px-lg py-5xl'>
+		<div className='space-y-3xl px-lg py-5xl'>
 			<div className='flex items-center gap-lg'>
 				<Link
 					href={`/profile/${user.username}`}

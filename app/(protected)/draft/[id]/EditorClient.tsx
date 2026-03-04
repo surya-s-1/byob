@@ -209,7 +209,7 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
             {/* Main Editor Area */}
             <div className='flex flex-1 flex-col overflow-y-auto no-scrollbar'>
                 <header className='sticky top-0 z-30 border-b border-border bg-primary/80 backdrop-blur-md'>
-                    <div className='mx-auto flex h-14 w-full max-w-4xl items-center justify-between px-2xl lg:px-5xl'>
+                    <div className='flex h-14 w-full items-center justify-between px-2xl lg:px-5xl'>
                         <div className='flex items-center justify-start'>
                             <Button
                                 variant='ghost'
