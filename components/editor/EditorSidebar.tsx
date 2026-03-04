@@ -206,7 +206,7 @@ export default function EditorSidebar({
                 </div>
 
                 {/* Scheduling Section */}
-                <div className='space-y-lg'>
+                {/* <div className='space-y-lg'>
                     <h3 className='flex items-center gap-sm text-xs font-bold uppercase tracking-wider text-subtle'>
                         <Calendar size={14} />
                         Schedule Publish
@@ -225,7 +225,7 @@ export default function EditorSidebar({
                             Leave empty to publish immediately.
                         </p>
                     </div>
-                </div>
+                </div> */}
 
                 {/* Authors Section */}
                 <div className='space-y-lg pt-lg border-t border-border/50'>
