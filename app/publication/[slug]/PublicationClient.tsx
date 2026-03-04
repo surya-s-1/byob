@@ -219,10 +219,11 @@ export default function PublicationClient({
 	}
 
 	const canManage = publication.myRole === 'OWNER' || publication.myRole === 'ADMIN'
+	const canAuthor = publication.myRole === 'OWNER' || publication.myRole === 'ADMIN' || publication.myRole === 'EDITOR'
 
 	return (
-		<div className='space-y-5xl px-lg py-3xl lg:py-5xl'>
-			{canManage && (
+		<div className='w-full md:w-[90%] lg:w-[80%] space-y-5xl px-lg py-3xl lg:py-5xl'>
+			{canAuthor && (
 				<FloatingActions
 					actions={[
 						{
@@ -238,7 +239,7 @@ export default function PublicationClient({
 			{/* Publication Header */}
 			<PublicationHeader
 				publication={publication}
-				canManage={canManage}
+				canAuthor={canAuthor}
 				isFollowing={isFollowing}
 				isLoadingFollow={isLoading}
 				onFollow={handleFollow}
@@ -420,7 +421,7 @@ export default function PublicationClient({
 				emptyMessage='No followers yet'
 			/>
 
-			{canManage && (
+			{canAuthor && (
 				<UsersListModal
 					isOpen={membersOpen}
 					onClose={() => setMembersOpen(false)}

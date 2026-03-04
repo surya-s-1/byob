@@ -9,7 +9,7 @@ import { cn } from '@/lib/utils'
 
 interface PublicationHeaderProps {
 	publication: Publication
-	canManage: boolean
+	canAuthor: boolean
 	isFollowing: boolean
 	isLoadingFollow: boolean
 	onFollow: () => void
@@ -18,7 +18,7 @@ interface PublicationHeaderProps {
 
 export default function PublicationHeader({
 	publication,
-	canManage,
+	canAuthor,
 	isFollowing,
 	isLoadingFollow,
 	onFollow,
@@ -78,7 +78,7 @@ export default function PublicationHeader({
 									{isFollowing ? 'Unsubscribe' : 'Subscribe'}
 								</Button>
 							)}
-							{canManage && (
+							{canAuthor && (
 								<Button
 									onClick={onWriteArticle}
 									variant='brand'
