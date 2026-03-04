@@ -147,18 +147,18 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 			<div className='space-y-3 border-t border-border p-3'>
 				<div className={cn('flex gap-1', !isExpanded && 'flex-col')}>
 					<button
-						onClick={toggleTheme}
-						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
-						title='Toggle Theme'
-					>
-						{isDark ? <Sun size={20} /> : <Moon size={20} />}
-					</button>
-					<button
 						onClick={toggleSide}
 						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
 						title='Move Sidebar'
 					>
 						<ArrowLeftRight size={20} />
+					</button>
+					<button
+						onClick={toggleTheme}
+						className='flex flex-1 items-center justify-center rounded-xl p-2.5 text-subtle transition-all hover:bg-secondary hover:text-main'
+						title='Toggle Theme'
+					>
+						{isDark ? <Sun size={20} /> : <Moon size={20} />}
 					</button>
 				</div>
 
