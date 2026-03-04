@@ -136,7 +136,17 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 			className='group block relative cursor-pointer'
 		>
 			<Card className='group p-lg transition-all duration-300 hover:border-primary/50 sm:p-xl relative hover:shadow-md bg-elevated/50 hover:bg-elevated border-border/80'>
-				<div className='flex flex-col-reverse gap-lg sm:flex-row sm:gap-2xl relative'>
+				<div className='flex flex-col gap-lg sm:flex-row sm:gap-2xl relative'>
+					{article.cover && (
+						<div className='relative h-[160px] w-full shrink-0 overflow-hidden rounded-md bg-secondary sm:h-[128px] sm:w-[128px] lg:h-[112px] lg:w-[160px]'>
+							<Image
+								src={article.cover}
+								alt={article.title}
+								fill
+								className='object-cover transition-transform duration-500 group-hover:scale-105'
+							/>
+						</div>
+					)}
 					<div className='min-w-0 flex-1 space-y-sm relative z-10'>
 						<div className='flex justify-between items-start gap-lg'>
 							<div className='flex flex-wrap items-center gap-sm text-xs text-muted'>
@@ -166,9 +176,9 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 											setIsMenuOpen(!isMenuOpen)
 										}}
 										disabled={isProcessing}
-										className='flex h-3xl w-3xl items-center justify-center rounded-lg text-subtle/50 transition-colors hover:bg-secondary hover:text-main'
+										className='flex h-fit w-fit items-center justify-center rounded-lg text-subtle/50 transition-colors hover:bg-secondary hover:text-main'
 									>
-										{isProcessing ? <Loader2 size={16} className='animate-spin text-brand' /> : <MoreHorizontal size={16} />}
+										{isProcessing ? <Loader2 size={16} className='animate-spin text-brand' /> : <MoreHorizontal color='black' size={16} />}
 									</button>
 
 									{isMenuOpen && (
@@ -215,8 +225,11 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 								</div>
 							)}
 						</div>
-						<h3 className='line-clamp-2 text-lg font-bold text-main transition-colors group-hover:text-main sm:text-xl'>
+						<h2 className='line-clamp-2 text-lg font-bold text-main transition-colors group-hover:text-main'>
 							{article.title}
+						</h2>
+						<h3 className='line-clamp-2 text-main transition-colors group-hover:text-main'>
+							{article.subtitle}
 						</h3>
 						{article.excerpt && (
 							<p className='line-clamp-2 text-sm leading-relaxed text-subtle'>
@@ -254,16 +267,6 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 							</div>
 						)}
 					</div>
-					{article.cover && (
-						<div className='relative h-[160px] w-full shrink-0 overflow-hidden rounded-md bg-secondary sm:h-[128px] sm:w-[128px] lg:h-[112px] lg:w-[160px]'>
-							<Image
-								src={article.cover}
-								alt={article.title}
-								fill
-								className='object-cover transition-transform duration-500 group-hover:scale-105'
-							/>
-						</div>
-					)}
 				</div>
 			</Card>
 
