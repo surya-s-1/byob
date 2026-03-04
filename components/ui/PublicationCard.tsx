@@ -14,7 +14,7 @@ export default function PublicationCard({ publication, variant = 'full' }: Publi
 		return (
 			<Link href={`/publication/${publication.slug}`} className='group block cursor-pointer'>
 				<Card className='flex items-center gap-md p-md transition-all hover:bg-secondary'>
-					<div className='relative flex h-4xl w-4xl flex-shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-main'>
+					<div className='relative flex h-4xl w-4xl shrink-0 items-center justify-center overflow-hidden rounded-lg bg-primary/10 text-main'>
 						{publication.cover ? (
 							<Image
 								src={publication.cover}
@@ -51,7 +51,7 @@ export default function PublicationCard({ publication, variant = 'full' }: Publi
 		<Card className='group overflow-hidden p-lg transition-all hover:border-l-primary hover:shadow-md sm:p-xl'>
 			<Link href={`/publication/${publication.slug}`} className='cursor-pointer'>
 				<div className='flex flex-col items-start gap-lg sm:flex-row sm:items-center'>
-					<div className='relative flex h-[56px] w-[56px] flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary/10 font-bold text-main sm:h-6xl sm:w-6xl'>
+					<div className='relative flex h-[56px] w-[56px] shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary/10 font-bold text-main sm:h-6xl sm:w-6xl'>
 						{publication.cover ? (
 							<Image
 								src={publication.cover}

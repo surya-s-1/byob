@@ -121,7 +121,7 @@ export default function InviteMemberModal({
                                         className='flex items-center justify-between gap-md rounded-xl border border-border/50 bg-secondary/20 p-md'
                                     >
                                         <div className='flex items-center gap-md overflow-hidden'>
-                                            <div className='relative h-4xl w-4xl flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
+                                            <div className='relative h-4xl w-4xl shrink-0 overflow-hidden rounded-full bg-secondary'>
                                                 {user.image ? (
                                                     <Image
                                                         src={user.image}
@@ -138,7 +138,7 @@ export default function InviteMemberModal({
                                                 <p className='truncate text-xs text-muted'>@{user.username}</p>
                                             </div>
                                         </div>
-                                        <div className='flex-shrink-0 flex items-center gap-sm'>
+                                        <div className='shrink-0 flex items-center gap-sm'>
                                             {isInvited ? (
                                                 <>
                                                     <span className='text-xs font-medium text-brand bg-brand/10 px-sm py-2xs rounded-lg'>

@@ -22,7 +22,7 @@ export default function FloatingActions({ actions }: FloatingActionsProps) {
 	if (!actions || actions.length === 0) return null
 
 	return (
-		<div className='animate-in fade-in slide-in-from-bottom-5 fixed right-2xl bottom-2xl z-50 flex flex-col items-end gap-md duration-500 lg:hidden'>
+		<div className='animate-in fade-in slide-in-from-bottom-5 fixed right-md bottom-md z-50 flex flex-col items-end gap-md duration-500 lg:hidden'>
 			{actions.map((action, index) => {
 				const buttonVariant = action.variant === 'primary' ? 'brand' : (action.variant || 'brand') as any
 

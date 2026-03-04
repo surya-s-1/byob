@@ -2,12 +2,11 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { User, Camera, ArrowLeft, Save, Globe, Shield, Lock } from 'lucide-react'
+import { User, Camera, ArrowLeft, Save, Globe, Lock } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
-import { cn } from '@/lib/utils'
 
 interface SettingsClientProps {
 	user: any
@@ -113,14 +112,14 @@ export default function SettingsClient({ user }: SettingsClientProps) {
 							Privacy Note
 						</h4>
 						<div className='flex items-start gap-md'>
-							<Globe size={16} className='mt-0.5 flex-shrink-0 text-main' />
+							<Globe size={16} className='mt-0.5 shrink-0 text-main' />
 							<p className='text-xs leading-relaxed text-subtle'>
 								Your <strong>Name</strong> and <strong>Bio</strong> are visible to
 								everyone on the platform.
 							</p>
 						</div>
 						<div className='flex items-start gap-md'>
-							<Lock size={16} className='mt-0.5 flex-shrink-0 text-main' />
+							<Lock size={16} className='mt-0.5 shrink-0 text-main' />
 							<p className='text-xs leading-relaxed text-subtle'>
 								Your <strong>Date of Birth</strong> is only visible to you on your
 								profile page.

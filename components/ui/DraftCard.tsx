@@ -17,7 +17,7 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 			<Link href={`/draft/${draft.id}`} className='group relative block'>
 				<Card className='flex items-center justify-between gap-lg p-md transition-all hover:bg-secondary'>
 					<div className='flex min-w-0 items-center gap-md'>
-						<div className='relative h-10 w-10 flex-shrink-0 overflow-hidden rounded bg-secondary sm:h-12 sm:w-12'>
+						<div className='relative h-10 w-10 shrink-0 overflow-hidden rounded bg-secondary sm:h-12 sm:w-12'>
 							{draft.cover ? (
 								<Image
 									src={draft.cover}
@@ -130,7 +130,7 @@ export default function DraftCard({ draft, variant = 'full', onDelete }: Article
 						)}
 					</div>
 					{draft.cover && (
-						<div className='relative h-40 w-full flex-shrink-0 overflow-hidden rounded-md bg-secondary sm:h-32 sm:w-32 lg:h-28 lg:w-40'>
+						<div className='relative h-40 w-full shrink-0 overflow-hidden rounded-md bg-secondary sm:h-32 sm:w-32 lg:h-28 lg:w-40'>
 							<Image
 								src={draft.cover}
 								alt={draft.title}

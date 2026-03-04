@@ -23,7 +23,7 @@ export default function InvitationCard({
 	return (
 		<Card className='space-y-lg border-primary/20 bg-primary/5 p-lg transition-all hover:shadow-md'>
 			<div className='flex items-start gap-lg'>
-				<div className='flex h-4xl w-4xl flex-shrink-0 animate-pulse items-center justify-center rounded-full bg-primary/20 text-main'>
+				<div className='flex h-4xl w-4xl shrink-0 animate-pulse items-center justify-center rounded-full bg-primary/20 text-main'>
 					<Mail size={20} />
 				</div>
 				<div className='min-w-0 space-y-xs'>

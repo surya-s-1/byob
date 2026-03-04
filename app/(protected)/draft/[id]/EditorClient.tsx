@@ -187,7 +187,7 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
     }
 
     return (
-        <div className='flex h-full flex-col bg-primary text-main'>
+        <div className='flex flex-col bg-primary text-main w-full h-full md:w-[70%]'>
             {/* Delete Confirmation Modal */}
             <Modal isOpen={isDeleteDialogOpen} onClose={() => setIsDeleteDialogOpen(false)} title='Delete Draft'>
                 <div className='space-y-2xl'>

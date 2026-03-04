@@ -19,7 +19,7 @@ export default function StatCard({ title, value, change, icon, className }: Stat
 		>
 			<div className='flex items-start justify-between gap-lg'>
 				<span className='truncate text-sm font-medium text-subtle'>{title}</span>
-				<div className='flex-shrink-0'>{icon}</div>
+				<div className='shrink-0'>{icon}</div>
 			</div>
 			<div className='mt-sm flex flex-wrap items-end justify-between gap-sm'>
 				<span className='text-2xl font-bold text-main'>{value}</span>

@@ -64,8 +64,8 @@ function ClientLayoutWithSidebar({ user, children }: { user: any; children: Reac
 			secondarySidebarOpen={isSecondaryOpen}
 			secondaryIcon={secondaryIcon}
 		>
-			<div className='flex min-h-screen flex-col'>
-				<div className='flex-1'>{children}</div>
+			<div className='w-full min-h-screen flex flex-col items-center'>
+				<div className='w-full flex-1 flex flex-col items-center'>{children}</div>
 				<Footer />
 			</div>
 		</SidebarLayout>

@@ -100,7 +100,7 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 			>
 				<Card className='flex items-center justify-between gap-lg p-md transition-all duration-300 hover:bg-secondary/50 hover:shadow-md border-border/80'>
 					<div className='flex min-w-0 items-center gap-md'>
-						<div className='relative h-4xl w-4xl flex-shrink-0 overflow-hidden rounded bg-secondary sm:h-5xl sm:w-5xl'>
+						<div className='relative h-4xl w-4xl shrink-0 overflow-hidden rounded bg-secondary sm:h-5xl sm:w-5xl'>
 							{article.cover ? (
 								<Image
 									src={article.cover}
@@ -255,7 +255,7 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 						)}
 					</div>
 					{article.cover && (
-						<div className='relative h-[160px] w-full flex-shrink-0 overflow-hidden rounded-md bg-secondary sm:h-[128px] sm:w-[128px] lg:h-[112px] lg:w-[160px]'>
+						<div className='relative h-[160px] w-full shrink-0 overflow-hidden rounded-md bg-secondary sm:h-[128px] sm:w-[128px] lg:h-[112px] lg:w-[160px]'>
 							<Image
 								src={article.cover}
 								alt={article.title}

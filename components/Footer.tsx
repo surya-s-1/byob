@@ -3,7 +3,7 @@ import React from 'react'
 
 export default function Footer() {
 	return (
-		<footer className='mt-auto border-t border-border bg-secondary px-xl py-xl'>
+		<footer className='w-full mt-auto border-t border-border bg-secondary px-xl py-xl'>
 			<div className='flex flex-col items-center justify-between gap-md md:flex-row'>
 				<div className='flex items-center gap-xs text-sm text-subtle italic'>
 					<span>Running Head | Made by </span>

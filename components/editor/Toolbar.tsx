@@ -172,7 +172,7 @@ export default function Toolbar({ insert }: any) {
 
 	return (
 		<div className='sticky top-0 z-20 mb-lg flex items-center justify-between border-b border-border bg-primary/95 py-sm backdrop-blur-sm px-xs'>
-			<div className='flex items-center gap-xs overflow-x-auto no-scrollbar flex-nowrap pr-5xl md:pr-0'>
+			<div className='flex items-center gap-xs overflow-x-auto no-scrollbar flex-nowrap md:pr-0'>
 				<button
 					onMouseDown={(e) => handleCommand(e, 'bold')}
 					className={getBtnClass('bold')}
@@ -218,7 +218,7 @@ export default function Toolbar({ insert }: any) {
 					</button>
 				)}
 
-				<div className='mx-xs h-5 w-px bg-border flex-shrink-0'></div>
+				<div className='mx-xs h-5 w-px bg-border shrink-0'></div>
 
 				<button
 					onMouseDown={(e) => handleCommand(e, 'formatBlock', 'H1')}
@@ -242,7 +242,7 @@ export default function Toolbar({ insert }: any) {
 					<Heading3 size={18} />
 				</button>
 
-				<div className='mx-xs h-5 w-px bg-border flex-shrink-0'></div>
+				<div className='mx-xs h-5 w-px bg-border shrink-0'></div>
 
 				<button
 					onMouseDown={(e) => handleCommand(e, 'insertUnorderedList')}
@@ -267,7 +267,7 @@ export default function Toolbar({ insert }: any) {
 					<Quote size={16} />
 				</button>
 
-				<div className='mx-sm h-5 w-px bg-border flex-shrink-0'></div>
+				<div className='mx-sm h-5 w-px bg-border shrink-0'></div>
 
 				<button
 					onClick={() => insert({ type: 'image', src: '', w: 700, align: 'center' })}

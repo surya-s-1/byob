@@ -262,7 +262,7 @@ export default function EditorSidebar({
                                 className='group flex items-center justify-between gap-md rounded-xl border border-border/50 bg-secondary/10 p-sm pr-md'
                             >
                                 <div className='flex min-w-0 items-center gap-sm'>
-                                    <div className='relative h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
+                                    <div className='relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-secondary'>
                                         {author.image ? (
                                             <Image src={author.image} alt={author.name} fill className='object-cover' />
                                         ) : (
@@ -330,7 +330,7 @@ export default function EditorSidebar({
                                             onClick={() => addAuthor(user)}
                                             className='flex w-full items-center gap-md rounded-lg p-sm text-left hover:bg-secondary transition-colors'
                                         >
-                                            <div className='relative h-8 w-8 flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
+                                            <div className='relative h-8 w-8 shrink-0 overflow-hidden rounded-full bg-secondary'>
                                                 {user.image ? (
                                                     <Image src={user.image} alt={user.name} fill className='object-cover' />
                                                 ) : (
