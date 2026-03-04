@@ -76,12 +76,12 @@ export default function DashboardClient({
 	}
 
 	return (
-		<div className='space-y-3xl px-lg py-3xl'>
+		<div className='space-y-3xl px-lg py-3xl w-full md:w-[90%] lg:w-[70%]'>
 			<FloatingActions
 				actions={[
 					{
 						icon: <BookOpen size={20} />,
-						label: 'New Pub',
+						label: 'Create',
 						link: '/publications/new',
 						variant: 'brand',
 					},

@@ -45,7 +45,7 @@ export default function NewPublicationPage() {
 	}
 
 	return (
-		<div className='space-y-3xl px-lg py-5xl'>
+		<div className='space-y-3xl px-lg py-5xl w-full md:w-[90%] lg:w-[70%]'>
 			<div className='flex items-center gap-lg'>
 				<Link
 					href='/dashboard'

@@ -69,7 +69,7 @@ export default function ProfileClient({
 					actions={[
 						{
 							icon: <BookOpen size={20} />,
-							label: 'New Pub',
+							label: 'Create',
 							link: '/publications/new',
 							variant: 'brand',
 						},
