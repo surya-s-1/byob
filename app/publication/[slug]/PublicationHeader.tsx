@@ -38,7 +38,7 @@ export default function PublicationHeader({
 
 	return (
 		<>
-			<div className='flex flex-col items-start gap-3xl md:flex-row md:items-center'>
+			<div className='flex flex-col items-center gap-3xl md:flex-row'>
 				<div className='relative mx-auto h-[128px] w-[128px] shrink-0 overflow-hidden rounded-3xl border-2 border-border bg-secondary shadow-xl md:mx-0 md:h-[160px] md:w-[160px]'>
 					{publication.cover ? (
 						<Image
