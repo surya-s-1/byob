@@ -96,7 +96,7 @@ export default function Block({
 			tabIndex={0}
 			onClick={() => setFocusId(block.id)}
 			onKeyDown={handleKeyDown}
-			className={`group ring-brand relative my-4xl rounded-lg leading-none transition-all outline-none focus-within:ring-1 focus:ring-1 ${isFullWidth ? 'w-full' : 'w-fit ' + alignClass}`}
+			className={`group relative my-4xl rounded-lg leading-none transition-all outline-none focus-within:ring-1 focus:ring-1 ${isFullWidth ? 'w-full' : 'w-fit ' + alignClass}`}
 		>
 			<div className='absolute -top-3 right-2 z-40 flex items-center overflow-hidden rounded-md border border-border bg-elevated opacity-0 shadow-md transition-opacity group-hover:opacity-100'>
 				<button

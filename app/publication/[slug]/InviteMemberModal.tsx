@@ -85,14 +85,14 @@ export default function InviteMemberModal({
                             placeholder='Search username (min 6 chars)...'
                             value={searchQuery}
                             onChange={(e) => setSearchQuery(e.target.value)}
-                            className='w-full rounded-xl border border-border bg-secondary/50 py-md pl-4xl pr-lg text-sm text-main placeholder-muted outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
+                            className='w-full rounded-xl border border-border bg-secondary/50 py-md pl-4xl pr-lg text-sm text-main placeholder-muted outline-none transition-all focus:ring-1'
                         />
                     </div>
                     <div className='w-full sm:w-32'>
                         <select
                             value={selectedRole}
                             onChange={(e) => setSelectedRole(e.target.value as any)}
-                            className='w-full rounded-xl border border-border bg-secondary/50 py-md px-lg text-sm text-main outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
+                            className='w-full rounded-xl border border-border bg-secondary/50 py-md px-lg text-sm text-main outline-none transition-all focus:ring-1'
                         >
                             <option value='ADMIN'>Admin</option>
                             <option value='EDITOR'>Editor</option>
@@ -108,7 +108,7 @@ export default function InviteMemberModal({
                         </p>
                     ) : isSearching ? (
                         <div className='flex justify-center mt-4xl'>
-                            <div className='h-2xl w-2xl animate-spin rounded-full border-2 border-brand border-t-transparent' />
+                            <div className='h-2xl w-2xl animate-spin rounded-full border-2 border-t-transparent' />
                         </div>
                     ) : users.length > 0 ? (
                         <div className='space-y-md mt-lg max-h-[300px] overflow-y-auto thin-scrollbar pr-sm'>

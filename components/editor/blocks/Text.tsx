@@ -169,14 +169,14 @@ export default function Text({ block, update, isFocused, setFocusId, removeBlock
 						value={linkPopup.text}
 						onChange={(e) => setLinkPopup({ ...linkPopup, text: e.target.value })}
 						placeholder='Display text (optional)'
-						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
+						className='rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 					/>
 					<input
 						autoFocus
 						value={linkPopup.url}
 						onChange={(e) => setLinkPopup({ ...linkPopup, url: e.target.value })}
 						placeholder='https://...'
-						className='focus:border-brand ring-brand rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
+						className='rounded-sm border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 						onKeyDown={(e) => {
 							e.stopPropagation()
 							if (e.key === 'Enter') applyLink()

@@ -167,8 +167,8 @@ export default function EditorSidebar({
                     <div className='grid grid-cols-1 gap-sm'>
                         {[
                             { id: 'PUBLIC', icon: Globe, label: 'Public', desc: 'Anyone can read' },
-                            { id: 'HIDDEN', icon: Eye, label: 'Hidden', desc: 'Only via link' },
-                            { id: 'LOCKED', icon: Lock, label: 'Locked', desc: 'Members only' },
+                            { id: 'HIDDEN', icon: Eye, label: 'Hidden', desc: 'Members only' },
+                            { id: 'LOCKED', icon: Lock, label: 'Locked', desc: 'Subscribers only' },
                         ].map((opt) => (
                             <button
                                 key={opt.id}
@@ -179,7 +179,7 @@ export default function EditorSidebar({
                                 className={cn(
                                     'flex items-center gap-md rounded-xl border p-md text-left transition-all',
                                     visibility === opt.id
-                                        ? 'border-brand ring-1'
+                                        ? 'ring-0.5'
                                         : 'border-border bg-secondary/20 hover:border-muted'
                                 )}
                             >
@@ -219,7 +219,7 @@ export default function EditorSidebar({
                                 setScheduledAt(e.target.value)
                                 handleSaveSettings(visibility, e.target.value)
                             }}
-                            className='w-full rounded-xl border border-border bg-secondary/30 p-md text-sm text-main outline-none transition-all focus:border-brand focus:ring-1 focus:ring-brand'
+                            className='w-full rounded-xl border border-border bg-secondary/30 p-md text-sm text-main outline-none transition-all focus:ring-1'
                         />
                         <p className='text-[10px] text-muted italic'>
                             Leave empty to publish immediately.
@@ -310,7 +310,7 @@ export default function EditorSidebar({
                                 placeholder='Add author by username...'
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
-                                className='w-full rounded-xl border border-border bg-secondary/30 py-sm pl-[36px] pr-lg text-xs text-main outline-none focus:border-brand focus:ring-1 focus:ring-brand'
+                                className='w-full rounded-xl border border-border bg-secondary/30 py-sm pl-[36px] pr-lg text-xs text-main outline-none focus:ring-1'
                             />
                         </div>
 

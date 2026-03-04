@@ -103,7 +103,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 
 	return (
 		<div
-			className='ring-brand group relative inline-block rounded-lg transition-all duration-200 hover:px-lg hover:ring-1'
+			className='group relative inline-block rounded-lg transition-all duration-200 hover:px-lg hover:ring-1'
 			style={{ width: block.w || 600, height: block.h || 400, maxWidth: '100%' }}
 		>
 			{isInsecure ? (
@@ -189,7 +189,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								autoFocus
 								value={tempUrl}
 								onChange={(e) => setTempUrl(e.target.value)}
-								className='focus:border-brand ring-brand flex-1 rounded-md border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
+								className='flex-1 rounded-md border border-border bg-secondary px-md py-sm text-sm text-main transition-all outline-none focus:ring-1'
 								onKeyDown={(e) => {
 									e.stopPropagation()
 									if (e.key === 'Enter') {
@@ -211,7 +211,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 										settings: { ...settings, autoplay: e.target.checked },
 									})
 								}
-								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
+								className='text-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
 							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Autoplay
@@ -226,7 +226,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 										settings: { ...settings, fullscreen: e.target.checked },
 									})
 								}
-								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
+								className='text-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
 							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Fullscreen
@@ -239,7 +239,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								onChange={(e) =>
 									update({ settings: { ...settings, sensors: e.target.checked } })
 								}
-								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
+								className='text-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
 							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Sensors
@@ -252,7 +252,7 @@ export default function Iframe({ block, update, readOnly, isFocused }: any) {
 								onChange={(e) =>
 									update({ settings: { ...settings, pip: e.target.checked } })
 								}
-								className='text-brand focus:ring-brand h-4 w-4 rounded border-border bg-secondary transition-all'
+								className='text-brand h-4 w-4 rounded border-border bg-secondary transition-all'
 							/>
 							<span className='text-xs font-medium text-subtle transition-colors group-hover:text-main'>
 								Picture-in-Picture
