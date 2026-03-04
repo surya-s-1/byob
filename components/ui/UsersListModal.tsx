@@ -119,7 +119,7 @@ export default function UsersListModal({
                                     }
                                     : undefined
                             }
-                            hideFollowButton={isMembersModal}
+                            hideFollowButton={false}
                         />
                     ))
                 ) : (
