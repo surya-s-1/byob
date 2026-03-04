@@ -88,35 +88,42 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
         setSecondarySidebar(
             <EditorSidebar
                 draft={draft}
-                onSaveSettings={handleSaveSettings}
+                onSaveSettings={handleSaveSidebarSettings}
                 onSaveAuthors={handleSaveAuthors}
                 onPublish={handlePublish}
                 onDelete={() => setIsDeleteDialogOpen(true)}
                 userRole={userRole}
                 isPrimaryAuthor={isPrimaryAuthor}
-                saveState={saveState}
             />
         )
         setSecondaryIcon(<Settings size={20} />)
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [draft, saveState, userRole, isPrimaryAuthor])
+    }, [draft, userRole, isPrimaryAuthor])
 
-    const handleSaveAuthors = async (authorsData: { userId: string; isPrimary: boolean }[]) => {
-        setSaveState('saving')
-        try {
-            const res = await fetch(`/api/drafts/${draft.id}/authors`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ authors: authorsData }),
-            })
-            if (res.ok) {
-                setSaveState('saved')
-            } else {
-                setSaveState('error')
-            }
-        } catch (error) {
-            console.error('Error saving authors:', error)
-            setSaveState('error')
+    const handleSaveAuthors = async (authorsData: { userId: string; isPrimary: boolean }[], newAuthorsList?: any[]) => {
+        if (newAuthorsList) {
+            setDraft((prev) => ({ ...prev, authors: newAuthorsList }))
+        }
+
+        const res = await fetch(`/api/drafts/${draft.id}/authors`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ authors: authorsData }),
+        })
+        if (!res.ok) {
+            throw new Error('Failed to save authors')
+        }
+    }
+
+    const handleSaveSidebarSettings = async (settings: Partial<Draft>) => {
+        setDraft((prev) => ({ ...prev, ...settings } as Draft))
+        const res = await fetch(`/api/drafts/${draft.id}/save`, {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(settings),
+        })
+        if (!res.ok) {
+            throw new Error('Failed to save sidebar settings')
         }
     }
 
@@ -225,15 +232,15 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
                                     saveState === 'error' ? 'text-red-500' : 'text-muted'
                                 )}
                             >
-                                {saveState === 'saving' && <Loader2 size={12} className='animate-spin' />}
-                                {saveState === 'saved' && <Check size={12} className='text-brand' />}
+                                {(saveState === 'saving' || hasUnsavedChanges || saveState === 'idle') && <Loader2 size={12} className='animate-spin' />}
+                                {saveState === 'saved' && !hasUnsavedChanges && <Check size={12} className='text-brand' />}
                                 {saveState === 'saving'
                                     ? 'Saving...'
-                                    : saveState === 'saved'
-                                        ? 'Changes saved'
+                                    : hasUnsavedChanges || saveState === 'idle'
+                                        ? 'Unsaved changes'
                                         : saveState === 'error'
                                             ? 'Error saving'
-                                            : 'Unsaved changes'}
+                                            : 'Changes saved'}
                             </div>
                         </div>
                     </div>

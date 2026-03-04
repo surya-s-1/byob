@@ -10,12 +10,11 @@ import { cn } from '@/lib/utils'
 interface EditorSidebarProps {
     draft: Draft
     onSaveSettings: (settings: Partial<Draft>) => Promise<void>
-    onSaveAuthors: (authors: { userId: string; isPrimary: boolean }[]) => Promise<void>
+    onSaveAuthors: (authors: { userId: string; isPrimary: boolean }[], fullList?: any[]) => Promise<void>
     onPublish: () => Promise<void>
     onDelete: () => void
     userRole?: string
     isPrimaryAuthor?: boolean
-    saveState?: 'idle' | 'saving' | 'saved' | 'error'
 }
 
 export default function EditorSidebar({
@@ -26,7 +25,6 @@ export default function EditorSidebar({
     onDelete,
     userRole,
     isPrimaryAuthor,
-    saveState,
 }: EditorSidebarProps) {
     const [visibility, setVisibility] = useState(draft.articleVisibility)
     const [scheduledAt, setScheduledAt] = useState(
@@ -39,6 +37,7 @@ export default function EditorSidebar({
     const [isSaving, setIsSaving] = useState(false)
     const [isPublishing, setIsPublishing] = useState(false)
     const [isDeleting, setIsDeleting] = useState(false)
+    const [sidebarStatus, setSidebarStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('saved')
 
     const canManagePrimary = userRole === 'OWNER' || userRole === 'ADMIN' || isPrimaryAuthor
 
@@ -70,16 +69,16 @@ export default function EditorSidebar({
     }, [searchQuery, draft.publication?.id])
 
     const handleSaveSettings = async (newVisibility: typeof visibility, newScheduledAt: string) => {
-        setIsSaving(true)
+        setSidebarStatus('saving')
         try {
             await onSaveSettings({
                 articleVisibility: newVisibility,
                 scheduledAt: newScheduledAt ? new Date(newScheduledAt) : null,
             })
+            setSidebarStatus('saved')
         } catch (error) {
             console.error('Error saving sidebar settings:', error)
-        } finally {
-            setIsSaving(false)
+            setSidebarStatus('error')
         }
     }
 
@@ -91,23 +90,42 @@ export default function EditorSidebar({
 
         const newAuthors = authors.map((a) => (a.id === userId ? { ...a, isPrimary: !a.isPrimary } : a))
         setAuthors(newAuthors)
-        await onSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })))
+        setSidebarStatus('saving')
+        try {
+            await onSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })), newAuthors)
+            setSidebarStatus('saved')
+        } catch {
+            setSidebarStatus('error')
+        }
     }
 
     const removeAuthor = async (userId: string) => {
         const newAuthors = authors.filter((a) => a.id !== userId)
         setAuthors(newAuthors)
-        await onSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })))
+        setSidebarStatus('saving')
+        try {
+            await onSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })), newAuthors)
+            setSidebarStatus('saved')
+        } catch {
+            setSidebarStatus('error')
+        }
     }
 
     const addAuthor = async (user: User) => {
         if (authors.some((a) => a.id === user.id)) return
-        const newAuthor = { id: user.id, name: user.name, image: user.image, isPrimary: false }
+        const isFirst = authors.length === 0
+        const newAuthor = { id: user.id, name: user.name, image: user.image, isPrimary: isFirst }
         const newAuthors = [...authors, newAuthor]
         setAuthors(newAuthors)
         setSearchQuery('')
         setSearchResults([])
-        await onSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })))
+        setSidebarStatus('saving')
+        try {
+            await onSaveAuthors(newAuthors.map((a) => ({ userId: a.id, isPrimary: a.isPrimary })), newAuthors)
+            setSidebarStatus('saved')
+        } catch {
+            setSidebarStatus('error')
+        }
     }
 
     const handleDelete = async () => {
@@ -128,17 +146,14 @@ export default function EditorSidebar({
             {/* Header / Save Status */}
             <div className='flex items-center justify-between px-6 py-4'>
                 <h2 className='text-sm font-bold text-main uppercase tracking-wider'>Settings</h2>
-                {saveState && (
-                    <div className={cn(
-                        'flex items-center gap-1.5 text-[10px] font-bold uppercase transition-colors',
-                        saveState === 'error' ? 'text-red-500' : 'text-brand'
-                    )}>
-                        {saveState === 'saving' && <Loader2 size={10} className='animate-spin' />}
-                        {saveState === 'saved' && <Check size={10} />}
-                        {saveState === 'idle' && <div className='h-1 w-1 rounded-full bg-subtle' />}
-                        {saveState === 'saving' ? 'Saving' : saveState === 'saved' ? 'Saved' : saveState === 'error' ? 'Error' : 'Changes'}
-                    </div>
-                )}
+                <div className={cn(
+                    'flex items-center gap-1.5 text-[10px] font-bold uppercase transition-colors',
+                    sidebarStatus === 'error' ? 'text-red-500' : 'text-brand'
+                )}>
+                    {(sidebarStatus === 'saving' || sidebarStatus === 'idle') && <Loader2 size={10} className='animate-spin' />}
+                    {sidebarStatus === 'saved' && <Check size={10} />}
+                    {sidebarStatus === 'saving' ? 'Saving' : sidebarStatus === 'saved' ? 'Saved' : sidebarStatus === 'error' ? 'Error' : 'Unsaved'}
+                </div>
             </div>
 
             <div className='flex-1 space-y-8 p-6'>
@@ -213,7 +228,27 @@ export default function EditorSidebar({
                 </div>
 
                 {/* Authors Section */}
-                <div className='space-y-4'>
+                <div className='space-y-4 pt-4 border-t border-border/50'>
+                    {draft.createdBy && (
+                        <div className='flex items-center justify-between pb-2'>
+                            <h3 className='flex items-center gap-2 text-[10px] font-bold uppercase tracking-wider text-subtle'>
+                                Created by
+                            </h3>
+                            <div className='flex items-center gap-2'>
+                                <div className='relative h-6 w-6 overflow-hidden rounded-full bg-secondary'>
+                                    {draft.createdBy.image ? (
+                                        <Image src={draft.createdBy.image} alt={draft.createdBy.name} fill className='object-cover' />
+                                    ) : (
+                                        <div className='flex h-full w-full items-center justify-center text-[10px]'>
+                                            {draft.createdBy.name[0]}
+                                        </div>
+                                    )}
+                                </div>
+                                <span className='text-xs font-bold text-main'>{draft.createdBy.name}</span>
+                            </div>
+                        </div>
+                    )}
+
                     <h3 className='flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-subtle'>
                         <Users size={14} />
                         Authors
