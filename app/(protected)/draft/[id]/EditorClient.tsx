@@ -246,7 +246,7 @@ export default function EditorClient({ draft: initialDraft, currentUser, userRol
                     </div>
                 </header>
 
-                <div className='mx-auto w-full max-w-4xl flex-1 px-2xl py-5xl lg:px-5xl'>
+                <div className='mx-auto w-full flex-1 px-2xl py-5xl lg:px-5xl'>
                     <Head draft={draft} onSave={(data: any) => handleSaveSettings(data)} />
                     <Content
                         initialMarkdown={draft.content || ''}

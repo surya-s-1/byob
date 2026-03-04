@@ -51,7 +51,7 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 	}
 
 	return (
-		<header className='fixed top-0 right-0 left-0 z-[100] h-6xl border-b border-border bg-primary/80 backdrop-blur-lg md:hidden'>
+		<header className='fixed top-0 right-0 left-0 z-100 h-6xl border-b border-border bg-primary/80 backdrop-blur-lg md:hidden'>
 			<div className='mx-auto flex h-full max-w-7xl items-center justify-between'>
 				<Link href='/' className='flex items-center gap-sm px-lg'>
 					<div className='relative h-8xl w-8xl'>
@@ -97,7 +97,7 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 									'flex items-center gap-lg rounded-xl px-lg py-md text-base font-bold transition-all',
 									pathname === item.href
 										? item.brand
-											? 'relative overflow-hidden bg-brand text-inverse shadow-md after:absolute after:top-0 after:-left-[75%] after:block after:h-full after:w-1/2 after:bg-gradient-to-r after:from-transparent after:via-white/30 after:to-transparent after:skew-x-[-25deg] hover:after:animate-shine'
+											? 'relative overflow-hidden bg-brand text-inverse shadow-md after:absolute after:top-0 after:-left-[75%] after:block after:h-full after:w-1/2 after:bg-linear-to-r after:from-transparent after:via-white/30 after:to-transparent after:skew-x-[-25deg] hover:after:animate-shine'
 											: 'bg-secondary text-main'
 										: 'text-subtle hover:bg-secondary hover:text-main'
 								)}

@@ -79,7 +79,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 				<Link href='/' className='flex items-center gap-md px-sm'>
 					{isExpanded ? (
 
-						<div className='relative h-6xl w-6xl flex-shrink-0'>
+						<div className='relative h-6xl w-6xl shrink-0'>
 							<Image
 								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
 								alt='Logo'
@@ -89,7 +89,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 							/>
 						</div>
 					) : (
-						<div className='hidden md:block lg:hidden relative h-3xl w-3xl flex-shrink-0'>
+						<div className='hidden md:block lg:hidden relative h-3xl w-3xl shrink-0'>
 							<Image
 								src={isDark ? '/logo-dark.png' : '/logo-light.png'}
 								alt='Logo'
@@ -178,7 +178,7 @@ export default function DesktopSidebar({ user, navItems }: DesktopSidebarProps) 
 						)}
 						title={!isExpanded ? 'Profile' : ''}
 					>
-						<div className='h-3xl w-3xl flex-shrink-0 overflow-hidden rounded-full bg-secondary'>
+						<div className='h-3xl w-3xl shrink-0 overflow-hidden rounded-full bg-secondary'>
 							{user?.image ? (
 								<img
 									src={user.image}
