@@ -39,7 +39,7 @@ export default function ProfileClient({
 
 	const handleFollow = async () => {
 		if (!currentUser) {
-			window.location.href = '/login'
+			window.location.href = `/login?callbackUrl=${encodeURIComponent(window.location.pathname)}`
 			return
 		}
 

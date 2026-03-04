@@ -28,7 +28,7 @@ export default function UserCard({ user, currentUser, metadata, hideFollowButton
 		e.stopPropagation()
 
 		if (!currentUser) {
-			window.location.href = '/login'
+			window.location.href = `/login?callbackUrl=${encodeURIComponent('/profile/' + user.username)}`
 			return
 		}
 

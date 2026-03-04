@@ -8,6 +8,8 @@ import MobileHeader from './MobileHeader'
 import { useSidebar } from '@/context/SidebarContext'
 import { cn } from '@/lib/utils'
 import { X } from 'lucide-react'
+import Button from '@/components/ui/Button'
+import { useState, useEffect } from 'react'
 
 interface SidebarLayoutProps {
 	user: any
@@ -26,6 +28,47 @@ export default function SidebarLayout({
 }: SidebarLayoutProps) {
 	const { isExpanded, side, navItems, setIsSecondaryOpen } = useSidebar()
 	const secondarySide = side === 'left' ? 'right' : 'left'
+	const [isDark, setIsDark] = useState(false)
+
+	useEffect(() => {
+		setIsDark(document.documentElement.classList.contains('dark'))
+	}, [])
+
+	if (!user) {
+		return (
+			<div className='flex min-h-screen flex-col'>
+				{/* Simple Header for Unauthenticated Users */}
+				<header className='w-full fixed top-0 left-0 right-0 z-50 h-fit bg-transparent'>
+					<div className='mx-auto flex h-full items-center justify-between px-lg'>
+						<Link href='/' className='flex items-center gap-sm'>
+							<div className='relative lg:left-24 h-24 w-24'>
+								<Image
+									src={isDark ? '/logo-dark.png' : '/logo-light.png'}
+									alt='Logo'
+									fill
+									className='object-contain'
+								/>
+							</div>
+						</Link>
+						<Button
+							variant='brand'
+							size='md'
+							onClick={() => {
+								window.location.href = `/login?callbackUrl=${encodeURIComponent(window.location.pathname)}`
+							}}
+							className='font-bold rounded-full lg:right-24'
+						>
+							Join now
+						</Button>
+					</div>
+				</header>
+
+				<main className='mt-6xl w-full flex-1'>
+					{children}
+				</main>
+			</div>
+		)
+	}
 
 	return (
 		<div className='flex min-h-screen flex-col md:flex-row'>
