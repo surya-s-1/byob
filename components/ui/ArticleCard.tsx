@@ -281,21 +281,21 @@ export default function ArticleCard({ article, variant = 'full', currentUser, ca
 									? 'Are you sure you want to permanently delete this article? This action cannot be undone.'
 									: 'Are you sure you want to unpublish this article? It will be moved back to your drafts.'}
 							</p>
-							<div className='flex justify-end gap-md'>
+							<div className='flex flex-col md:flex-row-reverse gap-md'>
+								<Button
+									variant={'danger'}
+									onClick={confirmAction}
+									isLoading={isProcessing}
+									className='gap-sm'
+								>
+									{actionModal === 'delete' ? 'Delete Permanently' : 'Unpublish Article'}
+								</Button>
 								<Button
 									variant='ghost'
 									onClick={() => setActionModal(null)}
 									className='text-subtle hover:text-main'
 								>
 									Cancel
-								</Button>
-								<Button
-									variant={actionModal === 'delete' ? 'danger' : 'brand'}
-									onClick={confirmAction}
-									isLoading={isProcessing}
-									className='gap-sm'
-								>
-									{actionModal === 'delete' ? 'Delete Permanently' : 'Unpublish Article'}
 								</Button>
 							</div>
 						</div>
