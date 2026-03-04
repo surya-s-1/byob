@@ -1,16 +1,14 @@
 'use client'
 
-import React, { useState } from 'react'
-import { Publication, Article, NavItem } from '@/types'
+import { useState } from 'react'
+import { Publication, Article } from '@/types'
 import Button from '@/components/ui/Button'
 import Card from '@/components/ui/Card'
 import ArticleCard from '@/components/ui/ArticleCard'
 import DraftCard from '@/components/ui/DraftCard'
 import Tabs from '@/components/ui/Tabs'
 import FloatingActions from '@/components/ui/FloatingActions'
-import Link from 'next/link'
 import { PlusCircle, BookOpen, FileText, Trash2 } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import { useRouter } from 'next/navigation'
 import PublicationHeader from './PublicationHeader'
 import PublicationAbout from './PublicationAbout'
@@ -276,7 +274,12 @@ export default function PublicationClient({
 							<>
 								{initialArticles.length > 0 ? (
 									initialArticles.map((article) => (
-										<ArticleCard key={article.id} article={article} />
+										<ArticleCard
+											key={article.id}
+											article={article}
+											currentUser={currentUser}
+											canManagePub={canManage}
+										/>
 									))
 								) : (
 									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-20 text-center'>

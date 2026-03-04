@@ -1,7 +1,10 @@
+'use client'
+
+import { useState } from 'react'
 import { Publication } from '@/types'
 import Button from '@/components/ui/Button'
 import Image from 'next/image'
-import { BookOpen, PlusCircle, Share2 } from 'lucide-react'
+import { BookOpen, PlusCircle, Share2, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
 interface PublicationHeaderProps {
@@ -21,6 +24,18 @@ export default function PublicationHeader({
 	onFollow,
 	onWriteArticle,
 }: PublicationHeaderProps) {
+	const [isCopied, setIsCopied] = useState(false)
+
+	const handleShare = async () => {
+		try {
+			await navigator.clipboard.writeText(window.location.href)
+			setIsCopied(true)
+			setTimeout(() => setIsCopied(false), 2000)
+		} catch (error) {
+			console.error('Failed to copy linking', error)
+		}
+	}
+
 	return (
 		<div className='flex flex-col items-start gap-8 md:flex-row md:items-center'>
 			<div className='relative mx-auto h-32 w-32 flex-shrink-0 overflow-hidden rounded-3xl border-2 border-border bg-secondary shadow-xl md:mx-0 md:h-40 md:w-40'>
@@ -72,8 +87,8 @@ export default function PublicationHeader({
 							Write Article
 						</Button>
 					)}
-					<Button className='btn-brand rounded-full p-2.5'>
-						<Share2 size={18} />
+					<Button onClick={handleShare} className='btn-secondary rounded-full p-2.5 transition-all w-fit h-fit'>
+						{isCopied ? <Check size={18} className='text-brand' /> : <Share2 size={18} />}
 					</Button>
 				</div>
 			</div>
