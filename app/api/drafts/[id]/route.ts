@@ -75,3 +75,49 @@ export async function GET(req: NextRequest, { params }: { params: Promise<{ id: 
 		return NextResponse.json({ draft: null, error: 'Internal server error' }, { status: 500 })
 	}
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
+	try {
+		const { id } = await params
+		const session = await auth.api.getSession({ headers: req.headers })
+		const currentUser = session?.user
+
+		if (!currentUser) {
+			return NextResponse.json({ deleted: false, error: 'Unauthorized' }, { status: 401 })
+		}
+
+		const draft = await db.query.articleDrafts.findFirst({
+			where: eq(articleDrafts.id, id),
+		})
+
+		if (!draft) {
+			return NextResponse.json({ deleted: false, error: 'Draft not found' }, { status: 404 })
+		}
+
+		// Check permission
+		const member = await db.query.publicationMembers.findFirst({
+			where: and(
+				eq(publicationMembers.publicationId, draft.publicationId),
+				eq(publicationMembers.userId, currentUser.id)
+			),
+		})
+
+		const allowedRoles = ['OWNER', 'ADMIN', 'EDITOR']
+		if (!member || !allowedRoles.includes(member.userRole)) {
+			return NextResponse.json({ deleted: false, error: 'Forbidden' }, { status: 403 })
+		}
+
+		await db
+			.update(articleDrafts)
+			.set({
+				deletedAt: new Date(),
+				deletedBy: currentUser.id,
+			})
+			.where(eq(articleDrafts.id, id))
+
+		return NextResponse.json({ deleted: true, error: null })
+	} catch (error: any) {
+		console.error('Error deleting draft:', error)
+		return NextResponse.json({ deleted: false, error: 'Internal server error' }, { status: 500 })
+	}
+}

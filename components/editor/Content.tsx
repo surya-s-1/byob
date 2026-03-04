@@ -5,7 +5,7 @@ import Toolbar from './Toolbar'
 import Block from './blocks'
 import { parseToBlocks, blocksToMarkdown, generateId } from './utils'
 
-export default function Content({ initialMarkdown }: any) {
+export default function Content({ initialMarkdown, onSave }: any) {
 	const [blocks, setBlocks] = useState<any[]>(() => parseToBlocks(initialMarkdown))
 	const [focusId, setFocusId] = useState<string | null>(null)
 
@@ -17,24 +17,35 @@ export default function Content({ initialMarkdown }: any) {
 		blocksRef.current = blocks
 	}, [blocks])
 
+	const isInitialRender = useRef(true)
+
 	useEffect(() => {
 		const intervalId = setInterval(() => {
+			if (!onSave) return
 			const currentMarkdown = blocksToMarkdown(blocksRef.current)
 
-			setSavedMarkdown((prev) => {
-				if (prev !== currentMarkdown) {
-					setSaveStatus('saving')
-					setTimeout(() => setSaveStatus('saved'), 800)
-					return currentMarkdown
-				}
-				return prev
-			})
+			if (isInitialRender.current) {
+				isInitialRender.current = false
+				setSavedMarkdown(currentMarkdown)
+				return
+			}
+
+			if (savedMarkdown !== currentMarkdown) {
+				setSaveStatus('saving')
+				onSave({ content: currentMarkdown }).then(() => {
+					setSaveStatus('saved')
+					setSavedMarkdown(currentMarkdown)
+				}).catch(() => {
+					setSaveStatus('idle')
+				})
+			}
 		}, 10000)
 		return () => clearInterval(intervalId)
-	}, [])
+	}, [onSave, savedMarkdown])
 
 	useEffect(() => {
-		if (saveStatus === 'saved' && blocksToMarkdown(blocks) !== savedMarkdown) {
+		const currentMarkdown = blocksToMarkdown(blocks)
+		if (saveStatus === 'saved' && currentMarkdown !== savedMarkdown) {
 			setSaveStatus('idle')
 		}
 	}, [blocks, savedMarkdown, saveStatus])
@@ -94,7 +105,7 @@ export default function Content({ initialMarkdown }: any) {
 							insertBlock(insertAt, parsed.data)
 							return
 						}
-					} catch (err) {}
+					} catch (err) { }
 				}
 
 				// If it's markdown-like text, we might want to prevent it from pasting raw into a text block

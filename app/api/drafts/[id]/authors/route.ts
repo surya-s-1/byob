@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { db } from '@/db/client'
 import { articleDrafts, publicationMembers, articleAuthors, draftAuthors } from '@/db/schema'
 import { auth } from '@/lib/auth'
-import { eq, and, isNull } from 'drizzle-orm'
+import { eq, and, isNull, inArray } from 'drizzle-orm'
 
 export async function POST(req: NextRequest, { params }: { params: Promise<{ id: string }> }) {
 	try {
@@ -42,6 +42,25 @@ export async function POST(req: NextRequest, { params }: { params: Promise<{ id:
 				{ added: false, error: 'Invalid authors array' },
 				{ status: 400 }
 			)
+		}
+
+		// Validation: Each author must be a member of the publication with valid role
+		const authorIds = authors.map(a => a.userId)
+		if (authorIds.length > 0) {
+			const validMembers = await db.query.publicationMembers.findMany({
+				where: and(
+					eq(publicationMembers.publicationId, draftData.publicationId),
+					inArray(publicationMembers.userId, authorIds),
+					inArray(publicationMembers.userRole, ['OWNER', 'ADMIN', 'EDITOR'])
+				)
+			})
+
+			if (validMembers.length !== authorIds.length) {
+				return NextResponse.json(
+					{ added: false, error: 'One or more users are not authorized members of this publication' },
+					{ status: 403 }
+				)
+			}
 		}
 
 		await db.transaction(async (tx) => {

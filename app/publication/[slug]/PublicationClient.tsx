@@ -44,6 +44,7 @@ export default function PublicationClient({
 	const [followersCount, setFollowersCount] = useState(publication.followersCount)
 	const [isLoading, setIsLoading] = useState(false)
 	const [localInvitations, setLocalInvitations] = useState(invitations || [])
+	const [localDrafts, setLocalDrafts] = useState(drafts || [])
 	const [reinvitingIds, setReinvitingIds] = useState<Set<string>>(new Set())
 	const [isInviteModalOpen, setIsInviteModalOpen] = useState(false)
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -121,6 +122,25 @@ export default function PublicationClient({
 			}
 		} catch (error) {
 			console.error('Error creating draft:', error)
+		}
+	}
+
+	const handleDeleteDraft = async (id: string) => {
+		if (!confirm('Are you sure you want to delete this draft?')) return
+
+		try {
+			const res = await fetch(`/api/drafts/${id}`, {
+				method: 'DELETE',
+			})
+			if (res.ok) {
+				setLocalDrafts((prev) => prev.filter((d) => d.id !== id))
+			} else {
+				const data = await res.json()
+				alert(data.error || 'Failed to delete draft')
+			}
+		} catch (error) {
+			console.error('Error deleting draft:', error)
+			alert('An error occurred while deleting the draft.')
 		}
 	}
 
@@ -274,9 +294,13 @@ export default function PublicationClient({
 
 						{activeTab === 'drafts' && publication.myRole && (
 							<>
-								{drafts.length > 0 ? (
-									drafts.map((draft) => (
-										<DraftCard key={draft.id} draft={draft} />
+								{localDrafts.length > 0 ? (
+									localDrafts.map((draft) => (
+										<DraftCard
+											key={draft.id}
+											draft={draft}
+											onDelete={handleDeleteDraft}
+										/>
 									))
 								) : (
 									<div className='rounded-3xl border border-dashed border-border/50 bg-secondary/20 py-20 text-center'>

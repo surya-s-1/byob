@@ -54,7 +54,7 @@ export interface Draft {
 	articleVisibility: 'PUBLIC' | 'HIDDEN' | 'LOCKED'
 	scheduledAt: Date | null
 	authors: { id: string; name: string; image: string | null; isPrimary: boolean }[]
-	publication: { id: string; slug: string; displayName: string } | null
+	publication: { id: string; slug: string; displayName: string }
 	lockedBy: { id: string; name: string; image: string | null } | null
 	lockedUntil: Date | null
 }

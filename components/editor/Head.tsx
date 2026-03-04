@@ -3,13 +3,31 @@
 import { useState, useRef, useEffect } from 'react'
 import Cover from './Cover'
 
-export default function Head({ draft, readOnly }: any) {
+export default function Head({ draft, readOnly, onSave }: any) {
 	const [cover, setCover] = useState(draft.cover || '')
 	const [title, setTitle] = useState(draft.title || '')
 	const [subtitle, setSubtitle] = useState(draft.subtitle || '')
 
 	const titleRef = useRef<HTMLTextAreaElement>(null)
 	const subtitleRef = useRef<HTMLTextAreaElement>(null)
+
+	const isInitialRender = useRef(true)
+
+	// Debounced autosave for Head metadata
+	useEffect(() => {
+		if (readOnly || !onSave) return
+
+		if (isInitialRender.current) {
+			isInitialRender.current = false
+			return
+		}
+
+		const timeoutId = setTimeout(() => {
+			onSave({ title, subtitle, cover })
+		}, 2000)
+
+		return () => clearTimeout(timeoutId)
+	}, [title, subtitle, cover, onSave, readOnly])
 
 	const autoResize = (el: HTMLTextAreaElement | null) => {
 		if (!el) return

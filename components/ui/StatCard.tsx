@@ -13,7 +13,7 @@ export default function StatCard({ title, value, change, icon, className }: Stat
 	return (
 		<Card
 			className={cn(
-				'flex min-h-[112px] w-full flex-col justify-between border-l-4 border-l-primary p-4 transition-all hover:shadow-md',
+				'flex min-h-[112px] w-full flex-col justify-between p-4 transition-all hover:shadow-md',
 				className
 			)}
 		>

@@ -234,6 +234,12 @@
 		scrollbar-color: var(--text-primary) transparent;
 	}
 
+	.no-scrollbar {
+		scrollbar-width: none;
+		-ms-overflow-style: none;
+		&::-webkit-scrollbar { display: none; }
+	}
+
 	.animate-in {
 		animation-duration: 300ms;
 		animation-fill-mode: both;

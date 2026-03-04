@@ -48,7 +48,7 @@ export default function PublicationCard({ publication, variant = 'full' }: Publi
 	}
 
 	return (
-		<Card className='group overflow-hidden border-l-4 border-l-primary/20 p-4 transition-all hover:border-l-primary hover:shadow-md sm:p-5'>
+		<Card className='group overflow-hidden p-4 transition-all hover:border-l-primary hover:shadow-md sm:p-5'>
 			<Link href={`/publication/${publication.slug}`} className='cursor-pointer'>
 				<div className='flex flex-col items-start gap-4 sm:flex-row sm:items-center'>
 					<div className='relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-primary/10 font-bold text-main sm:h-16 sm:w-16'>

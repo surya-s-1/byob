@@ -2,16 +2,19 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Card from './Card'
 import { Draft } from '@/types'
+import { Trash2 } from 'lucide-react'
+import Button from './Button'
 
 interface ArticleCardProps {
 	draft: Draft
 	variant?: 'full' | 'compact'
+	onDelete?: (id: string, e: React.MouseEvent) => void
 }
 
-export default function DraftCard({ draft, variant = 'full' }: ArticleCardProps) {
+export default function DraftCard({ draft, variant = 'full', onDelete }: ArticleCardProps) {
 	if (variant === 'compact') {
 		return (
-			<Link href={`/draft/${draft.id}`} className='group block'>
+			<Link href={`/draft/${draft.id}`} className='group relative block'>
 				<Card className='flex items-center justify-between gap-4 p-3 transition-all hover:bg-secondary'>
 					<div className='flex min-w-0 items-center gap-3'>
 						<div className='relative h-10 w-10 flex-shrink-0 overflow-hidden rounded bg-secondary sm:h-12 sm:w-12'>
@@ -37,19 +40,47 @@ export default function DraftCard({ draft, variant = 'full' }: ArticleCardProps)
 							</div>
 						</div>
 					</div>
+					{onDelete && (
+						<Button
+							variant='ghost'
+							size='sm'
+							className='h-8 w-8 p-0 text-muted hover:text-red-500'
+							onClick={(e: React.MouseEvent) => {
+								e.preventDefault()
+								e.stopPropagation()
+								onDelete(draft.id, e)
+							}}
+						>
+							<Trash2 size={16} />
+						</Button>
+					)}
 				</Card>
 			</Link>
 		)
 	}
 
 	return (
-		<Link href={`/draft/${draft.id}`} className='group block'>
+		<Link href={`/draft/${draft.id}`} className='group relative block'>
 			<Card className='group overflow-hidden p-4 transition-all hover:border-main sm:p-5'>
+				{onDelete && (
+					<Button
+						variant='ghost'
+						size='sm'
+						className='absolute top-4 right-4 z-10 h-10 w-10 p-0 text-muted opacity-0 transition-all hover:bg-red-500/10 hover:text-red-500 group-hover:opacity-100'
+						onClick={(e: React.MouseEvent) => {
+							e.preventDefault()
+							e.stopPropagation()
+							onDelete(draft.id, e)
+						}}
+					>
+						<Trash2 size={18} />
+					</Button>
+				)}
 				<div className='flex flex-col-reverse gap-4 sm:flex-row sm:gap-6'>
 					<div className='min-w-0 flex-1 space-y-2'>
 						<div className='line-clamp-2 flex items-center justify-between text-lg font-bold text-main transition-colors sm:text-xl'>
 							<span>{draft.title}</span>
-							<span className='text-xs text-muted'>
+							<span className='mr-12 text-xs text-muted sm:mr-0'>
 								{new Date(draft.updatedAt).toLocaleDateString()}
 							</span>
 						</div>
