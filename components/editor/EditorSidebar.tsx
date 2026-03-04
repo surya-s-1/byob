@@ -309,7 +309,7 @@ export default function EditorSidebar({
                             <Search className='absolute left-3 top-1/2 -translate-y-1/2 text-muted' size={14} />
                             <input
                                 type='text'
-                                placeholder='Add author by name...'
+                                placeholder='Add author by username...'
                                 value={searchQuery}
                                 onChange={(e) => setSearchQuery(e.target.value)}
                                 className='w-full rounded-xl border border-border bg-secondary/30 py-2.5 pl-9 pr-4 text-xs text-main outline-none focus:border-brand focus:ring-1 focus:ring-brand'
