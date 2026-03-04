@@ -16,6 +16,7 @@ import PublicationSeries from './PublicationSeries'
 import PublicationInvitations from './PublicationInvitations'
 import InviteMemberModal from './InviteMemberModal'
 import Modal from '@/components/ui/Modal'
+import UsersListModal from '@/components/ui/UsersListModal'
 
 interface PublicationClientProps {
 	publication: Publication
@@ -50,6 +51,8 @@ export default function PublicationClient({
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
 	const [isDeleting, setIsDeleting] = useState(false)
 	const [cancellingIds, setCancellingIds] = useState<Set<string>>(new Set())
+	const [membersOpen, setMembersOpen] = useState(false)
+	const [followersOpen, setFollowersOpen] = useState(false)
 
 	const handleFollow = async () => {
 		if (!currentUser) {
@@ -240,8 +243,6 @@ export default function PublicationClient({
 				isLoadingFollow={isLoading}
 				onFollow={handleFollow}
 				onWriteArticle={handleWriteArticle}
-				currentUser={currentUser}
-				publicationSlug={slug}
 			/>
 
 			<div className='grid grid-cols-1 gap-3xl lg:grid-cols-4'>
@@ -251,6 +252,8 @@ export default function PublicationClient({
 						followersCount={followersCount}
 						canManage={canManage}
 						onInviteClick={() => setIsInviteModalOpen(true)}
+						onFollowersClick={() => setFollowersOpen(true)}
+						onMembersClick={() => setMembersOpen(true)}
 					/>
 				</div>
 
@@ -407,6 +410,27 @@ export default function PublicationClient({
 					</div>
 				</div>
 			</Modal>
+
+			<UsersListModal
+				isOpen={followersOpen}
+				onClose={() => setFollowersOpen(false)}
+				title='Followers'
+				currentUser={currentUser}
+				endpoint={`/api/publications/slug/${slug}/followers`}
+				emptyMessage='No followers yet'
+			/>
+
+			{canManage && (
+				<UsersListModal
+					isOpen={membersOpen}
+					onClose={() => setMembersOpen(false)}
+					title='Members'
+					currentUser={currentUser}
+					endpoint={`/api/publications/slug/${slug}/members`}
+					emptyMessage='No members yet'
+					isMembersModal={true}
+				/>
+			)}
 		</div>
 	)
 }

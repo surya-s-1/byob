@@ -8,6 +8,8 @@ interface PublicationAboutProps {
 	followersCount: number
 	canManage: boolean
 	onInviteClick?: () => void
+	onFollowersClick?: () => void
+	onMembersClick?: () => void
 }
 
 export default function PublicationAbout({
@@ -15,6 +17,8 @@ export default function PublicationAbout({
 	followersCount,
 	canManage,
 	onInviteClick,
+	onFollowersClick,
+	onMembersClick,
 }: PublicationAboutProps) {
 	return (
 		<Card className='sticky top-24 space-y-2xl p-2xl'>
@@ -29,13 +33,19 @@ export default function PublicationAbout({
 							{publication.visibility.toLowerCase()}
 						</span>
 					</div>
-					<div className='flex items-center justify-between text-sm'>
+					<div
+						onClick={onFollowersClick ? onFollowersClick : () => {}}
+						className='flex items-center justify-between text-sm cursor-pointer hover:underline'
+					>
 						<span className='flex items-center gap-sm text-subtle'>
 							<Users size={16} /> Followers
 						</span>
 						<span className='font-bold text-main'>{followersCount}</span>
 					</div>
-					<div className='flex items-center justify-between text-sm'>
+					<div
+						onClick={onMembersClick ? onMembersClick : ()=>{}}
+						className='flex items-center justify-between text-sm cursor-pointer hover:underline'
+					>
 						<span className='flex items-center gap-sm text-subtle'>
 							<Shield size={16} /> Members
 						</span>

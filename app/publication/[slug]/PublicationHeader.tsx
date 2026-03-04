@@ -6,7 +6,6 @@ import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import { BookOpen, PlusCircle, Share2, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import UsersListModal from '@/components/ui/UsersListModal'
 
 interface PublicationHeaderProps {
 	publication: Publication
@@ -15,8 +14,6 @@ interface PublicationHeaderProps {
 	isLoadingFollow: boolean
 	onFollow: () => void
 	onWriteArticle: () => void
-	currentUser: any | null
-	publicationSlug: string
 }
 
 export default function PublicationHeader({
@@ -26,12 +23,8 @@ export default function PublicationHeader({
 	isLoadingFollow,
 	onFollow,
 	onWriteArticle,
-	currentUser,
-	publicationSlug,
 }: PublicationHeaderProps) {
 	const [isCopied, setIsCopied] = useState(false)
-	const [membersOpen, setMembersOpen] = useState(false)
-	const [followersOpen, setFollowersOpen] = useState(false)
 
 	const handleShare = async () => {
 		try {
@@ -103,49 +96,8 @@ export default function PublicationHeader({
 								{isCopied ? <Check size={18} className='text-brand' /> : <Share2 size={18} />}
 							</Button>
 						</div>
-
-						<div className='flex gap-md justify-center md:justify-start'>
-							{canManage && (
-								<button
-									onClick={() => setMembersOpen(true)}
-									className='rounded-lg border border-border/50 px-md py-sm text-center text-sm transition-all hover:bg-secondary/50 hover:border-border'
-								>
-									<p className='font-bold text-main'>{publication.memberCount || 0}</p>
-									<p className='text-xs text-subtle'>Members</p>
-								</button>
-							)}
-							<button
-								onClick={() => setFollowersOpen(true)}
-								className='rounded-lg border border-border/50 px-md py-sm text-center text-sm transition-all hover:bg-secondary/50 hover:border-border'
-							>
-								<p className='font-bold text-main'>{publication.followersCount || 0}</p>
-								<p className='text-xs text-subtle'>Followers</p>
-							</button>
-						</div>
 					</div>
 				</div>
 			</div>
-
-			{canManage && (
-				<UsersListModal
-					isOpen={membersOpen}
-					onClose={() => setMembersOpen(false)}
-					title='Members'
-					currentUser={currentUser}
-					endpoint={`/api/publications/slug/${publicationSlug}/members`}
-					emptyMessage='No members yet'
-					isMembersModal={true}
-				/>
-			)}
-
-			<UsersListModal
-				isOpen={followersOpen}
-				onClose={() => setFollowersOpen(false)}
-				title='Followers'
-				currentUser={currentUser}
-				endpoint={`/api/publications/slug/${publicationSlug}/followers`}
-				emptyMessage='No followers yet'
-			/>
-		</>
-	)
+		</>)
 }
