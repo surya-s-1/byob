@@ -51,8 +51,8 @@ export default function MobileHeader({ user, navItems }: MobileHeaderProps) {
 	}
 
 	return (
-		<header className='fixed top-0 right-0 left-0 z-100 h-6xl border-b border-border bg-primary/80 backdrop-blur-lg md:hidden'>
-			<div className='mx-auto flex h-full max-w-7xl items-center justify-between'>
+		<header className='fixed top-0 right-0 left-0 z-50 h-6xl border-b border-border bg-primary/80 backdrop-blur-lg md:hidden'>
+			<div className='flex h-full items-center justify-between'>
 				<Link href='/' className='flex items-center gap-sm px-lg'>
 					<div className='relative h-8xl w-8xl'>
 						<Image

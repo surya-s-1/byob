@@ -69,7 +69,7 @@ export default function SidebarLayout({
 					{/* Mobile Overlay */}
 					<div
 						className={cn(
-							'fixed inset-0 z-100 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden',
+							'fixed inset-0 z-40 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden',
 							secondarySidebarOpen ? 'opacity-100' : 'pointer-events-none opacity-0'
 						)}
 						onClick={() => setIsSecondaryOpen(false)}
@@ -77,7 +77,7 @@ export default function SidebarLayout({
 
 					<aside
 						className={cn(
-							'fixed bottom-0 top-0 z-110 w-full max-w-[320px] bg-primary transition-transform duration-300 md:duration-500',
+							'fixed bottom-0 top-0 z-50 w-full max-w-[320px] bg-primary transition-transform duration-300 md:duration-500',
 							secondarySide === 'left' ? 'left-0 border-r border-border' : 'right-0 border-l border-border',
 							!secondarySidebarOpen && (secondarySide === 'left' ? '-translate-x-full' : 'translate-x-full'),
 							'flex flex-col'
@@ -98,7 +98,7 @@ export default function SidebarLayout({
 					<button
 						onClick={() => setIsSecondaryOpen(!secondarySidebarOpen)}
 						className={cn(
-							'fixed top-1/2 z-120 hidden -translate-y-1/2 items-center justify-center rounded-full bg-primary border border-border text-main transition-all duration-300 shadow-lg hover:bg-secondary hover:scale-110 md:flex',
+							'fixed top-1/2 z-50 hidden -translate-y-1/2 items-center justify-center rounded-full bg-primary border border-border text-main transition-all duration-300 shadow-lg hover:bg-secondary hover:scale-110 md:flex',
 							secondaryIcon ? 'h-10 w-10' : 'h-24 w-4',
 							secondarySide === 'left'
 								? secondarySidebarOpen ? 'left-[320px] -translate-x-1/2' : 'left-lg'

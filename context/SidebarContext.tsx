@@ -70,8 +70,11 @@ export function SidebarProvider({ children }: { children: React.ReactNode }) {
 		setIsSecondaryOpen(isArticleOrDraft) // Open search sidebar by default on editor
 
 		setNavItems(DEFAULT_NAV_ITEMS)
-		setSecondarySidebar(null) // Reset on navigation
-		setSecondaryIcon(null)
+		// Only reset secondary sidebar if we're navigating away from draft/editor pages
+		if (!isArticleOrDraft) {
+			setSecondarySidebar(null)
+			setSecondaryIcon(null)
+		}
 	}, [pathname])
 
 	const toggleSidebar = () => setIsExpanded(!isExpanded)
