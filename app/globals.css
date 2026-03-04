@@ -123,8 +123,6 @@
 
 @layer components {
 
-
-
 	/* WYSIWYG Editor Styles */
 	.wysiwyg-editor h1 {
 		@apply my-4 text-4xl font-extrabold text-main;
@@ -228,6 +226,14 @@
 
 	.btn-brand:hover::after {
 		@apply animate-shine;
+	}
+
+	.text-brand-primary {
+		background: var(--brand-primary);
+		-webkit-background-clip: text;
+		background-clip: text;
+		color: transparent;
+		display: inline-block;
 	}
 
 	.animate-in {

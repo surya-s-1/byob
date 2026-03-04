@@ -11,9 +11,14 @@ import { cn } from '@/lib/utils'
 interface UserCardProps {
 	user: User & { isFollowing?: boolean }
 	currentUser?: any | null
+	metadata?: {
+		label: string
+		className?: string
+	}
+	hideFollowButton?: boolean
 }
 
-export default function UserCard({ user, currentUser }: UserCardProps) {
+export default function UserCard({ user, currentUser, metadata, hideFollowButton = false }: UserCardProps) {
 	const [isFollowing, setIsFollowing] = useState(user.isFollowing)
 	const [isLoading, setIsLoading] = useState(false)
 	const isOwnProfile = currentUser?.id === user.id
@@ -58,23 +63,28 @@ export default function UserCard({ user, currentUser }: UserCardProps) {
 					)}
 				</div>
 
-				<div className='min-w-0 flex-1 text-subtle transition-colors hover:text-main'>
-					<h3 className='font-bold'>{user.name}</h3>
+				<div className='min-w-0 flex-1'>
+					<h3 className='font-bold text-main'>{user.name}</h3>
 					<p className='text-sm text-subtle'>@{user.username}</p>
 					{user.bio && (
 						<p className='mt-xs hidden max-w-[50%] text-xs text-muted sm:block'>
 							{user.bio}
 						</p>
 					)}
+					{metadata && (
+						<p className={cn('mt-xs text-xs font-medium', metadata.className)}>
+							{metadata.label}
+						</p>
+					)}
 				</div>
 
-				{!isOwnProfile && (
+				{!isOwnProfile && !hideFollowButton && (
 					<Button
 						onClick={handleFollow}
 						isLoading={isLoading}
 						variant='brand'
-						size='xs'
-						className='h-auto font-bold shadow-sm'
+						size='md'
+						className='h-auto px-lg py-sm font-bold shadow-sm'
 					>
 						{isFollowing ? 'Unfollow' : 'Follow'}
 					</Button>

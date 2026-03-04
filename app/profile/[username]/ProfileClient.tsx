@@ -86,7 +86,7 @@ export default function ProfileClient({
 
 			<div className='mt-lg grid grid-cols-1 gap-3xl md:grid-cols-4'>
 				<div className='order-1 space-y-2xl md:col-span-1'>
-					<ProfileBio user={user} isOwnProfile={isOwnProfile} />
+					<ProfileBio user={user} isOwnProfile={isOwnProfile} currentUser={currentUser} />
 				</div>
 
 				<div className='order-2 space-y-2xl md:col-span-3'>

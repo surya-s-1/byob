@@ -24,6 +24,7 @@ interface PublicationClientProps {
 	series: any[]
 	invitations: any[]
 	drafts: any[]
+	slug: string
 }
 
 type TabType = 'articles' | 'series' | 'invitations' | 'drafts' | 'danger'
@@ -35,6 +36,7 @@ export default function PublicationClient({
 	series,
 	invitations,
 	drafts,
+	slug,
 }: PublicationClientProps) {
 	const router = useRouter()
 	const [activeTab, setActiveTab] = useState<TabType>('articles')
@@ -238,6 +240,8 @@ export default function PublicationClient({
 				isLoadingFollow={isLoading}
 				onFollow={handleFollow}
 				onWriteArticle={handleWriteArticle}
+				currentUser={currentUser}
+				publicationSlug={slug}
 			/>
 
 			<div className='grid grid-cols-1 gap-3xl lg:grid-cols-4'>

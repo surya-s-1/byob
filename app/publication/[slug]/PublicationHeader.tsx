@@ -6,6 +6,7 @@ import Button from '@/components/ui/Button'
 import Image from 'next/image'
 import { BookOpen, PlusCircle, Share2, Check } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import UsersListModal from '@/components/ui/UsersListModal'
 
 interface PublicationHeaderProps {
 	publication: Publication
@@ -14,6 +15,8 @@ interface PublicationHeaderProps {
 	isLoadingFollow: boolean
 	onFollow: () => void
 	onWriteArticle: () => void
+	currentUser: any | null
+	publicationSlug: string
 }
 
 export default function PublicationHeader({
@@ -23,8 +26,12 @@ export default function PublicationHeader({
 	isLoadingFollow,
 	onFollow,
 	onWriteArticle,
+	currentUser,
+	publicationSlug,
 }: PublicationHeaderProps) {
 	const [isCopied, setIsCopied] = useState(false)
+	const [membersOpen, setMembersOpen] = useState(false)
+	const [followersOpen, setFollowersOpen] = useState(false)
 
 	const handleShare = async () => {
 		try {
@@ -37,64 +44,108 @@ export default function PublicationHeader({
 	}
 
 	return (
-		<div className='flex flex-col items-start gap-3xl md:flex-row md:items-center'>
-			<div className='relative mx-auto h-[128px] w-[128px] shrink-0 overflow-hidden rounded-3xl border-2 border-border bg-secondary shadow-xl md:mx-0 md:h-[160px] md:w-[160px]'>
-				{publication.cover ? (
-					<Image
-						src={publication.cover}
-						alt={publication.displayName}
-						fill
-						className='object-cover'
-					/>
-				) : (
-					<div className='absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary'>
-						<BookOpen size={48} className='text-main/20' />
+		<>
+			<div className='flex flex-col items-start gap-3xl md:flex-row md:items-center'>
+				<div className='relative mx-auto h-[128px] w-[128px] shrink-0 overflow-hidden rounded-3xl border-2 border-border bg-secondary shadow-xl md:mx-0 md:h-[160px] md:w-[160px]'>
+					{publication.cover ? (
+						<Image
+							src={publication.cover}
+							alt={publication.displayName}
+							fill
+							className='object-cover'
+						/>
+					) : (
+						<div className='absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/20 to-secondary'>
+							<BookOpen size={48} className='text-main/20' />
+						</div>
+					)}
+				</div>
+
+				<div className='flex-1 space-y-lg text-center md:text-left'>
+					<div className='space-y-xs'>
+						<h1 className='text-3xl font-bold tracking-tight text-main md:text-5xl'>
+							{publication.displayName}
+						</h1>
+						{publication.displayDescription && (
+							<p className='mx-auto max-w-full text-lg text-subtle md:mx-0 md:max-w-[90%] md:text-xl'>
+								{publication.displayDescription}
+							</p>
+						)}
 					</div>
-				)}
+
+					<div className='flex flex-col gap-md pt-sm'>
+						<div className='flex flex-wrap items-center justify-center gap-sm md:justify-start'>
+							{!publication.isMember && (
+								<Button
+									onClick={onFollow}
+									isLoading={isLoadingFollow}
+									variant={isFollowing ? 'secondary' : 'brand'}
+									className='rounded-full'
+								>
+									{isFollowing ? 'Unsubscribe' : 'Subscribe'}
+								</Button>
+							)}
+							{canManage && (
+								<Button
+									onClick={onWriteArticle}
+									variant='brand'
+									className='hidden items-center gap-sm rounded-full md:flex'
+								>
+									<PlusCircle size={18} />
+									Write Article
+								</Button>
+							)}
+							<Button
+								onClick={handleShare}
+								variant='secondary'
+								className='rounded-full p-md transition-all w-fit h-fit'
+							>
+								{isCopied ? <Check size={18} className='text-brand' /> : <Share2 size={18} />}
+							</Button>
+						</div>
+
+						<div className='flex gap-md justify-center md:justify-start'>
+							{canManage && (
+								<button
+									onClick={() => setMembersOpen(true)}
+									className='rounded-lg border border-border/50 px-md py-sm text-center text-sm transition-all hover:bg-secondary/50 hover:border-border'
+								>
+									<p className='font-bold text-main'>{publication.memberCount || 0}</p>
+									<p className='text-xs text-subtle'>Members</p>
+								</button>
+							)}
+							<button
+								onClick={() => setFollowersOpen(true)}
+								className='rounded-lg border border-border/50 px-md py-sm text-center text-sm transition-all hover:bg-secondary/50 hover:border-border'
+							>
+								<p className='font-bold text-main'>{publication.followersCount || 0}</p>
+								<p className='text-xs text-subtle'>Followers</p>
+							</button>
+						</div>
+					</div>
+				</div>
 			</div>
 
-			<div className='flex-1 space-y-lg text-center md:text-left'>
-				<div className='space-y-xs'>
-					<h1 className='text-3xl font-bold tracking-tight text-main md:text-5xl'>
-						{publication.displayName}
-					</h1>
-					{publication.displayDescription && (
-						<p className='mx-auto max-w-full text-lg text-subtle md:mx-0 md:max-w-[90%] md:text-xl'>
-							{publication.displayDescription}
-						</p>
-					)}
-				</div>
+			{canManage && (
+				<UsersListModal
+					isOpen={membersOpen}
+					onClose={() => setMembersOpen(false)}
+					title='Members'
+					currentUser={currentUser}
+					endpoint={`/api/publications/slug/${publicationSlug}/members`}
+					emptyMessage='No members yet'
+					isMembersModal={true}
+				/>
+			)}
 
-				<div className='flex flex-wrap items-center justify-center gap-sm pt-sm md:justify-start'>
-					{!publication.isMember && (
-						<Button
-							onClick={onFollow}
-							isLoading={isLoadingFollow}
-							variant={isFollowing ? 'secondary' : 'brand'}
-							className='rounded-full'
-						>
-							{isFollowing ? 'Unsubscribe' : 'Subscribe'}
-						</Button>
-					)}
-					{canManage && (
-						<Button
-							onClick={onWriteArticle}
-							variant='brand'
-							className='hidden items-center gap-sm rounded-full md:flex'
-						>
-							<PlusCircle size={18} />
-							Write Article
-						</Button>
-					)}
-					<Button
-						onClick={handleShare}
-						variant='secondary'
-						className='rounded-full p-md transition-all w-fit h-fit'
-					>
-						{isCopied ? <Check size={18} className='text-brand' /> : <Share2 size={18} />}
-					</Button>
-				</div>
-			</div>
-		</div>
+			<UsersListModal
+				isOpen={followersOpen}
+				onClose={() => setFollowersOpen(false)}
+				title='Followers'
+				currentUser={currentUser}
+				endpoint={`/api/publications/slug/${publicationSlug}/followers`}
+				emptyMessage='No followers yet'
+			/>
+		</>
 	)
 }

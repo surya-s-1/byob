@@ -67,6 +67,7 @@ export default async function PublicationPage({ params }: { params: Promise<{ sl
 			series={series || []}
 			invitations={invitations || []}
 			drafts={drafts || []}
+			slug={slug}
 		/>
 	)
 }
