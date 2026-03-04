@@ -33,7 +33,7 @@ export default function ProfileBio({ user, isOwnProfile, currentUser }: ProfileB
 						</div>
 					)}
 
-					<div className='flex gap-lg pt-md'>
+					<div className='flex flex-col lg:flex-row gap-lg pt-md'>
 						<button
 							onClick={() => setFollowersOpen(true)}
 							className='flex-1 rounded-lg border border-border/50 px-md py-sm text-center text-sm transition-all hover:bg-secondary/50 hover:border-border'

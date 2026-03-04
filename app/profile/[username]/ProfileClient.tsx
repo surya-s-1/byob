@@ -63,7 +63,7 @@ export default function ProfileClient({
 	}
 
 	return (
-		<div className='space-y-3xl px-lg py-3xl'>
+		<div className='w-full md:w-[90%] lg:w-[80%]space-y-3xl px-lg py-3xl'>
 			{isOwnProfile && (
 				<FloatingActions
 					actions={[
@@ -113,7 +113,7 @@ export default function ProfileClient({
 						)}
 
 						{activeTab === 'publications' && (
-							<div className='animate-in fade-in slide-in-from-bottom-2 grid grid-cols-1 gap-lg duration-300 sm:grid-cols-2'>
+							<div className='animate-in fade-in slide-in-from-bottom-2 grid grid-cols-1 gap-lg duration-300 lg:grid-cols-2'>
 								{initialPublications.length > 0 ? (
 									initialPublications.map((pub) => (
 										<PublicationCard key={pub.id} publication={pub} />
